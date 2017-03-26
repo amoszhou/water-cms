@@ -1,0 +1,12 @@
+#datasource
+spring:
+  datasource:
+    name:water
+    url:jdbc:mysql://127.0.0.1:3306/water
+    username:root
+    password:123456
+    driver-class-name:com.mysql.jdbc.Driver
+#Hikaricp config
+  hikari:
+    connection-timeout:60000
+    maximum-pool-size:30
