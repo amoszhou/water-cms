@@ -25,7 +25,7 @@ public class Area{
     private Integer hallId;
 
     @ManyToOne
-    @JoinColumn(name = "hall_id")
+    @JoinColumn(name = "hall_id",insertable=false , updatable=false,foreignKey = @ForeignKey(name = "none",value = ConstraintMode.NO_CONSTRAINT))
     private BizHall hall;
 
     @Column(name = "create_user")

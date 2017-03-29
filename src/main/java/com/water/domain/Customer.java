@@ -37,14 +37,14 @@ public class Customer {
     private Integer areaId;
 
     @ManyToOne
-    @JoinColumn(name = "area_id")
+    @JoinColumn(name = "area_id",insertable=false , updatable=false,foreignKey = @ForeignKey(name = "none",value = ConstraintMode.NO_CONSTRAINT))
     private Area area;
 
     @Column(name="hall_id")
     private Integer hallId;
 
     @ManyToOne
-    @JoinColumn(name="hall_id")
+    @JoinColumn(name="hall_id",insertable=false , updatable=false,foreignKey = @ForeignKey(name = "none",value = ConstraintMode.NO_CONSTRAINT))
     private BizHall hall;
 
     /**缴费频率*/
@@ -57,7 +57,7 @@ public class Customer {
     @Column(name="archive_id")
     private String archiveId;
     @ManyToOne
-    @JoinColumn(name="archive_id")
+    @JoinColumn(name="archive_id",insertable=false , updatable=false,foreignKey = @ForeignKey(name = "none",value = ConstraintMode.NO_CONSTRAINT))
     private Archive archive;
 
     @Column(name = "create_time")

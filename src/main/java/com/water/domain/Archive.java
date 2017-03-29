@@ -26,21 +26,22 @@ public class Archive {
 //    @JoinColumn(name="record_user")
     private Integer recordUser;
 
-    @Column(name="hall_id")
+    @Column(name = "hall_id")
     private Integer hallId;
 
     @ManyToOne
-    @JoinColumn(name="hall_id")
+    @JoinColumn(name = "hall_id", insertable = false, updatable = false,
+            foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
     private BizHall hall;
 
-    @Column(name="area_id")
+    @Column(name = "area_id")
     private Integer areaId;
 
     @ManyToOne
-    @JoinColumn(name="area_id")
+    @JoinColumn(name = "area_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
     private Area area;
 
-    @Column(name="create_time")
+    @Column(name = "create_time")
     private Date createTime;
 
 

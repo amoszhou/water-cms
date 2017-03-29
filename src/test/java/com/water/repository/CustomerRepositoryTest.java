@@ -6,6 +6,8 @@ import com.water.domain.Customer;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/3/26.
  */
@@ -28,12 +30,11 @@ public class CustomerRepositoryTest extends WaterCmsApplicationTests{
         customerRepository.saveAndFlush(c);
     }
 
-//    @Test
-//    public void testFindAll(){
-//        Page<Customer> page = PageHelper.startPage(1,10);
-//        customerRepository.pageFindAll(null);
-//        System.out.println("===Customer size : " + page.size());
-//        System.out.println("===Customer(0) name : " + page.get(0).getName());
-//
-//    }
+    @Test
+    public void testFindAll(){
+        List<Customer> datas = customerRepository.findAll();
+        System.out.println("===Customer size : " + datas.size());
+        System.out.println("===Customer(0) name : " + datas.get(0).getName());
+
+    }
 }

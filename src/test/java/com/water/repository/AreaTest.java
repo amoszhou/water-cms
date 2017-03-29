@@ -19,8 +19,7 @@ public class AreaTest extends WaterCmsApplicationTests {
         Area area = new Area();
         area.setName("C区");
         area.setCode("C");
-        area.setCreateUser(1);
-//        int result = areaRepository.saveAndFlush(area);
+        areaRepository.saveAndFlush(area);
         Area area1 = areaRepository.findOne(1);
 //        System.out.println("==========result :" + result);
     }
