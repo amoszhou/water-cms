@@ -17,11 +17,11 @@ public class AreaTest extends WaterCmsApplicationTests {
     @Test
     public void testCreate() {
         Area area = new Area();
-        area.setName("B区");
-        area.setCode("B");
-        area.setManager("amos");
+        area.setName("C区");
+        area.setCode("C");
         area.setCreateUser(1);
-        int result = areaRepository.createArea(area);
-        System.out.println("==========result :" + result);
+//        int result = areaRepository.saveAndFlush(area);
+        Area area1 = areaRepository.findOne(1);
+//        System.out.println("==========result :" + result);
     }
 }
