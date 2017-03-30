@@ -18,7 +18,7 @@ public class Area{
 
     @Column
     private String name;
-    @Column
+    @Column(length =2)
     private String code;
 
     @Column(name="hall_id")
