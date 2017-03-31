@@ -9,4 +9,16 @@ import javax.persistence.Table;
 //@Entity
 //@Table(name="t_user")
 public class User {
+
+
+    private Integer companyId;
+
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
 }
