@@ -1,6 +1,8 @@
 package com.water.repository;
 
 import com.water.domain.Customer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -8,4 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CustomerRepository  extends JpaRepository<Customer,Integer>{
 
+    Customer findByCode(String code);
 }

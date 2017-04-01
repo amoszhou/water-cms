@@ -21,10 +21,19 @@ public class BaseController {
 
     /**
      * 获取当前登陆的用户
+     *
      * @param request
      * @return
      */
     public User getCurrentUser(HttpServletRequest request) {
         return (User) getSession(request).getAttribute(USER_KEY);
+    }
+
+    public int getValidPageNum(int pageNum) {
+        return pageNum < 1 ? 1 : pageNum;
+    }
+
+    public int getValidPageSize(int pageSize) {
+        return pageSize < 1 ? 10 : pageSize;
     }
 }
