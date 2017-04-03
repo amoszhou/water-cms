@@ -1,29 +1,57 @@
 package com.water.domain;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * 用水记录
  * Created by Administrator on 2017/3/26.
  */
+@Entity
+@Table(name = "t_water_record")
 public class WaterRecord {
 
+    @Id
+    @GeneratedValue
     private Integer id;
+
+    @Column(name = "cust_id")
     private Integer custId;
+
+    @ManyToOne
+    @JoinColumn(name = "cust_id", insertable = false, updatable = false)
+    private Customer customer;
+
+    @Column(name = "cust_code")
+    private String custCode;
+
+    @Column(name = "meter_code")
+    private Integer meterCode;
+
+    @Column
     private String period;
     /**
      * 上月表数
      */
+    @Column(name = "last_number")
     private Integer lastNumber;
     /**
      * 本月表数
      */
+    @Column(name = "curr_number")
     private Integer currNumber;
+
+    @Column
     private Integer fee;
+    @Column
     private Integer pay;
-    private Date    createTime;
-    private Date    updateTime;
+    @Column(name = "create_time")
+    private Date createTime;
+    @Column(name = "update_time")
+    private Date updateTime;
+    @Column(name = "create_user")
     private Integer createUser;
+    @Column(name = "update_user")
     private Integer updateUser;
 
 
@@ -113,5 +141,29 @@ public class WaterRecord {
 
     public void setUpdateUser(Integer updateUser) {
         this.updateUser = updateUser;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public String getCustCode() {
+        return custCode;
+    }
+
+    public void setCustCode(String custCode) {
+        this.custCode = custCode;
+    }
+
+    public Integer getMeterCode() {
+        return meterCode;
+    }
+
+    public void setMeterCode(Integer meterCode) {
+        this.meterCode = meterCode;
     }
 }

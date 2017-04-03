@@ -25,7 +25,7 @@ public class PriceType {
     @Column
     private Integer sewage;
 
-    @Column
+    @Column(name="company_id")
     private Integer companyId;
 
 
