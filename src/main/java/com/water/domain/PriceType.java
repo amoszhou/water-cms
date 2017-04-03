@@ -25,6 +25,9 @@ public class PriceType {
     @Column
     private Integer sewage;
 
+    @Column
+    private Integer companyId;
+
 
     public Integer getId() {
         return id;
@@ -56,5 +59,13 @@ public class PriceType {
 
     public void setSewage(Integer sewage) {
         this.sewage = sewage;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 }

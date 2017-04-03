@@ -1,13 +1,7 @@
 package com.water.controller;
 
-import com.water.domain.Area;
-import com.water.domain.BizHall;
-import com.water.domain.Company;
-import com.water.domain.User;
-import com.water.repository.ArchiveRepository;
-import com.water.repository.AreaRepository;
-import com.water.repository.BizHallRepository;
-import com.water.repository.CompanyRepository;
+import com.water.domain.*;
+import com.water.repository.*;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,6 +32,8 @@ public class FoundationController extends BaseController {
     @Autowired
     private ArchiveRepository archiveRepository;
 
+    @Autowired
+    private PriceTypeRepository priceTypeRepository;
 
     @RequestMapping(value = "/company", method = RequestMethod.GET)
     public String allCompany(Model model) {
@@ -68,5 +64,24 @@ public class FoundationController extends BaseController {
         return "area-list";
     }
 
+    @RequestMapping(value = "/archive", method = RequestMethod.GET)
+    public String archives(HttpServletRequest request, Model model,int pageNum,int pageSize){
+        User user = getCurrentUser(request);
+        Integer companyId = user.getCompanyId();
+        Pageable pageable = new PageRequest(getValidPageNum(pageNum), getValidPageSize(pageSize), Sort.Direction.DESC, "id");
+        Page<Archive> data = archiveRepository.findByHallId(companyId, pageable);
+        model.addAttribute("data", data);
+        return "archive-list";
+    }
+
+    @RequestMapping(value = "/priceType", method = RequestMethod.GET)
+    public String priceTypes(HttpServletRequest request, Model model,int pageNum,int pageSize){
+        User user = getCurrentUser(request);
+        Integer companyId = user.getCompanyId();
+        Pageable pageable = new PageRequest(getValidPageNum(pageNum), getValidPageSize(pageSize), Sort.Direction.DESC, "id");
+        Page<PriceType> data = priceTypeRepository.findByCompanyId(companyId, pageable);
+        model.addAttribute("data", data);
+        return "archive-list";
+    }
 
 }
