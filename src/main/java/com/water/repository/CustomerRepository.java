@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
-    Customer findByCode(String code);
+    Customer findByCodeAndCompanyId(String code, Integer companyId);
 
-    List<Customer> findByIsDelete(Integer isDelete);
+    Page<Customer> findByCompanyId(Integer companyId, Pageable pageable);
 }
