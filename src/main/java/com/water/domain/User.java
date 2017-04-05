@@ -10,6 +10,7 @@ import javax.persistence.Table;
 //@Table(name="t_user")
 public class User {
 
+    private Integer id;
 
     private Integer companyId;
 
@@ -20,5 +21,13 @@ public class User {
 
     public void setCompanyId(Integer companyId) {
         this.companyId = companyId;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

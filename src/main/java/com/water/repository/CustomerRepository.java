@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Created by Administrator on 2017/3/26.
  */
-public interface CustomerRepository  extends JpaRepository<Customer,Integer>{
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
-    Customer findByCode(String code);
+    Customer findByCodeAndCompanyId(String code, Integer companyId);
+
+    Page<Customer> findByCompanyId(Integer companyId, Pageable pageable);
 }
