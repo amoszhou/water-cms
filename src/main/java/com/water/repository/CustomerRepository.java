@@ -15,4 +15,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     Customer findByCodeAndCompanyId(String code, Integer companyId);
 
     Page<Customer> findByCompanyId(Integer companyId, Pageable pageable);
+
+    List<Customer>  findByIsDelete(Integer isDelete);
+
 }
