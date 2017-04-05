@@ -1,8 +1,11 @@
 package com.water.controller;
 
 
+import com.water.constant.JsonResult;
 import com.water.domain.Customer;
+import com.water.domain.CustomerMeter;
 import com.water.domain.User;
+import com.water.repository.CustomerMeterRepository;
 import com.water.repository.CustomerRepository;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.log4j.Logger;
@@ -30,6 +33,9 @@ public class CustomerController extends BaseController {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private CustomerMeterRepository customerMeterRepository;
 
     @RequestMapping("{code}")
     public String findById(@PathVariable String code, HttpServletRequest request, Model model) {
@@ -64,19 +70,35 @@ public class CustomerController extends BaseController {
      * @return
      */
     @RequestMapping(method = RequestMethod.POST)
-    public boolean createCustomer(HttpServletRequest request, Customer c) {
+    public JsonResult createCustomer(HttpServletRequest request, Customer c) {
         User user = getCurrentUser(request);
         c.setCreateTime(new Date());
         c.setCreateUser(user.getId());
         customerRepository.saveAndFlush(c);
-        return true;
+        return new JsonResult(true);
     }
 
 
-    @RequestMapping(value = "/{customerId}/meter", method = RequestMethod.POST)
-    public boolean addMeterForCustomer(HttpServletRequest request, @PathVariable Integer customerId) {
-        // TODO: 2017/4/5 添加水表
-        return true;
+    /**
+     * 给指定用户添加水表
+     *
+     * @param request
+     * @param code
+     * @param meter
+     * @return
+     */
+    @RequestMapping(value = "/{code}/meter", method = RequestMethod.POST)
+    public JsonResult addMeterForCustomer(HttpServletRequest request, @PathVariable String code, CustomerMeter meter) {
+        User user = getCurrentUser(request);
+        Customer c = customerRepository.findByCodeAndCompanyId(code, user.getCompanyId());
+        if (c != null) {
+            meter.setCustId(c.getId());
+            meter.setCode(c.getCode());
+            meter.setIsDelete(0);
+            customerMeterRepository.saveAndFlush(meter);
+            return new JsonResult(true);
+        }
+        return new JsonResult(false).setMsg("您没有权限为该住户新增水表");
     }
 
 }
