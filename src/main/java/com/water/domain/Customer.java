@@ -33,31 +33,38 @@ public class Customer {
     @Column
     private String idCard;
 
-    @Column(name="area_id")
+    @Column(name="company_id")
+    private Integer companyId;
+
+    @Column(name = "area_id")
     private Integer areaId;
 
     @ManyToOne
-    @JoinColumn(name = "area_id",insertable=false , updatable=false,foreignKey = @ForeignKey(name = "none",value = ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "area_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
     private Area area;
 
-    @Column(name="hall_id")
+    @Column(name = "hall_id")
     private Integer hallId;
 
     @ManyToOne
-    @JoinColumn(name="hall_id",insertable=false , updatable=false,foreignKey = @ForeignKey(name = "none",value = ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "hall_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
     private BizHall hall;
 
-    /**缴费频率*/
+    /**
+     * 缴费频率
+     */
     @Column
     private Integer frequency;
-    /**家庭成员人数*/
+    /**
+     * 家庭成员人数
+     */
     @Column
     private Integer familyCount;
 
-    @Column(name="archive_id")
+    @Column(name = "archive_id")
     private String archiveId;
     @ManyToOne
-    @JoinColumn(name="archive_id",insertable=false , updatable=false,foreignKey = @ForeignKey(name = "none",value = ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "archive_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
     private Archive archive;
 
     @Column(name = "create_time")
@@ -237,5 +244,13 @@ public class Customer {
 
     public void setArchive(Archive archive) {
         this.archive = archive;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 }

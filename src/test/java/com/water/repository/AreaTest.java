@@ -23,4 +23,14 @@ public class AreaTest extends WaterCmsApplicationTests {
         Area area1 = areaRepository.findOne(1);
 //        System.out.println("==========result :" + result);
     }
+
+    @Test
+    public void testUpdateArea() {
+        Area area = new Area();
+        area.setId(1);
+        area.setName("A区");
+        area.setCode("A");
+        area.setHallId(1);
+        areaRepository.saveAndFlush(area);
+    }
 }

@@ -1,9 +1,9 @@
 package com.water.controller;
 
 import com.water.constant.JsonResult;
-import com.water.domain.BizHall;
+import com.water.domain.Archive;
 import com.water.domain.User;
-import com.water.repository.BizHallRepository;
+import com.water.repository.ArchiveRepository;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,43 +14,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Created by Administrator on 2017/4/8.
+ * Created by Administrator on 2017/4/9.
  */
-@RequestMapping("/bizHall")
-public class BizHallController extends BaseController {
-
+@RequestMapping("/archive")
+public class ArchiveController extends BaseController {
 
     @Autowired
-    private BizHallRepository bizHallRepository;
+    private ArchiveRepository archiveRepository;
 
 
-    /**
-     * 营业厅列表
-     * @param request
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
     @RequestMapping(method = RequestMethod.GET)
-    public JsonResult bizHalls(HttpServletRequest request, int pageNum, int pageSize) {
+    public JsonResult archives(HttpServletRequest request, int pageNum, int pageSize) {
         User user = getCurrentUser(request);
         Integer companyId = user.getCompanyId();
         Pageable pageable = new PageRequest(getValidPageNum(pageNum), getValidPageSize(pageSize), Sort.Direction.DESC, "id");
-        Page<BizHall> data = bizHallRepository.findByCompanyId(companyId, pageable);
+        Page<Archive> data = archiveRepository.findByHallId(companyId, pageable);
         return new JsonResult(true).setData(data);
     }
 
-    /**
-     * 新增营业厅
-     * @param bizHall
-     * @return
-     */
     @RequestMapping(method = RequestMethod.POST)
-    public JsonResult createBizHalls(BizHall bizHall) {
-        bizHallRepository.saveAndFlush(bizHall);
+    public JsonResult createArchives(HttpServletRequest request, Archive archive) {
+//        User user = getCurrentUser(request);
+//        Integer companyId = user.getCompanyId();
+        archiveRepository.saveAndFlush(archive);
         return new JsonResult(true);
     }
-
-
-
 }

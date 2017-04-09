@@ -27,8 +27,6 @@ public class FoundationController extends BaseController {
     @Autowired
     private CompanyRepository companyRepository;
 
-    @Autowired
-    private ArchiveRepository archiveRepository;
 
     @Autowired
     private PriceTypeRepository priceTypeRepository;
@@ -41,23 +39,7 @@ public class FoundationController extends BaseController {
     }
 
 
-    @RequestMapping(value = "/archive", method = RequestMethod.GET)
-    public JsonResult archives(HttpServletRequest request, int pageNum, int pageSize) {
-        User user = getCurrentUser(request);
-        Integer companyId = user.getCompanyId();
-        Pageable pageable = new PageRequest(getValidPageNum(pageNum), getValidPageSize(pageSize), Sort.Direction.DESC, "id");
-        Page<Archive> data = archiveRepository.findByHallId(companyId, pageable);
-        return new JsonResult(true).setData(data);
-    }
 
-    @RequestMapping(value = "/priceType", method = RequestMethod.GET)
-    public JsonResult priceTypes(HttpServletRequest request, Model model, int pageNum, int pageSize) {
-        User user = getCurrentUser(request);
-        Integer companyId = user.getCompanyId();
-        Pageable pageable = new PageRequest(getValidPageNum(pageNum), getValidPageSize(pageSize), Sort.Direction.DESC, "id");
-        Page<PriceType> data = priceTypeRepository.findByCompanyId(companyId, pageable);
-        return new JsonResult(true).setData(data);
-    }
 
     /**
      * 新增价格

@@ -1,9 +1,9 @@
 package com.water.controller;
 
 import com.water.constant.JsonResult;
-import com.water.domain.BizHall;
+import com.water.domain.PriceType;
 import com.water.domain.User;
-import com.water.repository.BizHallRepository;
+import com.water.repository.PriceTypeRepository;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,43 +14,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Created by Administrator on 2017/4/8.
+ * Created by Administrator on 2017/4/9.
  */
-@RequestMapping("/bizHall")
-public class BizHallController extends BaseController {
-
+@RequestMapping("/price")
+public class PriceController extends BaseController {
 
     @Autowired
-    private BizHallRepository bizHallRepository;
+    private PriceTypeRepository priceTypeRepository;
 
 
-    /**
-     * 营业厅列表
-     * @param request
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
     @RequestMapping(method = RequestMethod.GET)
-    public JsonResult bizHalls(HttpServletRequest request, int pageNum, int pageSize) {
+    public JsonResult priceTypes(HttpServletRequest request, int pageNum, int pageSize) {
         User user = getCurrentUser(request);
         Integer companyId = user.getCompanyId();
         Pageable pageable = new PageRequest(getValidPageNum(pageNum), getValidPageSize(pageSize), Sort.Direction.DESC, "id");
-        Page<BizHall> data = bizHallRepository.findByCompanyId(companyId, pageable);
+        Page<PriceType> data = priceTypeRepository.findByCompanyId(companyId, pageable);
         return new JsonResult(true).setData(data);
     }
 
     /**
-     * 新增营业厅
-     * @param bizHall
+     * 添加价格类型。
+     *
+     * @param request
+     * @param price
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
-    public JsonResult createBizHalls(BizHall bizHall) {
-        bizHallRepository.saveAndFlush(bizHall);
+    @RequestMapping(method = RequestMethod.GET)
+    public JsonResult createPriceType(HttpServletRequest request, PriceType price) {
+        User user = getCurrentUser(request);
+        Integer companyId = user.getCompanyId();
+        price.setCompanyId(companyId);
+        priceTypeRepository.saveAndFlush(price);
         return new JsonResult(true);
     }
-
-
-
 }
