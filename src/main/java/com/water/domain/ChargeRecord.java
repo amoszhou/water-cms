@@ -41,6 +41,23 @@ public class ChargeRecord {
     @Column(name = "pay_type")
     private Integer payType;
 
+    /**
+     * 充值类型:
+     * 1-正常缴费
+     * 2-预存
+     */
+    @Column(name = "charge_type")
+    private Integer chargeType;
+
+
+
+    public Integer getChargeType() {
+        return chargeType;
+    }
+
+    public void setChargeType(Integer chargeType) {
+        this.chargeType = chargeType;
+    }
 
     public Integer getId() {
         return id;
