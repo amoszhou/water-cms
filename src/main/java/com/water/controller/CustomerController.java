@@ -101,4 +101,10 @@ public class CustomerController extends BaseController {
         return new JsonResult(false).setMsg("您没有权限为该住户新增水表");
     }
 
+    @RequestMapping("/prepay")
+    public JsonResult prePay(Integer userId,float amount){
+
+
+    }
+
 }

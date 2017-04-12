@@ -22,12 +22,20 @@ public class WaterRecord {
     @JoinColumn(name = "cust_id", insertable = false, updatable = false)
     private Customer customer;
 
+    /**
+     * 客户编码
+     */
     @Column(name = "cust_code")
     private String custCode;
-
+    /**
+     * 水表编码
+     */
     @Column(name = "meter_code")
     private Integer meterCode;
 
+    /**
+     * 月份
+     */
     @Column
     private String period;
     /**
@@ -41,10 +49,24 @@ public class WaterRecord {
     @Column(name = "curr_number")
     private Integer currNumber;
 
+    /**
+     * 产生的费用
+     */
     @Column
     private Integer fee;
+    /**
+     * 是否已经支付
+     * 0--未支付
+     * 1--已支付
+     */
     @Column
     private Integer pay;
+    /**
+     * 缴费记录
+     */
+    @Column(name = "charge_id")
+    private Integer chargeId;
+
     @Column(name = "create_time")
     private Date createTime;
     @Column(name = "update_time")

@@ -23,8 +23,6 @@ public class Customer {
     @Column
     private String name;
     @Column
-    private Integer balance;
-    @Column
     private String address;
     @Column
     private String tel;
@@ -100,14 +98,6 @@ public class Customer {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Integer balance) {
-        this.balance = balance;
     }
 
     public String getAddress() {
