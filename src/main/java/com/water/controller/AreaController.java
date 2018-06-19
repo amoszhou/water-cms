@@ -30,8 +30,8 @@ public class AreaController extends BaseController{
      */
     @RequestMapping(method = RequestMethod.GET)
     public JsonResult areas(int pageNum, int pageSize, Integer hallId) {
-//        User user = getCurrentUser(request);
-//        Integer companyId = user.getCompanyId();
+//        Employee user = getCurrentUser(request);
+//        Integer companyId = user.getFactoryId();
         Pageable pageable = new PageRequest(getValidPageNum(pageNum), getValidPageSize(pageSize), Sort.Direction.DESC, "id");
         Page<Area> data = areaRepository.findByHallId(hallId, pageable);
         return new JsonResult(true).setData(data);
@@ -46,8 +46,8 @@ public class AreaController extends BaseController{
      */
     @RequestMapping(method = RequestMethod.POST)
     public JsonResult createArea(int pageNum, int pageSize,Integer hallId) {
-//        User user = getCurrentUser(request);
-//        Integer companyId = user.getCompanyId();
+//        Employee user = getCurrentUser(request);
+//        Integer companyId = user.getFactoryId();
         Pageable pageable = new PageRequest(getValidPageNum(pageNum), getValidPageSize(pageSize), Sort.Direction.DESC, "id");
         Page<Area> data = areaRepository.findByHallId(hallId, pageable);
         return new JsonResult(true).setData(data);

@@ -12,9 +12,9 @@ import java.util.List;
  */
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
-    Customer findByCodeAndCompanyId(String code, Integer companyId);
+    Customer findByCodeAndFactoryId(String code, Integer companyId);
 
-    Page<Customer> findByCompanyId(Integer companyId, Pageable pageable);
+    Page<Customer> findByFactoryId(Integer companyId, Pageable pageable);
 
     List<Customer>  findByIsDelete(Integer isDelete);
 

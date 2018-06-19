@@ -1,6 +1,6 @@
 package com.water.controller;
 
-import com.water.domain.User;
+import com.water.domain.Employee;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 
 public class BaseController {
 
-    private static final String COMPANY_KEY = "COMPANY_ID";
+    private static final String FACTORY_KEY = "FACTORY_ID";
 
     private static final String USER_KEY = "session_user_id";
 
@@ -25,8 +25,13 @@ public class BaseController {
      * @param request
      * @return
      */
-    public User getCurrentUser(HttpServletRequest request) {
-        return (User) getSession(request).getAttribute(USER_KEY);
+    public Employee getCurrentUser(HttpServletRequest request) {
+        // TODO: 2018/6/11  remove after login has been done
+        Employee e = new Employee();
+        e.setFactoryId(1);
+        e.setId(1);
+        return e;
+//        return (Employee) getSession(request).getAttribute(USER_KEY);
     }
 
     public int getValidPageNum(int pageNum) {

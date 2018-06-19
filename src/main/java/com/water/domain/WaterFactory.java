@@ -3,11 +3,12 @@ package com.water.domain;
 import javax.persistence.*;
 
 /**
+ * 水厂
  * Created by Administrator on 2017/3/29.
  */
 @Entity
-@Table(name = "t_company")
-public class Company {
+@Table(name = "t_factory")
+public class WaterFactory {
 
     @Id
     @GeneratedValue

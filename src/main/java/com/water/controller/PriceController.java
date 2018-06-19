@@ -2,7 +2,7 @@ package com.water.controller;
 
 import com.water.constant.JsonResult;
 import com.water.domain.PriceType;
-import com.water.domain.User;
+import com.water.domain.Employee;
 import com.water.repository.PriceTypeRepository;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +25,8 @@ public class PriceController extends BaseController {
 
     @RequestMapping(method = RequestMethod.GET)
     public JsonResult priceTypes(HttpServletRequest request, int pageNum, int pageSize) {
-        User user = getCurrentUser(request);
-        Integer companyId = user.getCompanyId();
+        Employee user = getCurrentUser(request);
+        Integer companyId = user.getFactoryId();
         Pageable pageable = new PageRequest(getValidPageNum(pageNum), getValidPageSize(pageSize), Sort.Direction.DESC, "id");
         Page<PriceType> data = priceTypeRepository.findByCompanyId(companyId, pageable);
         return new JsonResult(true).setData(data);
@@ -41,8 +41,8 @@ public class PriceController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public JsonResult createPriceType(HttpServletRequest request, PriceType price) {
-        User user = getCurrentUser(request);
-        Integer companyId = user.getCompanyId();
+        Employee user = getCurrentUser(request);
+        Integer companyId = user.getFactoryId();
         price.setCompanyId(companyId);
         priceTypeRepository.saveAndFlush(price);
         return new JsonResult(true);

@@ -2,7 +2,7 @@ package com.water.controller;
 
 import com.water.constant.JsonResult;
 import com.water.domain.Archive;
-import com.water.domain.User;
+import com.water.domain.Employee;
 import com.water.repository.ArchiveRepository;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +25,8 @@ public class ArchiveController extends BaseController {
 
     @RequestMapping(method = RequestMethod.GET)
     public JsonResult archives(HttpServletRequest request, int pageNum, int pageSize) {
-        User user = getCurrentUser(request);
-        Integer companyId = user.getCompanyId();
+        Employee user = getCurrentUser(request);
+        Integer companyId = user.getFactoryId();
         Pageable pageable = new PageRequest(getValidPageNum(pageNum), getValidPageSize(pageSize), Sort.Direction.DESC, "id");
         Page<Archive> data = archiveRepository.findByHallId(companyId, pageable);
         return new JsonResult(true).setData(data);
@@ -34,8 +34,8 @@ public class ArchiveController extends BaseController {
 
     @RequestMapping(method = RequestMethod.POST)
     public JsonResult createArchives(HttpServletRequest request, Archive archive) {
-//        User user = getCurrentUser(request);
-//        Integer companyId = user.getCompanyId();
+//        Employee user = getCurrentUser(request);
+//        Integer companyId = user.getFactoryId();
         archiveRepository.saveAndFlush(archive);
         return new JsonResult(true);
     }

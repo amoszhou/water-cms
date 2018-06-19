@@ -8,6 +8,7 @@ import com.water.repository.CustomerAccountRepository;
 import com.water.repository.CustomerMeterRepository;
 import com.water.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -37,10 +38,13 @@ public class CustomerService {
      *
      * @return
      */
-    public List<Customer> findAllEnableCustomer() {
+      public List<Customer> findAllEnableCustomer() {
         // TODO: 2017/4/3 status需要定义
         return customerRepository.findByIsDelete(1);
     }
+
+
+
 
     /**
      * 查询所有可用的水表
@@ -63,7 +67,6 @@ public class CustomerService {
         account.setUpdateTime(new Date());
         account.setUpdateUser(customer.getCreateUser());
         customerAccountRepository.saveAndFlush(account);
-
     }
 
 
@@ -73,12 +76,12 @@ public class CustomerService {
      * @param user   操作员
      * @param record 充值信息
      */
-    public void prePay(User user, ChargeType type, ChargeRecord record) {
+    public void prePay(Employee user, ChargeType type, ChargeRecord record) {
         Customer customer = customerRepository.findOne(record.getCustId());
         if (customer == null) {
             throw new BizException("用户不存在，不能进行操作");
         }
-        if (!customer.getCompanyId().equals(user.getCompanyId())) {
+        if (!customer.getFactoryId().equals(user.getFactoryId())) {
             throw new BizException("您没有权限对该用户进行操作");
         }
         record.setCreateTime(new Date());

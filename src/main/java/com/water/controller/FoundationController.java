@@ -5,10 +5,6 @@ import com.water.domain.*;
 import com.water.repository.*;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +29,7 @@ public class FoundationController extends BaseController {
 
     @RequestMapping(value = "/company", method = RequestMethod.GET)
     public String allCompany(Model model) {
-        List<Company> data = companyRepository.findAll();
+        List<WaterFactory> data = companyRepository.findAll();
         model.addAttribute("companyList", data);
         return "company-list";
     }
@@ -51,8 +47,8 @@ public class FoundationController extends BaseController {
      */
     @RequestMapping(value = "/priceType", method = RequestMethod.POST)
     public JsonResult createPriceTypes(HttpServletRequest request, Model model, PriceType priceType) {
-//        User user = getCurrentUser(request);
-//        Integer companyId = user.getCompanyId();
+//        Employee user = getCurrentUser(request);
+//        Integer companyId = user.getFactoryId();
         priceTypeRepository.saveAndFlush(priceType);
         return new JsonResult(true);
     }

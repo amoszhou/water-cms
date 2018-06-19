@@ -15,9 +15,10 @@ public class BizHall {
 
     @Column(name="company_id")
     private Integer companyId;
+
     @ManyToOne
     @JoinColumn(name = "company_id",insertable=false , updatable=false,foreignKey = @ForeignKey(name = "none",value = ConstraintMode.NO_CONSTRAINT))
-    private Company company;
+    private WaterFactory company;
 
     @Column
     private String name;
@@ -91,11 +92,11 @@ public class BizHall {
         this.isDelete = isDelete;
     }
 
-    public Company getCompany() {
+    public WaterFactory getCompany() {
         return company;
     }
 
-    public void setCompany(Company company) {
+    public void setCompany(WaterFactory company) {
         this.company = company;
     }
 }

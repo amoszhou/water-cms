@@ -20,19 +20,39 @@ public class Customer {
      */
     @Column
     private String code;
+
+    /**
+     * 姓名
+     */
     @Column
     private String name;
+
+    /**
+     * 地址
+     */
     @Column
     private String address;
+
+    /**
+     * 手机
+     */
     @Column
     private String tel;
+
+    /**
+     * 固定电话
+     */
     @Column
     private String phone;
+
+    /**
+     * 身份证号
+     */
     @Column
     private String idCard;
 
-    @Column(name="company_id")
-    private Integer companyId;
+    @Column(name="factory_id")
+    private Integer factoryId;
 
     @Column(name = "area_id")
     private Integer areaId;
@@ -236,11 +256,11 @@ public class Customer {
         this.archive = archive;
     }
 
-    public Integer getCompanyId() {
-        return companyId;
+    public Integer getFactoryId() {
+        return factoryId;
     }
 
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
+    public void setFactoryId(Integer factoryId) {
+        this.factoryId = factoryId;
     }
 }

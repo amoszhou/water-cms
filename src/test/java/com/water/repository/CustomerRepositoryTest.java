@@ -24,7 +24,6 @@ public class CustomerRepositoryTest extends WaterCmsApplicationTests{
         c.setName("php");
         c.setAddress("深圳市宝安区西乡");
         c.setAreaId(1);
-        c.setBalance(0);
         c.setTel("13888888888");
 
         customerRepository.saveAndFlush(c);
