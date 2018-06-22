@@ -1,3 +1,4 @@
+/*
 package com.water.controller;
 
 import com.water.constant.JsonResult;
@@ -13,9 +14,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+*/
 /**
  * Created by Administrator on 2017/4/8.
- */
+ *//*
+
 @RequestMapping("/bizHall")
 public class BizHallController extends BaseController {
 
@@ -24,13 +27,15 @@ public class BizHallController extends BaseController {
     private BizHallRepository bizHallRepository;
 
 
-    /**
+    */
+/**
      * 营业厅列表
      * @param request
      * @param pageNum
      * @param pageSize
      * @return
-     */
+     *//*
+
     @RequestMapping(method = RequestMethod.GET)
     public JsonResult bizHalls(HttpServletRequest request, int pageNum, int pageSize) {
         Employee user = getCurrentUser(request);
@@ -40,11 +45,13 @@ public class BizHallController extends BaseController {
         return new JsonResult(true).setData(data);
     }
 
-    /**
+    */
+/**
      * 新增营业厅
      * @param bizHall
      * @return
-     */
+     *//*
+
     @RequestMapping(method = RequestMethod.POST)
     public JsonResult createBizHalls(BizHall bizHall) {
         bizHallRepository.saveAndFlush(bizHall);
@@ -53,4 +60,4 @@ public class BizHallController extends BaseController {
 
 
 
-}
+}*/

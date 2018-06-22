@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.water.dao.CustomerMeterDAO" >
+  <resultMap id="BaseResultMap" type="com.water.domain.CustomerMeter" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="cust_code" property="custCode" jdbcType="VARCHAR" />
+    <result column="cust_id" property="custId" jdbcType="INTEGER" />
+    <result column="enable_date" property="enableDate" jdbcType="TIMESTAMP" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    <result column="price_type" property="priceType" jdbcType="INTEGER" />
+    <result column="size" property="size" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, cust_code, cust_id, enable_date, is_delete, price_type, size
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_customer_meter
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.water.domain.CustomerMeter" >
+    insert into t_customer_meter (id, code, cust_code, 
+      cust_id, enable_date, is_delete, 
+      price_type, size)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{custCode,jdbcType=VARCHAR}, 
+      #{custId,jdbcType=INTEGER}, #{enableDate,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=INTEGER}, 
+      #{priceType,jdbcType=INTEGER}, #{size,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.water.domain.CustomerMeter" >
+    insert into t_customer_meter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="custCode != null" >
+        cust_code,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="enableDate != null" >
+        enable_date,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="priceType != null" >
+        price_type,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="custCode != null" >
+        #{custCode,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="enableDate != null" >
+        #{enableDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="priceType != null" >
+        #{priceType,jdbcType=INTEGER},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,3 +1,4 @@
+/*
 package com.water.controller;
 
 
@@ -23,10 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
+*/
 /**
  * 用户住户相关操作
  * Created by Administrator on 2017/3/26.
- */
+ *//*
+
 @RestController
 @RequestMapping("/customer")
 public class CustomerController extends BaseController {
@@ -39,13 +42,15 @@ public class CustomerController extends BaseController {
     @Autowired
     private CustomerMeterRepository customerMeterRepository;
 
-    /**
+    */
+/**
      * 根据编码进行查询
      * @param code
      * @param request
      * @param model
      * @return
-     */
+     *//*
+
     @RequestMapping("{code}")
     public String findById(@PathVariable String code, HttpServletRequest request, Model model) {
 //        Pageable pageable = new PageRequest(getValidPageNum(pageNum), getValidPageSize(pageSize), Sort.Direction.DESC, "id");
@@ -55,14 +60,16 @@ public class CustomerController extends BaseController {
         return "customer";
     }
 
-    /**
+    */
+/**
      * 分页查询本公司的所有住户
      *
      * @param pageNum
      * @param pageSize
      * @param model
      * @return
-     */
+     *//*
+
     @RequestMapping(method = RequestMethod.GET)
     public String list(HttpServletRequest request, int pageNum, int pageSize, Model model) {
         Pageable pageable = new PageRequest(getValidPageNum(pageNum), getValidPageSize(pageSize), Sort.Direction.DESC, "id");
@@ -72,12 +79,14 @@ public class CustomerController extends BaseController {
         return "customerList";
     }
 
-    /**
+    */
+/**
      * 创建新住户
      *
      * @param c
      * @return
-     */
+     *//*
+
     @RequestMapping(method = RequestMethod.POST)
     public JsonResult createCustomer(HttpServletRequest request, Customer c) {
         Employee user = getCurrentUser(request);
@@ -89,14 +98,16 @@ public class CustomerController extends BaseController {
     }
 
 
-    /**
+    */
+/**
      * 给指定用户添加水表
      *
      * @param request
      * @param code
      * @param meter
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/{code}/meter", method = RequestMethod.POST)
     public JsonResult addMeterForCustomer(HttpServletRequest request, @PathVariable String code, CustomerMeter meter) {
         Employee user = getCurrentUser(request);
@@ -118,3 +129,4 @@ public class CustomerController extends BaseController {
     }
 
 }
+*/

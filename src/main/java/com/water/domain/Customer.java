@@ -1,100 +1,46 @@
 package com.water.domain;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 用户
- * Created by Administrator on 2017/3/26.
- */
-@Entity
-@Table(name = "t_customer")
-public class Customer {
-
-    @Id
-    @GeneratedValue
+public class Customer implements Serializable {
     private Integer id;
 
-    /**
-     * 用户编码
-     */
-    @Column
-    private String code;
-
-    /**
-     * 姓名
-     */
-    @Column
-    private String name;
-
-    /**
-     * 地址
-     */
-    @Column
     private String address;
 
-    /**
-     * 手机
-     */
-    @Column
-    private String tel;
+    private String archiveId;
 
-    /**
-     * 固定电话
-     */
-    @Column
-    private String phone;
-
-    /**
-     * 身份证号
-     */
-    @Column
-    private String idCard;
-
-    @Column(name="factory_id")
-    private Integer factoryId;
-
-    @Column(name = "area_id")
     private Integer areaId;
 
-    @ManyToOne
-    @JoinColumn(name = "area_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
-    private Area area;
+    private String code;
 
-    @Column(name = "hall_id")
-    private Integer hallId;
+    private Date createTime;
 
-    @ManyToOne
-    @JoinColumn(name = "hall_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
-    private BizHall hall;
+    private Integer createUser;
 
-    /**
-     * 缴费频率
-     */
-    @Column
-    private Integer frequency;
-    /**
-     * 家庭成员人数
-     */
-    @Column
+    private Integer factoryId;
+
     private Integer familyCount;
 
-    @Column(name = "archive_id")
-    private String archiveId;
-    @ManyToOne
-    @JoinColumn(name = "archive_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
-    private Archive archive;
+    private Integer frequency;
 
-    @Column(name = "create_time")
-    private Date createTime;
-    @Column(name = "update_time")
-    private Date updateTime;
-    @Column(name = "create_user")
-    private Integer createUser;
-    @Column(name = "update_user")
-    private Integer updateUser;
-    @Column(name = "is_delete")
+    private Integer hallId;
+
+    private String idCard;
+
     private Integer isDelete;
+
+    private String name;
+
+    private String phone;
+
+    private String tel;
+
+    private Date updateTime;
+
+    private Integer updateUser;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -102,22 +48,6 @@ public class Customer {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getAddress() {
@@ -128,12 +58,12 @@ public class Customer {
         this.address = address;
     }
 
-    public String getTel() {
-        return tel;
+    public String getArchiveId() {
+        return archiveId;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setArchiveId(String archiveId) {
+        this.archiveId = archiveId;
     }
 
     public Integer getAreaId() {
@@ -144,20 +74,20 @@ public class Customer {
         this.areaId = areaId;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 
     public Integer getCreateUser() {
@@ -168,52 +98,12 @@ public class Customer {
         this.createUser = createUser;
     }
 
-    public Integer getUpdateUser() {
-        return updateUser;
+    public Integer getFactoryId() {
+        return factoryId;
     }
 
-    public void setUpdateUser(Integer updateUser) {
-        this.updateUser = updateUser;
-    }
-
-    public Integer getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(Integer isDelete) {
-        this.isDelete = isDelete;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
-    }
-
-    public Integer getHallId() {
-        return hallId;
-    }
-
-    public void setHallId(Integer hallId) {
-        this.hallId = hallId;
-    }
-
-    public Integer getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(Integer frequency) {
-        this.frequency = frequency;
+    public void setFactoryId(Integer factoryId) {
+        this.factoryId = factoryId;
     }
 
     public Integer getFamilyCount() {
@@ -224,43 +114,161 @@ public class Customer {
         this.familyCount = familyCount;
     }
 
-    public String getArchiveId() {
-        return archiveId;
+    public Integer getFrequency() {
+        return frequency;
     }
 
-    public void setArchiveId(String archiveId) {
-        this.archiveId = archiveId;
+    public void setFrequency(Integer frequency) {
+        this.frequency = frequency;
     }
 
-    public Area getArea() {
-        return area;
+    public Integer getHallId() {
+        return hallId;
     }
 
-    public void setArea(Area area) {
-        this.area = area;
+    public void setHallId(Integer hallId) {
+        this.hallId = hallId;
     }
 
-    public BizHall getHall() {
-        return hall;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setHall(BizHall hall) {
-        this.hall = hall;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
-    public Archive getArchive() {
-        return archive;
+    public Integer getIsDelete() {
+        return isDelete;
     }
 
-    public void setArchive(Archive archive) {
-        this.archive = archive;
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
     }
 
-    public Integer getFactoryId() {
-        return factoryId;
+    public String getName() {
+        return name;
     }
 
-    public void setFactoryId(Integer factoryId) {
-        this.factoryId = factoryId;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Integer getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(Integer updateUser) {
+        this.updateUser = updateUser;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Customer other = (Customer) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
+            && (this.getArchiveId() == null ? other.getArchiveId() == null : this.getArchiveId().equals(other.getArchiveId()))
+            && (this.getAreaId() == null ? other.getAreaId() == null : this.getAreaId().equals(other.getAreaId()))
+            && (this.getCode() == null ? other.getCode() == null : this.getCode().equals(other.getCode()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()))
+            && (this.getFactoryId() == null ? other.getFactoryId() == null : this.getFactoryId().equals(other.getFactoryId()))
+            && (this.getFamilyCount() == null ? other.getFamilyCount() == null : this.getFamilyCount().equals(other.getFamilyCount()))
+            && (this.getFrequency() == null ? other.getFrequency() == null : this.getFrequency().equals(other.getFrequency()))
+            && (this.getHallId() == null ? other.getHallId() == null : this.getHallId().equals(other.getHallId()))
+            && (this.getIdCard() == null ? other.getIdCard() == null : this.getIdCard().equals(other.getIdCard()))
+            && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
+            && (this.getTel() == null ? other.getTel() == null : this.getTel().equals(other.getTel()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getUpdateUser() == null ? other.getUpdateUser() == null : this.getUpdateUser().equals(other.getUpdateUser()));
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getAddress() == null) ? 0 : getAddress().hashCode());
+        result = prime * result + ((getArchiveId() == null) ? 0 : getArchiveId().hashCode());
+        result = prime * result + ((getAreaId() == null) ? 0 : getAreaId().hashCode());
+        result = prime * result + ((getCode() == null) ? 0 : getCode().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getCreateUser() == null) ? 0 : getCreateUser().hashCode());
+        result = prime * result + ((getFactoryId() == null) ? 0 : getFactoryId().hashCode());
+        result = prime * result + ((getFamilyCount() == null) ? 0 : getFamilyCount().hashCode());
+        result = prime * result + ((getFrequency() == null) ? 0 : getFrequency().hashCode());
+        result = prime * result + ((getHallId() == null) ? 0 : getHallId().hashCode());
+        result = prime * result + ((getIdCard() == null) ? 0 : getIdCard().hashCode());
+        result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
+        result = prime * result + ((getTel() == null) ? 0 : getTel().hashCode());
+        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getUpdateUser() == null) ? 0 : getUpdateUser().hashCode());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", address=").append(address);
+        sb.append(", archiveId=").append(archiveId);
+        sb.append(", areaId=").append(areaId);
+        sb.append(", code=").append(code);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", createUser=").append(createUser);
+        sb.append(", factoryId=").append(factoryId);
+        sb.append(", familyCount=").append(familyCount);
+        sb.append(", frequency=").append(frequency);
+        sb.append(", hallId=").append(hallId);
+        sb.append(", idCard=").append(idCard);
+        sb.append(", isDelete=").append(isDelete);
+        sb.append(", name=").append(name);
+        sb.append(", phone=").append(phone);
+        sb.append(", tel=").append(tel);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append(", updateUser=").append(updateUser);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

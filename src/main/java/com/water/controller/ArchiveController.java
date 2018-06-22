@@ -1,3 +1,4 @@
+/*
 package com.water.controller;
 
 import com.water.constant.JsonResult;
@@ -13,9 +14,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+*/
 /**
  * Created by Administrator on 2017/4/9.
- */
+ *//*
+
 @RequestMapping("/archive")
 public class ArchiveController extends BaseController {
 
@@ -40,3 +43,4 @@ public class ArchiveController extends BaseController {
         return new JsonResult(true);
     }
 }
+*/

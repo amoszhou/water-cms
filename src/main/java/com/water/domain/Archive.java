@@ -1,49 +1,26 @@
 package com.water.domain;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 表册
- * Created by Administrator on 2017/3/29.
- */
-@Entity
-@Table(name = "t_archive")
-public class Archive {
-
-    @Id
-    @GeneratedValue
+public class Archive implements Serializable {
     private Integer id;
 
-    @Column
-    private String code;
-
-    @Column
-    private String name;
-
-    // TODO: 2017/3/29  增加用员工的ManyToOne关联
-//    @ManyToOne
-//    @JoinColumn(name="record_user")
-    private Integer recordUser;
-
-    @Column(name = "hall_id")
-    private Integer hallId;
-
-    @ManyToOne
-    @JoinColumn(name = "hall_id", insertable = false, updatable = false,
-            foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
-    private BizHall hall;
-
-    @Column(name = "area_id")
     private Integer areaId;
 
-    @ManyToOne
-    @JoinColumn(name = "area_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
-    private Area area;
+    private String code;
 
-    @Column(name = "create_time")
     private Date createTime;
 
+    private Integer hallId;
+
+    private String name;
+
+    private Integer recordUser;
+
+    private Integer isDelete;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -51,30 +28,6 @@ public class Archive {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getHallId() {
-        return hallId;
-    }
-
-    public void setHallId(Integer hallId) {
-        this.hallId = hallId;
     }
 
     public Integer getAreaId() {
@@ -85,12 +38,36 @@ public class Archive {
         this.areaId = areaId;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getHallId() {
+        return hallId;
+    }
+
+    public void setHallId(Integer hallId) {
+        this.hallId = hallId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getRecordUser() {
@@ -101,19 +78,67 @@ public class Archive {
         this.recordUser = recordUser;
     }
 
-    public BizHall getHall() {
-        return hall;
+    public Integer getIsDelete() {
+        return isDelete;
     }
 
-    public void setHall(BizHall hall) {
-        this.hall = hall;
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
     }
 
-    public Area getArea() {
-        return area;
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Archive other = (Archive) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getAreaId() == null ? other.getAreaId() == null : this.getAreaId().equals(other.getAreaId()))
+            && (this.getCode() == null ? other.getCode() == null : this.getCode().equals(other.getCode()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getHallId() == null ? other.getHallId() == null : this.getHallId().equals(other.getHallId()))
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getRecordUser() == null ? other.getRecordUser() == null : this.getRecordUser().equals(other.getRecordUser()))
+            && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()));
     }
 
-    public void setArea(Area area) {
-        this.area = area;
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getAreaId() == null) ? 0 : getAreaId().hashCode());
+        result = prime * result + ((getCode() == null) ? 0 : getCode().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getHallId() == null) ? 0 : getHallId().hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getRecordUser() == null) ? 0 : getRecordUser().hashCode());
+        result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", areaId=").append(areaId);
+        sb.append(", code=").append(code);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", hallId=").append(hallId);
+        sb.append(", name=").append(name);
+        sb.append(", recordUser=").append(recordUser);
+        sb.append(", isDelete=").append(isDelete);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

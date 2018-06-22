@@ -1,40 +1,23 @@
 package com.water.domain;
 
-import javax.persistence.*;
+import java.io.Serializable;
 
-/**
- * Created by Administrator on 2017/3/29.
- */
-@Entity
-@Table(name = "t_bizhall")
-public class BizHall {
-
-    @Id
-    @GeneratedValue
+public class BizHall implements Serializable {
     private Integer id;
 
-    @Column(name="company_id")
-    private Integer companyId;
-
-    @ManyToOne
-    @JoinColumn(name = "company_id",insertable=false , updatable=false,foreignKey = @ForeignKey(name = "none",value = ConstraintMode.NO_CONSTRAINT))
-    private WaterFactory company;
-
-    @Column
-    private String name;
-
-    @Column
     private String address;
 
-    @Column
-    private String manager;
+    private Integer companyId;
 
-    @Column
-    private String tel;
-
-    @Column(name = "is_delete")
     private Integer isDelete;
 
+    private String manager;
+
+    private String name;
+
+    private String tel;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -42,22 +25,6 @@ public class BizHall {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getAddress() {
@@ -68,20 +35,12 @@ public class BizHall {
         this.address = address;
     }
 
-    public String getManager() {
-        return manager;
+    public Integer getCompanyId() {
+        return companyId;
     }
 
-    public void setManager(String manager) {
-        this.manager = manager;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
     public Integer getIsDelete() {
@@ -92,11 +51,80 @@ public class BizHall {
         this.isDelete = isDelete;
     }
 
-    public WaterFactory getCompany() {
-        return company;
+    public String getManager() {
+        return manager;
     }
 
-    public void setCompany(WaterFactory company) {
-        this.company = company;
+    public void setManager(String manager) {
+        this.manager = manager;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        BizHall other = (BizHall) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
+            && (this.getCompanyId() == null ? other.getCompanyId() == null : this.getCompanyId().equals(other.getCompanyId()))
+            && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
+            && (this.getManager() == null ? other.getManager() == null : this.getManager().equals(other.getManager()))
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getTel() == null ? other.getTel() == null : this.getTel().equals(other.getTel()));
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getAddress() == null) ? 0 : getAddress().hashCode());
+        result = prime * result + ((getCompanyId() == null) ? 0 : getCompanyId().hashCode());
+        result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
+        result = prime * result + ((getManager() == null) ? 0 : getManager().hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getTel() == null) ? 0 : getTel().hashCode());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", address=").append(address);
+        sb.append(", companyId=").append(companyId);
+        sb.append(", isDelete=").append(isDelete);
+        sb.append(", manager=").append(manager);
+        sb.append(", name=").append(name);
+        sb.append(", tel=").append(tel);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

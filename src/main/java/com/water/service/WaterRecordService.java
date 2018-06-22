@@ -1,3 +1,4 @@
+/*
 package com.water.service;
 
 import com.water.constant.GlobalSetting;
@@ -14,9 +15,11 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
+*/
 /**
  * Created by Administrator on 2017/4/3.
- */
+ *//*
+
 @Service
 public class WaterRecordService {
 
@@ -25,11 +28,13 @@ public class WaterRecordService {
     @Autowired
     private CustomerService customerService;
 
-    /**
+    */
+/**
      * 抄表准备
      *
      * @param period 月份
-     */
+     *//*
+
     public void createWaterReocrd(String period) {
 
         List<Customer> customers = customerService.findAllEnableCustomer();
@@ -40,11 +45,13 @@ public class WaterRecordService {
 
     }
 
-    /**
+    */
+/**
      * 抄表
      * 1.首先更新本月生成的用水记录
      * 2.生成下个月的起始码数
-     */
+     *//*
+
     public void doCopy(String period, String custCode, int currNum, int operator) {
         List<WaterRecord> records = waterRecordRepository.findByPeriodAndCustCode(period, custCode);
         if (records == null) {
@@ -65,3 +72,4 @@ public class WaterRecordService {
 
 
 }
+*/

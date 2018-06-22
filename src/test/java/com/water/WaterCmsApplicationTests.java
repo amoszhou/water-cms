@@ -1,3 +1,4 @@
+/*
 package com.water;
 
 import com.water.domain.Area;
@@ -25,8 +26,10 @@ public class WaterCmsApplicationTests {
 
     @Test
     public void testFindAllArea() {
-//        List<Area> areas = areaRepository.allArea();
+
+      areaRepository.findByHallId(1,null);
 //        Assert.assertEquals(1, areas.size());
 //        Assert.assertEquals(1,areas.get(0).getCreateUser().intValue());
     }
 }
+*/

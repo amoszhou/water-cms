@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.water.dao.WaterRecordDAO" >
+  <resultMap id="BaseResultMap" type="com.water.domain.WaterRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="charge_id" property="chargeId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="INTEGER" />
+    <result column="curr_number" property="currNumber" jdbcType="INTEGER" />
+    <result column="cust_code" property="custCode" jdbcType="VARCHAR" />
+    <result column="cust_id" property="custId" jdbcType="INTEGER" />
+    <result column="fee" property="fee" jdbcType="INTEGER" />
+    <result column="last_number" property="lastNumber" jdbcType="INTEGER" />
+    <result column="meter_code" property="meterCode" jdbcType="INTEGER" />
+    <result column="pay" property="pay" jdbcType="INTEGER" />
+    <result column="period" property="period" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_user" property="updateUser" jdbcType="INTEGER" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, charge_id, create_time, create_user, curr_number, cust_code, cust_id, fee, last_number, 
+    meter_code, pay, period, update_time, update_user, is_delete
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_water_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.water.domain.WaterRecord" >
+    insert into t_water_record (id, charge_id, create_time, 
+      create_user, curr_number, cust_code, 
+      cust_id, fee, last_number, 
+      meter_code, pay, period, 
+      update_time, update_user, is_delete
+      )
+    values (#{id,jdbcType=INTEGER}, #{chargeId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=INTEGER}, #{currNumber,jdbcType=INTEGER}, #{custCode,jdbcType=VARCHAR}, 
+      #{custId,jdbcType=INTEGER}, #{fee,jdbcType=INTEGER}, #{lastNumber,jdbcType=INTEGER}, 
+      #{meterCode,jdbcType=INTEGER}, #{pay,jdbcType=INTEGER}, #{period,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.water.domain.WaterRecord" >
+    insert into t_water_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="chargeId != null" >
+        charge_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="currNumber != null" >
+        curr_number,
+      </if>
+      <if test="custCode != null" >
+        cust_code,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+      <if test="lastNumber != null" >
+        last_number,
+      </if>
+      <if test="meterCode != null" >
+        meter_code,
+      </if>
+      <if test="pay != null" >
+        pay,
+      </if>
+      <if test="period != null" >
+        period,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateUser != null" >
+        update_user,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="chargeId != null" >
+        #{chargeId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="currNumber != null" >
+        #{currNumber,jdbcType=INTEGER},
+      </if>
+      <if test="custCode != null" >
+        #{custCode,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=INTEGER},
+      </if>
+      <if test="lastNumber != null" >
+        #{lastNumber,jdbcType=INTEGER},
+      </if>
+      <if test="meterCode != null" >
+        #{meterCode,jdbcType=INTEGER},
+      </if>
+      <if test="pay != null" >
+        #{pay,jdbcType=INTEGER},
+      </if>
+      <if test="period != null" >
+        #{period,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

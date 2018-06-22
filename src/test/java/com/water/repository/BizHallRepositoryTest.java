@@ -1,3 +1,4 @@
+/*
 package com.water.repository;
 
 import com.water.WaterCmsApplicationTests;
@@ -13,9 +14,11 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
+*/
 /**
  * Created by Administrator on 2017/3/26.
- */
+ *//*
+
 public class BizHallRepositoryTest extends WaterCmsApplicationTests {
 
     @Autowired
@@ -36,3 +39,4 @@ public class BizHallRepositoryTest extends WaterCmsApplicationTests {
         Assert.assertEquals(0,data.getTotalElements());
     }
 }
+*/

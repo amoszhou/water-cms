@@ -1,3 +1,4 @@
+/*
 package com.water.controller;
 
 import com.water.constant.JsonResult;
@@ -11,9 +12,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+*/
 /**
  * Created by Administrator on 2017/4/8.
- */
+ *//*
+
 @RequestMapping("/area")
 public class AreaController extends BaseController{
 
@@ -21,13 +24,15 @@ public class AreaController extends BaseController{
     private AreaRepository areaRepository;
 
 
-    /**
+    */
+/**
      * 查询某个营业厅下面的区域
      * @param pageNum
      * @param pageSize
      * @param hallId
      * @return
-     */
+     *//*
+
     @RequestMapping(method = RequestMethod.GET)
     public JsonResult areas(int pageNum, int pageSize, Integer hallId) {
 //        Employee user = getCurrentUser(request);
@@ -37,13 +42,15 @@ public class AreaController extends BaseController{
         return new JsonResult(true).setData(data);
     }
 
-    /**
+    */
+/**
      * 在某个营业厅下面增加区域
      * @param pageNum
      * @param pageSize
      * @param hallId
      * @return
-     */
+     *//*
+
     @RequestMapping(method = RequestMethod.POST)
     public JsonResult createArea(int pageNum, int pageSize,Integer hallId) {
 //        Employee user = getCurrentUser(request);
@@ -54,3 +61,4 @@ public class AreaController extends BaseController{
     }
 
 }
+*/

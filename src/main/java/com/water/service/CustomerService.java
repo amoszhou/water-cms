@@ -1,3 +1,4 @@
+/*
 package com.water.service;
 
 import com.water.constant.ChargeType;
@@ -14,10 +15,13 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
+*/
 /**
  * 基础数据管理
- * Created by 周美华 on 2017/4/1.
- */
+ * Created by 周美华 on 2017/4/1.*//*
+
+
+
 @Service
 public class CustomerService {
 
@@ -33,11 +37,14 @@ public class CustomerService {
     private CustomerAccountRepository customerAccountRepository;
 
 
-    /**
+*/
+/**
      * 查询所有可用的用户
      *
-     * @return
-     */
+     * @return*//*
+
+
+
       public List<Customer> findAllEnableCustomer() {
         // TODO: 2017/4/3 status需要定义
         return customerRepository.findByIsDelete(1);
@@ -46,11 +53,14 @@ public class CustomerService {
 
 
 
-    /**
+*/
+/**
      * 查询所有可用的水表
      *
-     * @return
-     */
+     * @return*//*
+
+
+
     public List<CustomerMeter> findAllEnableMeter() {
         // TODO: 2017/4/3 status需要定义
         return customerMeterRepository.findByIsDelete(1);
@@ -70,12 +80,15 @@ public class CustomerService {
     }
 
 
-    /**
+*/
+/**
      * 用户充值（预存）
      *
      * @param user   操作员
-     * @param record 充值信息
-     */
+     * @param record 充值信息*//*
+
+
+
     public void prePay(Employee user, ChargeType type, ChargeRecord record) {
         Customer customer = customerRepository.findOne(record.getCustId());
         if (customer == null) {
@@ -87,10 +100,14 @@ public class CustomerService {
         record.setCreateTime(new Date());
         record.setCreateUser(user.getId());
 
-        /**更新余额*/
+*/
+/**更新余额*//*
+
+
         CustomerAccount account = customerAccountRepository.findByCustId(customer.getId());
         customerAccountRepository.updateBalance(record.getAmount(), user.getId(), customer.getId(), account.getVersion());
 
         chargeRecordRepository.save(record);
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.water.repository;
 
 import com.water.WaterCmsApplicationTests;
@@ -5,9 +6,11 @@ import com.water.domain.Area;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+*/
 /**
  * Created by Administrator on 2017/3/26.
- */
+ *//*
+
 public class AreaTest extends WaterCmsApplicationTests {
 
     @Autowired
@@ -34,3 +37,4 @@ public class AreaTest extends WaterCmsApplicationTests {
         areaRepository.saveAndFlush(area);
     }
 }
+*/

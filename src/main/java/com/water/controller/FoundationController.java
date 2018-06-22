@@ -1,3 +1,4 @@
+/*
 package com.water.controller;
 
 import com.water.constant.JsonResult;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
+*/
 /**
  * Created by Administrator on 2017/3/30.
- */
+ *//*
+
 @Controller
 @RequestMapping("/foundation")
 public class FoundationController extends BaseController {
@@ -37,14 +40,16 @@ public class FoundationController extends BaseController {
 
 
 
-    /**
+    */
+/**
      * 新增价格
      *
      * @param request
      * @param model
      * @param priceType
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/priceType", method = RequestMethod.POST)
     public JsonResult createPriceTypes(HttpServletRequest request, Model model, PriceType priceType) {
 //        Employee user = getCurrentUser(request);
@@ -53,3 +58,4 @@ public class FoundationController extends BaseController {
         return new JsonResult(true);
     }
 }
+*/
