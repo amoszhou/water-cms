@@ -23,16 +23,6 @@
     from t_charge_record
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <insert id="insert" parameterType="com.water.domain.ChargeRecord" >
-    insert into t_charge_record (id, amount, charge_type, 
-      create_time, create_user, cust_code, 
-      cust_id, invoice_code, pay_type, 
-      is_delete)
-    values (#{id,jdbcType=INTEGER}, #{amount,jdbcType=INTEGER}, #{chargeType,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=INTEGER}, #{custCode,jdbcType=VARCHAR}, 
-      #{custId,jdbcType=INTEGER}, #{invoiceCode,jdbcType=VARCHAR}, #{payType,jdbcType=INTEGER}, 
-      #{isDelete,jdbcType=INTEGER})
-  </insert>
   <insert id="insertSelective" parameterType="com.water.domain.ChargeRecord" >
     insert into t_charge_record
     <trim prefix="(" suffix=")" suffixOverrides="," >

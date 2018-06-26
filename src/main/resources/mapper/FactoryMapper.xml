@@ -12,20 +12,14 @@
   <sql id="Base_Column_List" >
     id, address, manager, name, tel, is_delete
   </sql>
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_factory
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <insert id="insert" parameterType="com.water.domain.Factory" >
-    insert into t_factory (id, address, manager, 
-      name, tel, is_delete
-      )
-    values (#{id,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{manager,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER}
-      )
-  </insert>
   <insert id="insertSelective" parameterType="com.water.domain.Factory" >
     insert into t_factory
     <trim prefix="(" suffix=")" suffixOverrides="," >

@@ -20,14 +20,6 @@
     from t_meter
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <insert id="insert" parameterType="com.water.domain.Meter" >
-    insert into t_meter (id, brand, create_time, 
-      model, name, size, 
-      specification, is_delete)
-    values (#{id,jdbcType=INTEGER}, #{brand,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{model,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{size,jdbcType=INTEGER}, 
-      #{specification,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER})
-  </insert>
   <insert id="insertSelective" parameterType="com.water.domain.Meter" >
     insert into t_meter
     <trim prefix="(" suffix=")" suffixOverrides="," >

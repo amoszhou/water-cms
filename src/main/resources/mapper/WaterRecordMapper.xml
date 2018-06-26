@@ -28,20 +28,6 @@
     from t_water_record
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <insert id="insert" parameterType="com.water.domain.WaterRecord" >
-    insert into t_water_record (id, charge_id, create_time, 
-      create_user, curr_number, cust_code, 
-      cust_id, fee, last_number, 
-      meter_code, pay, period, 
-      update_time, update_user, is_delete
-      )
-    values (#{id,jdbcType=INTEGER}, #{chargeId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{createUser,jdbcType=INTEGER}, #{currNumber,jdbcType=INTEGER}, #{custCode,jdbcType=VARCHAR}, 
-      #{custId,jdbcType=INTEGER}, #{fee,jdbcType=INTEGER}, #{lastNumber,jdbcType=INTEGER}, 
-      #{meterCode,jdbcType=INTEGER}, #{pay,jdbcType=INTEGER}, #{period,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}
-      )
-  </insert>
   <insert id="insertSelective" parameterType="com.water.domain.WaterRecord" >
     insert into t_water_record
     <trim prefix="(" suffix=")" suffixOverrides="," >

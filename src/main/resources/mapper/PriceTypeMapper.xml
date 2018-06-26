@@ -18,14 +18,6 @@
     from t_price_type
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <insert id="insert" parameterType="com.water.domain.PriceType" >
-    insert into t_price_type (id, company_id, name, 
-      price, sewage, is_delete
-      )
-    values (#{id,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{price,jdbcType=INTEGER}, #{sewage,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}
-      )
-  </insert>
   <insert id="insertSelective" parameterType="com.water.domain.PriceType" >
     insert into t_price_type
     <trim prefix="(" suffix=")" suffixOverrides="," >

@@ -19,14 +19,6 @@
     from t_area
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <insert id="insert" parameterType="com.water.domain.Area" >
-    insert into t_area (id, code, create_time, 
-      create_user, hall_id, is_delete, 
-      name)
-    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{createUser,jdbcType=INTEGER}, #{hallId,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR})
-  </insert>
   <insert id="insertSelective" parameterType="com.water.domain.Area" >
     insert into t_area
     <trim prefix="(" suffix=")" suffixOverrides="," >

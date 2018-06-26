@@ -19,14 +19,6 @@
     from t_employee
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <insert id="insert" parameterType="com.water.domain.Employee" >
-    insert into t_employee (id, factory_id, password, 
-      real_name, tel_phone, username, 
-      is_delete)
-    values (#{id,jdbcType=INTEGER}, #{factoryId,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, 
-      #{realName,jdbcType=VARCHAR}, #{telPhone,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
-      #{isDelete,jdbcType=INTEGER})
-  </insert>
   <insert id="insertSelective" parameterType="com.water.domain.Employee" >
     insert into t_employee
     <trim prefix="(" suffix=")" suffixOverrides="," >

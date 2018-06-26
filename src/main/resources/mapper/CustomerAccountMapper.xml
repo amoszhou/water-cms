@@ -19,14 +19,6 @@
     from t_customer_account
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <insert id="insert" parameterType="com.water.domain.CustomerAccount" >
-    insert into t_customer_account (id, balance, cust_id, 
-      update_time, update_user, version, 
-      is_delete)
-    values (#{id,jdbcType=INTEGER}, #{balance,jdbcType=INTEGER}, #{custId,jdbcType=INTEGER}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, 
-      #{isDelete,jdbcType=INTEGER})
-  </insert>
   <insert id="insertSelective" parameterType="com.water.domain.CustomerAccount" >
     insert into t_customer_account
     <trim prefix="(" suffix=")" suffixOverrides="," >
