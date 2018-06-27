@@ -55,7 +55,7 @@ var vm = new Vue({
                 "modifyTime": "2018-05-09T09:44:34",
                 "link": false,
                 "menu": true,
-                "urls": "/app.html",
+                "urls": "/factory.html",
                 "parentId": 442
             }, {
                 "id": 447,
@@ -65,7 +65,7 @@ var vm = new Vue({
                 "modifyTime": "2018-04-10T15:30:49",
                 "link": false,
                 "menu": true,
-                "urls": "/area.html",
+                "urls": "/app.html",
                 "parentId": 442
             }, {
                 "id": 452,
@@ -219,7 +219,10 @@ function routerList(router, menuList){
 				console.log(url);
 				//替换iframe的url
 			/*    vm.main = url.replace('#', '');*/
-			    vm.main = url.substr(2,4);
+               /* var myArray=new Array();
+                myArray = url.split("/");*/
+                vm.main =    url.split("/")[1].split(".")[0];
+			   /* vm.main = url.substr(2,4);*/
 			    //导航菜单展开
 			    $(".treeview-menu li").removeClass("active");
                 $(".sidebar-menu li").removeClass("active");

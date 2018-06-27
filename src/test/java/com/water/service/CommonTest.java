@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Author : 林吉达
  * @Description :
@@ -18,11 +21,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class CommonTest {
     @Autowired
     private EmployeeDAO employeeDAO;
+    @Autowired
+    private FactoryService factoryService;
 
     @Test
     public void test1() {
+        Map map = new HashMap();
+        map.put("limit",1);
+        map.put("page",1);
 
-        System.out.println(employeeDAO.selectByPrimaryKey(1));
+        System.out.println(factoryService.queryList(map));
     }
 
 }

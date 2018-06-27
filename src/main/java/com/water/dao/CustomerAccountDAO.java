@@ -4,7 +4,12 @@ import com.water.domain.CustomerAccount;
 
 public interface CustomerAccountDAO {
 
+
     int insertSelective(CustomerAccount record);
 
     CustomerAccount selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(CustomerAccount record);
+
+
 }

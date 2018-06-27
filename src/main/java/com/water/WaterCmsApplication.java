@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class WaterCmsApplication {
 
 	public static void main(String[] args) {
-
 		    SpringApplication.run(WaterCmsApplication.class, args);
 	}
 }

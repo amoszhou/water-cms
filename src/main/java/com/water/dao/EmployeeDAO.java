@@ -4,7 +4,12 @@ import com.water.domain.Employee;
 
 public interface EmployeeDAO {
 
+
     int insertSelective(Employee record);
 
     Employee selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(Employee record);
+
+
 }

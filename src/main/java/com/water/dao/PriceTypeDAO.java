@@ -4,7 +4,12 @@ import com.water.domain.PriceType;
 
 public interface PriceTypeDAO {
 
+
     int insertSelective(PriceType record);
 
     PriceType selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(PriceType record);
+
+
 }

@@ -19,6 +19,7 @@
     from t_area
     where id = #{id,jdbcType=INTEGER}
   </select>
+
   <insert id="insertSelective" parameterType="com.water.domain.Area" >
     insert into t_area
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -68,4 +69,28 @@
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.water.domain.Area" >
+    update t_area
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="hallId != null" >
+        hall_id = #{hallId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

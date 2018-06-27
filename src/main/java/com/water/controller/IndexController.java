@@ -32,6 +32,16 @@ public class IndexController {
         return "app";
     }
 
+    @RequestMapping("/factory")
+    public String factory(Model model) {
+
+        model.addAttribute("addPer","true");
+        model.addAttribute("updatePer","true");
+        model.addAttribute("deletePer","true");
+
+        return "factory";
+    }
+
     @RequestMapping("/login")
     public String login(String username, String password) {
         if (StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password)) {
