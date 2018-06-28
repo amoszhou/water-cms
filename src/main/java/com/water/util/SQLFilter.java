@@ -3,10 +3,9 @@ package com.water.util;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * SQL过滤
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-04-01 16:16
+ * @Author : 林吉达
+ * @Description : SQL过滤
+ * @Date : 22:17 2018/6/27
  */
 public class SQLFilter {
 
@@ -25,15 +24,15 @@ public class SQLFilter {
         str = StringUtils.replace(str, "\\", "");
 
         //转换成小写
-        str = str.toLowerCase();
+        String  resultstr = str.toLowerCase();
 
         //非法字符
         String[] keywords = {"master", "truncate", "insert", "select", "delete", "update", "declare", "alert", "drop"};
 
         //判断是否包含非法字符
         for(String keyword : keywords){
-            if(str.indexOf(keyword) != -1){
-                throw new RuntimeException("包含非法字符");
+            if(resultstr.indexOf(keyword) != -1){
+                return  "此条记录包含非法字符，请不要审核通过";
             }
         }
 

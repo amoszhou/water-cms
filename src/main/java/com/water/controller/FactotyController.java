@@ -64,7 +64,7 @@ public class FactotyController {
         Factory factory = factoryService.queryObject(id);
         try {
             if (factory != null) {
-                logger.info("FactotyController.info|查询结果 activityInfo = {}", factory.toString());
+                logger.info("FactotyController.info|查询结果 employee = {}", factory.toString());
                 return R.ok().put("factory", factory);
             } else {
                 logger.info("FactotyController.info|查询失败，没有该结果");

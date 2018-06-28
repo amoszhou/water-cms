@@ -18,6 +18,22 @@ public class Area implements Serializable {
 
     private String name;
 
+    private Integer factoryId;
+
+    private String factoryName;
+
+    public String getFactoryName() {
+        return factoryName;
+    }
+
+    public void setFactoryName(String factoryName) {
+        this.factoryName = factoryName;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -76,6 +92,14 @@ public class Area implements Serializable {
         this.name = name;
     }
 
+    public Integer getFactoryId() {
+        return factoryId;
+    }
+
+    public void setFactoryId(Integer factoryId) {
+        this.factoryId = factoryId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -94,7 +118,8 @@ public class Area implements Serializable {
             && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()))
             && (this.getHallId() == null ? other.getHallId() == null : this.getHallId().equals(other.getHallId()))
             && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()));
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getFactoryId() == null ? other.getFactoryId() == null : this.getFactoryId().equals(other.getFactoryId()));
     }
 
     @Override
@@ -108,6 +133,7 @@ public class Area implements Serializable {
         result = prime * result + ((getHallId() == null) ? 0 : getHallId().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getFactoryId() == null) ? 0 : getFactoryId().hashCode());
         return result;
     }
 
@@ -124,6 +150,8 @@ public class Area implements Serializable {
         sb.append(", hallId=").append(hallId);
         sb.append(", isDelete=").append(isDelete);
         sb.append(", name=").append(name);
+        sb.append(", factoryId=").append(factoryId);
+        sb.append(", factoryName=").append(factoryName);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -17,6 +17,16 @@ public class Employee implements Serializable {
 
     private Integer isDelete;
 
+    private String factoryName;
+
+    public String getFactoryName() {
+        return factoryName;
+    }
+
+    public void setFactoryName(String factoryName) {
+        this.factoryName = factoryName;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -123,6 +133,7 @@ public class Employee implements Serializable {
         sb.append(", telPhone=").append(telPhone);
         sb.append(", username=").append(username);
         sb.append(", isDelete=").append(isDelete);
+        sb.append(", factoryName=").append(factoryName);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

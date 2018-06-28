@@ -1,6 +1,7 @@
 package com.water.service;
 
-import com.water.dao.FactoryDAO;
+import com.water.dao.EmployeeDAO;
+import com.water.domain.Employee;
 import com.water.domain.Factory;
 import com.water.util.PageUtil;
 import com.water.util.Query;
@@ -11,41 +12,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @Author : 林吉达
  * @Description :
- * @Date: Created in 11:47 2018/6/26
+ * @Date: Created in 16:49 2018/6/28
  * @Modified By:
  */
 @Service
-public class FactoryService {
+public class EmployeeService {
 
-    Logger logger = LoggerFactory.getLogger(FactoryService.class);
+    Logger logger = LoggerFactory.getLogger(EmployeeService.class);
 
     @Autowired
-    private FactoryDAO factoryDAO;
+    private EmployeeDAO employeeDAO;
 
-
-    /**
-     * @Author : 林吉达
-     * @Description : 查询列表
-     * @Date : 20:28 2018/6/26
-     */
+/**
+  * @Author : 林吉达
+  * @Description : 查询列表
+  * @Date : 16:53 2018/6/28
+  */
     public R queryList(Map<String, Object> params) {
-        logger.info("FactoryService/queryList begin | params = {}", params.toString());
+        logger.info("EmployeeService/queryList begin | params = {}", params.toString());
 
         Query query = new Query(params);
-        int total_count = factoryDAO.queryTotal(query);
+        int total_count = employeeDAO.queryTotal(query);
         logger.info("total:{}", total_count);
 
-        List<Factory> factories = null;
+        List<Employee> factories = null;
         if (total_count > 0) {
-            factories = factoryDAO.queryList(query);
+            factories = employeeDAO.queryList(query);
             logger.info("serviceList = {}", factories.toString());
         }
         PageUtil pageUtil = new PageUtil(factories, total_count, query.getLimit(), query.getPage());
@@ -57,31 +55,33 @@ public class FactoryService {
      * @Description :保存
      * @Date : 20:28 2018/6/26
      */
-    public void save(Factory factory) {
-        if (factory != null) {
-            factoryDAO.insertSelective(factory);
+    public void save(Employee employee) {
+        if (employee != null) {
+            employeeDAO.insertSelective(employee);
         }
     }
 
-    public Factory queryObject(Integer id) {
-        return factoryDAO.selectByPrimaryKey(id);
+    public Employee queryObject(Integer id) {
+        return employeeDAO.selectByPrimaryKey(id);
     }
 
-    public void update(Factory factory) {
-        if (factory != null) {
+    public void update(Employee employee) {
+        if (employee != null) {
 
-            factoryDAO.updateByPrimaryKeySelective(factory);
+            employeeDAO.updateByPrimaryKeySelective(employee);
         }
     }
 
     @Transactional
     public void delete(Long id) {
         if (id != null) {
-            //删除Factory表里的数据
-            factoryDAO.updateDeleteState(id);
+            //删除Employee表里的数据
+            employeeDAO.updateDeleteState(id);
             //todo 记得级联删除其他表的数据
         }
 
     }
+
+
 
 }
