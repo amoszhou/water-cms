@@ -1,6 +1,7 @@
 package com.water.controller;
 
 import com.water.domain.Factory;
+import com.water.domain.IdAndNameDTO;
 import com.water.service.FactoryService;
 import com.water.util.R;
 import org.slf4j.Logger;
@@ -8,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -108,5 +111,26 @@ public class FactotyController {
 
         return R.ok();
     }
+
+    /**
+     * 取得所有的水厂的ID和Name
+     */
+    @GetMapping(value = "/getEmployeeMessage")
+    public List<IdAndNameDTO> getEmployeeMessage(){
+        logger.info("FactotyController/getEmployeeMessage begin");
+        List<IdAndNameDTO> list = new ArrayList<>();
+        try {
+            list = factoryService.getEmployee();
+            for (IdAndNameDTO idAndNameDTO :list) {
+                idAndNameDTO.setIdAndName(idAndNameDTO.getId()+":"+ idAndNameDTO.getName());
+            }
+        } catch (Exception e) {
+            logger.info("FactotyController/getEmployeeMessage|查询失败，原因：{}", e.getMessage());
+            logger.error("FactotyController/getEmployeeMessage|Exception:"+e.getMessage(), e);
+        }
+        return  list;
+    }
+
+
 
 }

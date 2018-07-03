@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +47,13 @@ public class CommonTest {
 
     @Test
     public void test2() {
-        System.out.println(SQLFilter.sqlInject("djaisjdisajdiasjido住团贷网越来越好"));
+
+
+
+        BigDecimal decimal = BigDecimal.valueOf(0.2);
+        System.out.println(decimal);
+        BigDecimal setScale = decimal.setScale(2,BigDecimal.ROUND_HALF_DOWN);
+        System.out.println(setScale);
+
     }
 }

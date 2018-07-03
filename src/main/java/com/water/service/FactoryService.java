@@ -2,6 +2,7 @@ package com.water.service;
 
 import com.water.dao.FactoryDAO;
 import com.water.domain.Factory;
+import com.water.domain.IdAndNameDTO;
 import com.water.util.PageUtil;
 import com.water.util.Query;
 import com.water.util.R;
@@ -59,6 +60,10 @@ public class FactoryService {
      */
     public void save(Factory factory) {
         if (factory != null) {
+            String[] result = factory.getManagerName().split(":");
+            factory.setManagerId(Integer.parseInt(result[0]));
+            factory.setManagerName(result[1]);
+            logger.info(factory.toString());
             factoryDAO.insertSelective(factory);
         }
     }
@@ -69,7 +74,10 @@ public class FactoryService {
 
     public void update(Factory factory) {
         if (factory != null) {
-
+            String[] result = factory.getManagerName().split(":");
+            factory.setManagerId(Integer.parseInt(result[0]));
+            factory.setManagerName(result[1]);
+            logger.info(factory.toString());
             factoryDAO.updateByPrimaryKeySelective(factory);
         }
     }
@@ -82,6 +90,10 @@ public class FactoryService {
             //todo 记得级联删除其他表的数据
         }
 
+    }
+    //获得所有的雇员信息
+    public List<IdAndNameDTO> getEmployee(){
+        return factoryDAO.getEmployee();
     }
 
 }

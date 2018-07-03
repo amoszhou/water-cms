@@ -7,13 +7,33 @@ public class Factory implements Serializable {
 
     private String address;
 
-    private String manager;
+
 
     private String name;
 
     private String tel;
 
     private Integer isDelete;
+
+    private  Integer managerId;
+
+    private  String managerName;
+
+    public Integer getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(Integer managerId) {
+        this.managerId = managerId;
+    }
+
+    public String getManagerName() {
+        return managerName;
+    }
+
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -33,13 +53,7 @@ public class Factory implements Serializable {
         this.address = address;
     }
 
-    public String getManager() {
-        return manager;
-    }
 
-    public void setManager(String manager) {
-        this.manager = manager;
-    }
 
     public String getName() {
         return name;
@@ -79,7 +93,6 @@ public class Factory implements Serializable {
         Factory other = (Factory) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
-            && (this.getManager() == null ? other.getManager() == null : this.getManager().equals(other.getManager()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getTel() == null ? other.getTel() == null : this.getTel().equals(other.getTel()))
             && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()));
@@ -91,7 +104,6 @@ public class Factory implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getAddress() == null) ? 0 : getAddress().hashCode());
-        result = prime * result + ((getManager() == null) ? 0 : getManager().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getTel() == null) ? 0 : getTel().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
@@ -100,18 +112,14 @@ public class Factory implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", address=").append(address);
-        sb.append(", manager=").append(manager);
-        sb.append(", name=").append(name);
-        sb.append(", tel=").append(tel);
-        sb.append(", isDelete=").append(isDelete);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Factory{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", name='" + name + '\'' +
+                ", tel='" + tel + '\'' +
+                ", isDelete=" + isDelete +
+                ", managerId=" + managerId +
+                ", managerName='" + managerName + '\'' +
+                '}';
     }
 }

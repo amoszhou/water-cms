@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--数据库驱动 -->
+    <!-- <properties resource="classpath:db.properties" /> -->
+    <!-- D:\repository -->
+
+    <classPathEntry
+            location="E:\maven repository\mysql\mysql-connector-java\5.1.44\mysql-connector-java-5.1.44.jar"/>
+
+
+
+    <context id="context1">
+
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+        <!--数据库链接地址账号密码 -->
+        <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/water"
+                        driverClass="com.mysql.jdbc.Driver" userId="root" password="root"  />
+        <!--1.生成数据库表Model类存放位置  		2.生成映射文件存放位置	3.生成Dao类存放位置-->
+        <!--  -->
+        <javaModelGenerator targetPackage="com.water.domain"
+                            targetProject="src/main/java/" />
+
+      <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources" />
+        <javaClientGenerator targetPackage="com.water.dao"
+                             targetProject="src/main/java/" type="XMLMAPPER" />
+    <!--    <javaModelGenerator targetPackage="com.dgut.table"
+            targetProject="src/main/java/" />-->
+        <!--     <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources" />
+
+<javaClientGenerator targetPackage="com.dgut.dao"
+          targetProject="src/main/java/" type="XMLMAPPER" />-->
+
+
+<!--        <table tableName="t_archive" domainObjectName="Archive"
+            enableSelectByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableDeleteByPrimaryKey="false"
+
+
+        >
+        </table>
+        <table tableName="t_area" domainObjectName="Area"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableDeleteByPrimaryKey="false"
+
+        >
+        </table>
+        <table tableName="t_bizhall" domainObjectName="BizHall"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableDeleteByPrimaryKey="false"
+
+        >
+        </table>
+        <table tableName="t_charge_record" domainObjectName="ChargeRecord"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableDeleteByPrimaryKey="false"
+
+        >
+        </table>
+        <table tableName="t_customer" domainObjectName="Customer"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableDeleteByPrimaryKey="false"
+
+        >
+        </table>
+        <table tableName="t_customer_account" domainObjectName="CustomerAccount"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableDeleteByPrimaryKey="false"
+
+        >
+        </table>
+        <table tableName="t_customer_meter" domainObjectName="CustomerMeter"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableDeleteByPrimaryKey="false"
+
+        >
+        </table>
+        <table tableName="t_employee" domainObjectName="Employee"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableDeleteByPrimaryKey="false"
+
+        >
+        </table>
+        <table tableName="t_factory" domainObjectName="Factory"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableDeleteByPrimaryKey="false"
+
+        >
+        </table>
+        <table tableName="t_meter" domainObjectName="Meter"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableDeleteByPrimaryKey="false"
+
+        >
+        </table>
+        <table tableName="t_price_type" domainObjectName="PriceType"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableDeleteByPrimaryKey="false"
+
+        >
+        </table>
+        <table tableName="t_water_record" domainObjectName="WaterRecord"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableDeleteByPrimaryKey="false"
+
+        >
+        </table>-->
+        <table tableName="t_bizhall" domainObjectName="Hall"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableDeleteByPrimaryKey="false"
+
+        >
+        </table>
+    </context>
+</generatorConfiguration>

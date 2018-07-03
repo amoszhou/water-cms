@@ -65,7 +65,7 @@ public class EmployeeController {
         try {
             if (employee != null) {
                 logger.info("EmployeeController.info|查询结果 employee = {}", employee.toString());
-                return R.ok().put("factory", employee);
+                return R.ok().put("employee", employee);
             } else {
                 logger.info("EmployeeController.info|查询失败，没有该结果");
                 return R.error("不存在该记录");

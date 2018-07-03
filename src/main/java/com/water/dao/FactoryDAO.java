@@ -1,6 +1,7 @@
 package com.water.dao;
 
 import com.water.domain.Factory;
+import com.water.domain.IdAndNameDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface FactoryDAO {
 
     List<Factory> queryList(Map<String, Object> map);
 
-
+    List<IdAndNameDTO> getEmployee();
 
     int insertSelective(Factory record);
 

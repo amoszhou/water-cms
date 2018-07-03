@@ -19,6 +19,36 @@ public class Employee implements Serializable {
 
     private String factoryName;
 
+    private Integer hallId;
+
+    private  String hallName;
+
+    private  Integer userType;
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
+    public String getHallName() {
+        return hallName;
+    }
+
+    public void setHallName(String hallName) {
+        this.hallName = hallName;
+    }
+
+    public Integer getHallId() {
+        return hallId;
+    }
+
+    public void setHallId(Integer hallId) {
+        this.hallId = hallId;
+    }
+
     public String getFactoryName() {
         return factoryName;
     }
@@ -134,6 +164,9 @@ public class Employee implements Serializable {
         sb.append(", username=").append(username);
         sb.append(", isDelete=").append(isDelete);
         sb.append(", factoryName=").append(factoryName);
+        sb.append(", hallId=").append(hallId);
+        sb.append(", hallName=").append(hallName);
+        sb.append(", userType=").append(userType);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

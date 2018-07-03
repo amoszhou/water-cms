@@ -2,6 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <title>应用列表</title>
     <meta charset="UTF-8">
@@ -31,7 +32,7 @@
                 <input type="text" class="form-control" v-model="q.name" @keyup.enter="query" placeholder="水厂名">
             </div>
             <div class="form-group col-sm-2">
-                <input type="text" class="form-control" v-model="q.manager" @keyup.enter="query" placeholder="管理员">
+                <input type="text" class="form-control" v-model="q.managerName" @keyup.enter="query" placeholder="管理员">
             </div>
 
             <a class="btn btn-default" @click="query">查询</a>
@@ -54,11 +55,21 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-2 control-label">水厂管理员</div>
+                <div class="col-sm-2 control-label">水厂管理员：</div>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="app.manager" placeholder="水厂管理员"/>
+                    <!--<input type="text" v-model="activityInfo.id" class="hidden"/>-->
+
+                    <select  v-model="app.managerName"
+                             style="width: 375px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
+                        <option v-for="option in EmployeeMessageList" v-bind:value="option.idAndName">
+                            {{ option.id+":"+option.name }}
+                        </option>
+
+                    </select>
                 </div>
             </div>
+
+
             <div class="form-group">
                 <div class="col-sm-2 control-label">水厂名</div>
                 <div class="col-sm-10">
@@ -113,12 +124,7 @@
                                 <input type="text" v-model="app.tel" class="no-border" readonly="readonly"/>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-sm-3 control-label">水厂管理员：</div>
-                            <div class="col-sm-3">
-                                <input type="text" v-model="app.manager" class="no-border" readonly="readonly"/>
-                            </div>
-                        </div>
+
 
 
                         <!--<div class="form-group">

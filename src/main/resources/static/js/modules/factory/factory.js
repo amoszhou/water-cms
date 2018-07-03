@@ -5,7 +5,7 @@ $(function () {
         colModel: [			
 			{ label: 'ID', name: 'id', index: "id", width: 30, key: true },
 			{ label: '水厂名', name: 'name', width: 40, sortable:false},
-			{ label: '管理员', name: 'manager', width: 40,sortable:false },
+			{ label: '管理员', name: 'managerName', width: 40,sortable:false },
             { label: '地址', name: 'address', width: 40, sortable:false/*, formatter: formatURL*/},
 			/*{ label: '电话', name: 'deleteStatus', width: 30, formatter: function(value, options, row){
 				return value === 0 ? 
@@ -55,17 +55,20 @@ var vm = new Vue({
         app:{
             id:'',
             address:'',
-            manager:'',
+            managerName:'',
             name:'',
-            tel:''
+            tel:'',
+            managerId:''
 		},
         q:{
             id:'',
             address:'',
-            manager:'',
+            managerName:'',
             name:'',
-            tel:''
-        }
+            tel:'',
+            managerId:''
+        },
+        EmployeeMessageList:[]
 	},
 	methods: {
 		query: function () {
@@ -147,7 +150,7 @@ var vm = new Vue({
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
-                postData:{'name': vm.q.name,'manager':vm.q.manager},
+                postData:{'name': vm.q.name,'managerName':vm.q.managerName},
                 page:page
             }).trigger("reloadGrid");
 		},
@@ -196,3 +199,22 @@ function formatURL(value, options, rowObject) {
     if(!(value.startsWith("http://") || (value.startsWith("https://"))) ) result="http://"+result;
     return '<a href="' + result + '" target="_blank">' + value + '</a>';
 }
+
+
+//页面加载时拿到所有的奖池编码
+$.ajax({
+    async: false, // 同步
+    type: 'GET',
+    url: "/factory/getEmployeeMessage",
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (returnJsonData) {
+        vm.EmployeeMessageList = [];
+        for(var i = 0 ; i < returnJsonData.length ; i ++){
+            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
+            vm.EmployeeMessageList.push(tepm);
+        }
+    },error:function (returnJsonData) {
+
+    }
+});

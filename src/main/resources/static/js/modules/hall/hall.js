@@ -1,13 +1,12 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'employee/list',
+        url: baseURL + 'hall/list',
         datatype: "json",
         colModel: [
             { label: 'ID', name: 'id', index: "id", width: 30, key: true },
-            { label: '用户名', name: 'username', width: 40, sortable:false},
-            { label: '水厂名', name: 'factoryName', width: 40, sortable:false},
-            { label: '营业厅名', name: 'hallName', width: 40, sortable:false},
-            { label: '真实姓名', name: 'realName', width: 40,sortable:false },
+            { label: '所属水厂名', name: 'factoryName', width: 40, sortable:false},
+            { label: '营业厅名', name: 'name', width: 40, sortable:false},
+            { label: '地址', name: 'address', width: 40, sortable:false/*, formatter: formatURL*/},
             /*{ label: '电话', name: 'deleteStatus', width: 30, formatter: function(value, options, row){
                 return value === 0 ?
                     '<span class="label label-success">正常</span>' :
@@ -15,7 +14,7 @@ $(function () {
             },sortable:false},*/
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
-            { label: '电话', name: 'telPhone', width:40/*,formatter: operateMenu*/,sortable:false},
+            { label: '电话', name: 'tel', width:40/*,formatter: operateMenu*/,sortable:false},
             { label: '操作', width:40,formatter: operateMenu,sortable:false},
         ],
         viewrecords: true,
@@ -55,28 +54,21 @@ var vm = new Vue({
         title:null,
         app:{
             id:'',
+            address:'',
             factoryId:'',
-            password:'',
-            realName:'',
-            username:'',
-            hallId:'',
-            telPhone:'',
             factoryName:'',
-            hallName:'',
-            userType:''
+            name:'',
+            tel:''
         },
         q:{
             id:'',
+            address:'',
             factoryId:'',
-            hallId:'',
-            password:'',
-            realName:'',
-            username:'',
-            telPhone:'',
             factoryName:'',
-            hallName:'',
-            userType:''
-        }
+            name:'',
+            tel:''
+        },
+        FactoryMessageList:[]
     },
     methods: {
         query: function () {
@@ -104,7 +96,7 @@ var vm = new Vue({
             }
 
             confirm('确定要删除选中的记录？', function(){
-                $.get(baseURL + "employee/"+id+"/del", function(r){
+                $.get(baseURL + "hall/"+id+"/del", function(r){
                     if (r.permissionCheck) {
                         alert(r.msg);
                         return;
@@ -123,8 +115,8 @@ var vm = new Vue({
             if(vm.validator()){
                 return ;
             }
-
-            var url = vm.app.id == null ? "employee/addEmployee" : "employee/updateEmployee";
+              console.log("id:"+vm.app.id);
+            var url = vm.app.id == null ? "hall/addHall" : "hall/updateHall";
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
@@ -151,14 +143,15 @@ var vm = new Vue({
                     alert(r.msg);
                     return;
                 }
-                vm.app = r.employee;
+                vm.app = r.hall;
+                console.log(vm.app.factoryName);
             });
         },
         reload: function () {
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'realName': vm.q.realName,'hallName':vm.q.hallName},
+                postData:{'factoryName':vm.q.factoryName},
                 page:page
             }).trigger("reloadGrid");
         },
@@ -207,3 +200,21 @@ function formatURL(value, options, rowObject) {
     if(!(value.startsWith("http://") || (value.startsWith("https://"))) ) result="http://"+result;
     return '<a href="' + result + '" target="_blank">' + value + '</a>';
 }
+
+//页面加载时拿到所有的奖池编码
+$.ajax({
+    async: false, // 同步
+    type: 'GET',
+    url: "/hall/getFactoryMessage",
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (returnJsonData) {
+        vm.FactoryMessageList = [];
+        for(var i = 0 ; i < returnJsonData.length ; i ++){
+            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
+            vm.FactoryMessageList.push(tepm);
+        }
+    },error:function (returnJsonData) {
+
+    }
+});

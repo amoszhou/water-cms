@@ -52,6 +52,18 @@ public class IndexController {
         return "employee";
     }
 
+    @RequestMapping("/hall")
+    public String hall(Model model) {
+
+        model.addAttribute("addPer","true");
+        model.addAttribute("updatePer","true");
+        model.addAttribute("deletePer","true");
+
+        return "hall";
+    }
+
+
+
 
 
     @RequestMapping("/login")

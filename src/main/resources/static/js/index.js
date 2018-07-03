@@ -68,6 +68,16 @@ var vm = new Vue({
                 "urls": "/app.html",
                 "parentId": 442
             }, {
+                "id": 450,
+                "appId": 33,
+                "name": "营业厅管理",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/hall.html",
+                "parentId": 442
+            }, {
                 "id": 448,
                 "appId": 33,
                 "name": "雇员管理",
