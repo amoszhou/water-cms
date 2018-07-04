@@ -67,7 +67,7 @@
     from t_factory
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <insert id="insertSelective" parameterType="com.water.domain.Factory" >
+  <insert id="insertSelective" parameterType="com.water.domain.Factory"  useGeneratedKeys="true" keyProperty="id" >
     insert into t_factory
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

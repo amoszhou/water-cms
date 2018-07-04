@@ -20,6 +20,26 @@ public class Archive implements Serializable {
 
     private Integer isDelete;
 
+    private String hallName;
+
+    private String areaName;
+
+    public String getHallName() {
+        return hallName;
+    }
+
+    public void setHallName(String hallName) {
+        this.hallName = hallName;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {

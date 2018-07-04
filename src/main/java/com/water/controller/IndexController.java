@@ -62,8 +62,25 @@ public class IndexController {
         return "hall";
     }
 
+    @RequestMapping("/area")
+    public String area(Model model) {
 
+        model.addAttribute("addPer","true");
+        model.addAttribute("updatePer","true");
+        model.addAttribute("deletePer","true");
 
+        return "area";
+    }
+
+    @RequestMapping("/archive")
+    public String archive(Model model) {
+
+        model.addAttribute("addPer","true");
+        model.addAttribute("updatePer","true");
+        model.addAttribute("deletePer","true");
+
+        return "archive";
+    }
 
 
     @RequestMapping("/login")

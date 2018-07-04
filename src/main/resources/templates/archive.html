@@ -2,6 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <title>应用列表</title>
     <meta charset="UTF-8">
@@ -28,12 +29,21 @@
     <div v-show="showList">
         <div class="grid-btn">
             <div class="form-group col-sm-2">
-                <input type="text" class="form-control" v-model="q.realName" @keyup.enter="query" placeholder="雇员真实姓名">
-            </div>
-            <div class="form-group col-sm-2">
-                <input type="text" class="form-control" v-model="q.factoryName" @keyup.enter="query" placeholder="所属水厂名">
+                <input type="text" class="form-control" v-model="q.name" @keyup.enter="query" placeholder="片区名">
             </div>
 
+            <div class="form-group col-md-1">
+                <select  v-model="q.factoryId" id="searchPrizeTypeId"
+                         style="width: 213px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
+                    <option value="-100">
+                        所有水厂
+                    </option>
+                    <option v-for="option in FactoryMessageList" v-bind:value="option.id">
+                        {{ option.id+":"+option.name }}
+                    </option>
+                </select>
+            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a class="btn btn-default" @click="query">查询</a>
             <a  th:if="${addPer=='true'}"  class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
             <a th:if="${updatePer=='true'}" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
@@ -48,37 +58,31 @@
         <div class="panel-heading">{{title}}</div>
         <form class="form-horizontal">
             <div class="form-group">
-                <div class="col-sm-2 control-label">用户名</div>
+                <div class="col-sm-2 control-label">片区编码</div>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="app.username" placeholder="用户名"/>
+                    <input type="text" class="form-control" v-model="app.code" placeholder="片区编码"/>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-2 control-label">真实姓名</div>
+                <div class="col-sm-2 control-label">片区名</div>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="app.realName" placeholder="真实姓名"/>
+                    <input type="text" class="form-control" v-model="app.name" placeholder="片区名"/>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-2 control-label">密码</div>
+                <div class="col-sm-2 control-label">所属水厂：</div>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="app.password" placeholder="密码"/>
-                </div>
-            </div>
+                    <!--<input type="text" v-model="activityInfo.id" class="hidden"/>-->
 
-            <div class="form-group">
-                <div class="col-sm-2 control-label">电话</div>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="app.telPhone" placeholder="电话"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-2 control-label">用户类别</div>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="app.userType" placeholder="用户类别"/>
-                </div>
-            </div>
+                    <select  v-model="app.factoryId"
+                             style="width: 375px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
+                        <option v-for="option in FactoryMessageList" v-bind:value="option.id">
+                            {{ option.id+":"+option.name }}
+                        </option>
 
+                    </select>
+                </div>
+            </div>
 
             <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
@@ -98,32 +102,32 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">雇员信息</h4>
+                        <h4 class="modal-title">片区信息</h4>
                     </div>
                     <div class="modal-body">
 
                         <div class="form-group">
-                            <div class="col-sm-3 control-label">用户名：</div>
+                            <div class="col-sm-3 control-label">片区编码：</div>
                             <div class="col-sm-3">
-                                <input type="text" v-model="app.username" class="no-border" readonly="readonly"/>
+                                <input type="text" v-model="app.code" class="no-border" readonly="readonly"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-3 control-label">真实姓名：</div>
+                            <div class="col-sm-3 control-label">片区名：</div>
                             <div class="col-sm-3">
-                                <input type="text" v-model="app.realName" class="no-border" readonly="readonly"/>
+                                <input type="text" v-model="app.name" class="no-border" readonly="readonly"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-3 control-label">电话：</div>
+                            <div class="col-sm-3 control-label">创建人：</div>
                             <div class="col-sm-3">
-                                <input type="text" v-model="app.telPhone" class="no-border" readonly="readonly"/>
+                                <input type="text" v-model="app.createUserName" class="no-border" readonly="readonly"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-3 control-label">用户类别：</div>
+                            <div class="col-sm-3 control-label">创建时间：</div>
                             <div class="col-sm-3">
-                                <input type="text" v-model="app.userType" class="no-border" readonly="readonly"/>
+                                <input type="text" v-model="app.dateForHTML" class="no-border" readonly="readonly"/>
                             </div>
                         </div>
 
@@ -153,6 +157,6 @@
     <!-- /.modal -->
 </div>
 
-<script src="../../js/modules/employee/employee.js"></script>
+<script src="../../js/modules/archive/archive.js"></script>
 </body>
 </html>

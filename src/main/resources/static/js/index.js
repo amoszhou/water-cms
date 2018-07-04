@@ -65,7 +65,7 @@ var vm = new Vue({
                 "modifyTime": "2018-04-10T15:30:49",
                 "link": false,
                 "menu": true,
-                "urls": "/app.html",
+                "urls": "/area.html",
                 "parentId": 442
             }, {
                 "id": 450,
@@ -96,7 +96,7 @@ var vm = new Vue({
                 "modifyTime": "2018-04-10T15:30:49",
                 "link": false,
                 "menu": true,
-                "urls": "/tableBook.html",
+                "urls": "/archive.html",
                 "parentId": 442
             }, {
                 "id": 452,

@@ -4,8 +4,7 @@
   <resultMap id="BaseResultMap" type="com.water.domain.Employee" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="factory_id" property="factoryId" jdbcType="INTEGER" />
-    <result column="hall_id" property="hallId" jdbcType="INTEGER" />
-    <result column="hall_name" property="hallName" jdbcType="VARCHAR" />
+    <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="real_name" property="realName" jdbcType="VARCHAR" />
     <result column="tel_phone" property="telPhone" jdbcType="VARCHAR" />
@@ -14,7 +13,7 @@
     <result column="user_type" property="userType" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, factory_id, password, real_name, tel_phone, username, is_delete ,hall_id,hall_name,user_type
+    id, factory_id, password, real_name, tel_phone, username, is_delete ,user_type,factory_name
   </sql>
   <!-- 查询条件 -->
   <sql id="whereClause">
@@ -23,8 +22,8 @@
       <if test="realName != null and realName.trim() != ''">
         and real_name like concat('%', trim(#{realName}),'%')
       </if>
-      <if test="hallName != null and hallName.trim() != ''">
-        and hall_name like concat('%', trim(#{hallName}),'%')
+      <if test="factoryName != null and factoryName.trim() != ''">
+        and factory_name like concat('%', trim(#{factoryName}),'%')
       </if>
       <if test="id != null and id.trim() != ''">
         and  id = #{id,jdbcType=INTEGER}
@@ -36,7 +35,7 @@
     </where>
   </sql>
   <select id="selectByPrimaryKey" resultType="com.water.domain.Employee" parameterType="java.lang.Integer" >
-    select b.user_type as userType, b.hall_name as hallName, b.hall_id as hallId, b.id, b.factory_id as factoryId, b.password, b.real_name as realName, b.tel_phone as telPhone, b.username, b.is_delete , a.name as factoryName
+    select  b.factory_name as factoryName,b.user_type as userType, b.id, b.factory_id as factoryId, b.password, b.real_name as realName, b.tel_phone as telPhone, b.username, b.is_delete , a.name as factoryName
     from (select id,name from t_factory where is_delete = 0) as a RIGHT JOIN (
     select
     <include refid="Base_Column_List"/>
@@ -50,7 +49,7 @@
     <include refid="whereClause"/>
   </select>
   <select id="queryList" resultType="com.water.domain.Employee">
-    select b.user_type as userType, b.hall_name as hallName, b.hall_id as hallId, b.id, b.factory_id as factoryId, b.password, b.real_name as realName, b.tel_phone as telPhone, b.username, b.is_delete , a.name as factoryName
+    select  b.factory_name as factoryName, b.user_type as userType,  b.id, b.factory_id as factoryId, b.password, b.real_name as realName, b.tel_phone as telPhone, b.username, b.is_delete , a.name as factoryName
     from (select id,name from t_factory where is_delete = 0) as a RIGHT JOIN (
     select
     <include refid="Base_Column_List"/>
@@ -74,9 +73,6 @@
     set is_delete = 1
     where id  =  #{id}
   </update>
-
-
-
 
 
   <insert id="insertSelective" parameterType="com.water.domain.Employee" >
@@ -103,14 +99,11 @@
       <if test="isDelete != null" >
         is_delete,
       </if>
-      <if test="hallId != null" >
-        hall_id,
-      </if>
-      <if test="hallName != null" >
-        hall_name,
-      </if>
       <if test="userType != null" >
         user_type,
+      </if>
+      <if test="factoryName != null" >
+        factory_name,
       </if>
 
 
@@ -137,15 +130,13 @@
       <if test="isDelete != null" >
         #{isDelete,jdbcType=INTEGER},
       </if>
-      <if test="hallId != null" >
-        #{hallId,jdbcType=INTEGER},
-      </if>
-      <if test="hallName != null" >
-        #{hallName,jdbcType=VARCHAR},
-      </if>
       <if test="userType != null" >
         #{userType,jdbcType=INTEGER},
       </if>
+      <if test="factoryName != null" >
+        #{factoryName,jdbcType=VARCHAR},
+      </if>
+
 
     </trim>
   </insert>
@@ -170,16 +161,12 @@
       <if test="isDelete != null" >
         is_delete = #{isDelete,jdbcType=INTEGER},
       </if>
-      <if test="hallId != null" >
-       hall_id = #{hallId,jdbcType=INTEGER},
-      </if>
-      <if test="hallName != null" >
-       hall_name =  #{hallName,jdbcType=VARCHAR},
-      </if>
       <if test="userType != null" >
         user_type =  #{userType,jdbcType=INTEGER},
       </if>
-
+      <if test="factoryName != null" >
+        factory_name =  #{factoryName,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>

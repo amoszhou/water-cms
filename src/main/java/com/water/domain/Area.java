@@ -1,6 +1,8 @@
 package com.water.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Area implements Serializable {
@@ -8,7 +10,7 @@ public class Area implements Serializable {
 
     private String code;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 
     private Integer createUser;
 
@@ -21,6 +23,26 @@ public class Area implements Serializable {
     private Integer factoryId;
 
     private String factoryName;
+
+    private String dateForHTML;
+
+    private String createUserName;
+
+    public String getCreateUserName() {
+        return createUserName;
+    }
+
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName;
+    }
+
+    public String getDateForHTML() {
+        return dateForHTML;
+    }
+
+    public void setDateForHTML(String dateForHTML) {
+        this.dateForHTML = dateForHTML;
+    }
 
     public String getFactoryName() {
         return factoryName;
@@ -52,12 +74,13 @@ public class Area implements Serializable {
         this.code = code;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
+        setDateForHTML(createTime.toString());
     }
 
     public Integer getCreateUser() {

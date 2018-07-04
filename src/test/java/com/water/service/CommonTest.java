@@ -1,5 +1,6 @@
 package com.water.service;
 
+import com.water.dao.ArchiveDAO;
 import com.water.dao.AreaDAO;
 import com.water.dao.EmployeeDAO;
 import com.water.util.SQLFilter;
@@ -31,6 +32,9 @@ public class CommonTest {
     private FactoryService factoryService;
     @Autowired
     private AreaDAO areaDAO;
+    @Autowired
+    private ArchiveDAO archiveDAO;
+
 
     @Test
     public void test1() {
@@ -47,13 +51,7 @@ public class CommonTest {
 
     @Test
     public void test2() {
-
-
-
-        BigDecimal decimal = BigDecimal.valueOf(0.2);
-        System.out.println(decimal);
-        BigDecimal setScale = decimal.setScale(2,BigDecimal.ROUND_HALF_DOWN);
-        System.out.println(setScale);
-
+        Map map = new HashMap();
+        archiveDAO.queryList(map);
     }
 }

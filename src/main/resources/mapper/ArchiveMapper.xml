@@ -10,16 +10,84 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="record_user" property="recordUser" jdbcType="INTEGER" />
     <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    <result column="hall_name" property="hallName" jdbcType="VARCHAR" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, area_id, code, create_time, hall_id, name, record_user, is_delete
   </sql>
+  <!-- 查询条件 -->
+  <sql id="whereClause">
+    <where>
+      and is_delete = 0
+      <if test="area_id != null">
+        and area_id =#{areaId}
+      </if>
+      <if test="name != null and name.trim() != ''">
+        and name like concat('%', trim(#{name}),'%')
+      </if>
+    </where>
+  </sql>
+  <!--权限过滤-->
+  <sql id="authSql">
+    <where>
+      <if test="areaIds != null and areaIds.size != 0">
+        and area_id in
+        <foreach collection="areaIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <select id="queryTotal" resultType="int">
+    select count(1) from t_archive
+    <include refid="whereClause"/>
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+    select     a.id, a.area_id, a.code, a.create_time, a.hall_id, a.name, a.record_user, a.is_delete
+    ,b.name as area_name,c.name as hall_name
+    from (select id,name from t_area <include refid="authSql"/>)  as b  right JOIN (
+    select
+    <include refid="Base_Column_List"/>
+    from t_archive
+    <include refid="whereClause"/>
+    <choose>
+      <when test="sidx != null and sidx.trim() != ''">
+        order by ${sidx} ${order}
+      </when>
+      <otherwise>
+        order by id desc
+      </otherwise>
+    </choose>
+    <if test="offset != null and limit != null">
+      limit #{offset}, #{limit}
+    </if>
+    )as a on b.id = a.area_id LEFT JOIN (select id,name from t_bizhall) as c on c.id = a.hall_id
+  </select>
+
+  <update id="updateDeleteState" parameterType="java.lang.Long">
+    update t_archive
+    set is_delete = 1
+    where id  =  #{id}
+  </update>
+
+
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_archive
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+
+
+
+
+
   <insert id="insertSelective" parameterType="com.water.domain.Archive" >
     insert into t_archive
     <trim prefix="(" suffix=")" suffixOverrides="," >

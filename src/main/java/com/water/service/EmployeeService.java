@@ -57,9 +57,6 @@ public class EmployeeService {
      */
     public void save(Employee employee) {
         if (employee != null) {
-            String[] result = employee.getHallName().split(":");
-            employee.setHallId(Integer.parseInt(result[0]));
-            employee.setHallName(result[1]);
             logger.info(employee.toString());
             employeeDAO.insertSelective(employee);
         }
@@ -71,9 +68,9 @@ public class EmployeeService {
 
     public void update(Employee employee) {
         if (employee != null) {
-            String[] result = employee.getHallName().split(":");
+           /* String[] result = employee.getHallName().split(":");
             employee.setHallId(Integer.parseInt(result[0]));
-            employee.setHallName(result[1]);
+            employee.setHallName(result[1]);*/
             employeeDAO.updateByPrimaryKeySelective(employee);
         }
     }

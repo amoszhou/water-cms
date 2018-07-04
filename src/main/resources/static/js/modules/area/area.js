@@ -1,12 +1,12 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'employee/list',
+        url: baseURL + 'area/list',
         datatype: "json",
         colModel: [
             { label: 'ID', name: 'id', index: "id", width: 30, key: true },
-            { label: '用户名', name: 'username', width: 40, sortable:false},
-            { label: '水厂名', name: 'factoryName', width: 40, sortable:false},
-            { label: '真实姓名', name: 'realName', width: 40,sortable:false },
+            { label: '片区编码', name: 'code', width: 40, sortable:false},
+            { label: '片区名', name: 'name', width: 40, sortable:false},
+            { label: '所属水厂', name: 'factoryName', width: 40,sortable:false },
             /*{ label: '电话', name: 'deleteStatus', width: 30, formatter: function(value, options, row){
                 return value === 0 ?
                     '<span class="label label-success">正常</span>' :
@@ -14,7 +14,8 @@ $(function () {
             },sortable:false},*/
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
-            { label: '电话', name: 'telPhone', width:40/*,formatter: operateMenu*/,sortable:false},
+            { label: '创建人', name: 'createUserName', width:40/*,formatter: operateMenu*/,sortable:false},
+            { label: '创建时间', name: 'dateForHTML', width:40,formatter: formatDate/*,formatter: operateMenu*/,sortable:false},
             { label: '操作', width:40,formatter: operateMenu,sortable:false},
         ],
         viewrecords: true,
@@ -55,27 +56,22 @@ var vm = new Vue({
         app:{
             id:'',
             factoryId:'',
-            password:'',
-            realName:'',
-            username:'',
-            hallId:'',
-            telPhone:'',
             factoryName:'',
-            hallName:'',
-            userType:''
+            code:'',
+            createUserName:'',
+            hallId:'',
+            name:'',
         },
         q:{
             id:'',
             factoryId:'',
-            hallId:'',
-            password:'',
-            realName:'',
-            username:'',
-            telPhone:'',
             factoryName:'',
-            hallName:'',
-            userType:''
-        }
+            code:'',
+            createUserName:'',
+            hallId:'',
+            name:'',
+        },
+        FactoryMessageList:[],
     },
     methods: {
         query: function () {
@@ -103,7 +99,7 @@ var vm = new Vue({
             }
 
             confirm('确定要删除选中的记录？', function(){
-                $.get(baseURL + "employee/"+id+"/del", function(r){
+                $.get(baseURL + "area/"+id+"/del", function(r){
                     if (r.permissionCheck) {
                         alert(r.msg);
                         return;
@@ -122,8 +118,9 @@ var vm = new Vue({
             if(vm.validator()){
                 return ;
             }
-
-            var url = vm.app.id == null ? "employee/addEmployee" : "employee/updateEmployee";
+            delete vm.app.createTime;
+            console.log( vm.app);
+            var url = vm.app.id == null ? "area/addArea" : "area/updateArea";
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
@@ -145,19 +142,23 @@ var vm = new Vue({
             });
         },
         getApp: function(id){
-            $.get(baseURL + "employee/"+id+"/info", function(r){
+            $.get(baseURL + "area/"+id+"/info", function(r){
                 if (r.permissionCheck) {
                     alert(r.msg);
                     return;
                 }
-                vm.app = r.employee;
+                vm.app = r.area;
+                vm.app.dateForHTML=     vm.app.dateForHTML.toString().replace("T"," ");
+
             });
         },
         reload: function () {
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
+            if(vm.q.factoryId == -100)
+                vm.q.factoryId = null
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'realName': vm.q.realName,'hallName':vm.q.hallName},
+                postData:{'name': vm.q.name,'factoryId':vm.q.factoryId},
                 page:page
             }).trigger("reloadGrid");
         },
@@ -196,7 +197,8 @@ function openDetail(aid) {
 }
 
 function formatDate(cellvalue, options, rowObject) {
-    /*  cellvalue = cellvalue.replace("T"," ");*/
+      cellvalue = cellvalue.replace("T"," ");
+   /* console.log(cellvalue);*/
     return cellvalue;
 }
 
@@ -206,3 +208,20 @@ function formatURL(value, options, rowObject) {
     if(!(value.startsWith("http://") || (value.startsWith("https://"))) ) result="http://"+result;
     return '<a href="' + result + '" target="_blank">' + value + '</a>';
 }
+//页面加载时拿到所有的奖池编码
+$.ajax({
+    async: false, // 同步
+    type: 'GET',
+    url: "/hall/getFactoryMessage",
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (returnJsonData) {
+        vm.FactoryMessageList = [];
+        for(var i = 0 ; i < returnJsonData.length ; i ++){
+            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
+            vm.FactoryMessageList.push(tepm);
+        }
+    },error:function (returnJsonData) {
+
+    }
+});

@@ -1,6 +1,8 @@
 package com.water.service;
 
+import com.water.dao.EmployeeDAO;
 import com.water.dao.FactoryDAO;
+import com.water.domain.Employee;
 import com.water.domain.Factory;
 import com.water.domain.IdAndNameDTO;
 import com.water.util.PageUtil;
@@ -30,6 +32,8 @@ public class FactoryService {
 
     @Autowired
     private FactoryDAO factoryDAO;
+    @Autowired
+    private EmployeeDAO employeeDAO;
 
 
     /**
@@ -58,20 +62,28 @@ public class FactoryService {
      * @Description :保存
      * @Date : 20:28 2018/6/26
      */
+    @Transactional
     public void save(Factory factory) {
         if (factory != null) {
             String[] result = factory.getManagerName().split(":");
             factory.setManagerId(Integer.parseInt(result[0]));
             factory.setManagerName(result[1]);
             logger.info(factory.toString());
-            factoryDAO.insertSelective(factory);
-        }
+            int factoryId = factoryDAO.insertSelective(factory);
+            //修改employee表
+            Employee employee = new Employee();
+            employee.setFactoryId(factoryId);
+            employee.setId(Integer.parseInt(result[0]));
+            employee.setFactoryName(factory.getName());
+            employeeDAO.updateByPrimaryKeySelective(employee);
+         }
     }
 
     public Factory queryObject(Integer id) {
         return factoryDAO.selectByPrimaryKey(id);
     }
 
+    @Transactional
     public void update(Factory factory) {
         if (factory != null) {
             String[] result = factory.getManagerName().split(":");
@@ -79,6 +91,12 @@ public class FactoryService {
             factory.setManagerName(result[1]);
             logger.info(factory.toString());
             factoryDAO.updateByPrimaryKeySelective(factory);
+            //修改employee表
+            Employee employee = new Employee();
+            employee.setFactoryId(factory.getId());
+            employee.setId(Integer.parseInt(result[0]));
+            employee.setFactoryName(factory.getName());
+            employeeDAO.updateByPrimaryKeySelective(employee);
         }
     }
 
@@ -91,8 +109,9 @@ public class FactoryService {
         }
 
     }
+
     //获得所有的雇员信息
-    public List<IdAndNameDTO> getEmployee(){
+    public List<IdAndNameDTO> getEmployee() {
         return factoryDAO.getEmployee();
     }
 
