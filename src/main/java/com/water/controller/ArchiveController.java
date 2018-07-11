@@ -1,6 +1,7 @@
 package com.water.controller;
 
 import com.water.domain.Archive;
+import com.water.domain.IdAndNameDTO;
 import com.water.service.ArchiveService;
 import com.water.util.R;
 import org.slf4j.Logger;
@@ -8,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,7 +46,7 @@ public class ArchiveController {
     /**
      * 保存
      */
-    @PostMapping("/addArea")
+    @PostMapping("/addArchive")
     public R save(@RequestBody Archive dto){
         try {
             archiveService.save(dto);
@@ -81,7 +84,7 @@ public class ArchiveController {
     /**
      * 修改
      */
-    @PostMapping("/updateArea")
+    @PostMapping("/updateArchive")
     public R update(@RequestBody Archive dto){
         try {
             archiveService.update(dto);
@@ -108,5 +111,46 @@ public class ArchiveController {
         }
         return R.ok();
     }
+
+    /**
+     * 取得所有的片区的ID和Name
+     */
+    @GetMapping(value = "/getAreaMessage")
+    public List<IdAndNameDTO> getAreaMessage(){
+        logger.info("ArchiveController/getAreaMessage begin");
+        List<IdAndNameDTO> list = new ArrayList<>();
+        try {
+            list = archiveService.selectAreaMessage();
+            for (IdAndNameDTO idAndNameDTO :list) {
+                idAndNameDTO.setIdAndName(idAndNameDTO.getId()+":"+ idAndNameDTO.getName());
+            }
+        } catch (Exception e) {
+            logger.info("ArchiveController/getAreaMessage|查询失败，原因：{}", e.getMessage());
+            logger.error("ArchiveController/getAreaMessage|Exception:"+e.getMessage(), e);
+        }
+        return  list;
+    }
+
+    /**
+     * 取得所有的营业厅的ID和Name
+     */
+    @GetMapping(value = "/getHallMessage")
+    public List<IdAndNameDTO> getHallMessage(){
+        logger.info("ArchiveController/getHallMessage begin");
+        List<IdAndNameDTO> list = new ArrayList<>();
+        try {
+            list = archiveService.selectHallMessage();
+            for (IdAndNameDTO idAndNameDTO :list) {
+                idAndNameDTO.setIdAndName(idAndNameDTO.getId()+":"+ idAndNameDTO.getName());
+            }
+        } catch (Exception e) {
+            logger.info("ArchiveController/getHallMessage|查询失败，原因：{}", e.getMessage());
+            logger.error("ArchiveController/getHallMessage|Exception:"+e.getMessage(), e);
+        }
+        return  list;
+    }
+
+
+
 
 }

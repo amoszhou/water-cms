@@ -14,6 +14,50 @@
   <sql id="Base_Column_List" >
     id, brand, create_time, model, name, size, specification, is_delete
   </sql>
+
+  <!-- 查询条件 -->
+  <sql id="whereClause">
+    <where>
+      and is_delete = 0
+      <if test="name != null and name.trim() != ''">
+        and name like concat('%', trim(#{name}),'%')
+      </if>
+      <if test="brand != null and brand.trim() != ''">
+        and brand like concat('%', trim(#{brand}),'%')
+      </if>
+    </where>
+  </sql>
+  <select id="queryTotal" resultType="int">
+    select count(1) from t_meter
+    <include refid="whereClause"/>
+  </select>
+  <select id="queryList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_meter
+    <include refid="whereClause"/>
+    <choose>
+      <when test="sidx != null and sidx.trim() != ''">
+        order by ${sidx} ${order}
+      </when>
+      <otherwise>
+        order by id desc
+      </otherwise>
+    </choose>
+    <if test="offset != null and limit != null">
+      limit #{offset}, #{limit}
+    </if>
+  </select>
+  <update id="updateDeleteState" parameterType="java.lang.Long">
+    update t_meter
+    set is_delete = 1
+    where id  =  #{id}
+  </update>
+
+
+
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

@@ -1,44 +1,69 @@
 package com.water.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Customer implements Serializable {
     private Integer id;
-
+   //地址
     private String address;
-
+    //表册ID
     private String archiveId;
-
+    //表册名
+    private String archiveName;
+    //片区ID
     private Integer areaId;
-
+    //编码
     private String code;
-
-    private Date createTime;
-
+    //创建时间
+    private LocalDateTime createTime;
+    //创建人
     private Integer createUser;
-
+    //水厂ID
     private Integer factoryId;
-
+    //水厂名
+    private String factoryName;
+    //家庭账户ID
     private Integer familyCount;
-
+    //
     private Integer frequency;
-
+    //片区ID
     private Integer hallId;
-
+    //身份证
     private String idCard;
-
+    //
     private Integer isDelete;
-
+    //名称
     private String name;
-
+    //电话
     private String phone;
-
+    //电话
     private String tel;
-
-    private Date updateTime;
-
+    //更新时间
+    private LocalDateTime updateTime;
+    //更新人
     private Integer updateUser;
+
+    private String createTimeForHTML;
+
+    private String updateTimeForHTML;
+
+    public String getCreateTimeForHTML() {
+        return createTimeForHTML;
+    }
+
+    public void setCreateTimeForHTML(String createTimeForHTML) {
+        this.createTimeForHTML = createTimeForHTML;
+    }
+
+    public String getUpdateTimeForHTML() {
+        return updateTimeForHTML;
+    }
+
+    public void setUpdateTimeForHTML(String updateTimeForHTML) {
+        this.updateTimeForHTML = updateTimeForHTML;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -82,11 +107,12 @@ public class Customer implements Serializable {
         this.code = code;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTimeForHTML = createTime.toString();
         this.createTime = createTime;
     }
 
@@ -170,11 +196,12 @@ public class Customer implements Serializable {
         this.tel = tel;
     }
 
-    public Date getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTimeForHTML = updateTime.toString();
         this.updateTime = updateTime;
     }
 

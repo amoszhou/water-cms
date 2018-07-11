@@ -62,6 +62,16 @@ public class IndexController {
         return "hall";
     }
 
+    @RequestMapping("/meter")
+    public String meter(Model model) {
+
+        model.addAttribute("addPer","true");
+        model.addAttribute("updatePer","true");
+        model.addAttribute("deletePer","true");
+
+        return "meter";
+    }
+
     @RequestMapping("/area")
     public String area(Model model) {
 

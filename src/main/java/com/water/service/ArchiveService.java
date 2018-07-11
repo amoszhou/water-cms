@@ -3,6 +3,7 @@ package com.water.service;
 import com.water.dao.ArchiveDAO;
 import com.water.domain.Archive;
 import com.water.domain.Area;
+import com.water.domain.IdAndNameDTO;
 import com.water.util.PageUtil;
 import com.water.util.Query;
 import com.water.util.R;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,12 +43,12 @@ public class ArchiveService {
         int total_count = archiveDAO.queryTotal(query);
         logger.info("total:{}", total_count);
 
-        List<Archive> factories = null;
+        List<Archive> archives = null;
         if (total_count > 0) {
-            factories = archiveDAO.queryList(query);
-            logger.info("serviceList = {}", factories.toString());
+            archives = archiveDAO.queryList(query);
+            logger.info("serviceList = {}", archives.toString());
         }
-        PageUtil pageUtil = new PageUtil(factories, total_count, query.getLimit(), query.getPage());
+        PageUtil pageUtil = new PageUtil(archives, total_count, query.getLimit(), query.getPage());
         return R.ok().put("page", pageUtil);
     }
 
@@ -57,6 +59,8 @@ public class ArchiveService {
      */
     public void save(Archive archive){
         if (archive != null) {
+            //todo 获取用户名，填充recordUser           获取片区和营业厅列表
+            archive.setRecordUser(1);
             archiveDAO.insertSelective(archive);
         }
     }
@@ -80,6 +84,18 @@ public class ArchiveService {
         }
 
     }
+
+    public  List<IdAndNameDTO> selectAreaMessage(){
+        Map map = new HashMap();
+        return  archiveDAO.selectAreaMessage(map);
+    }
+
+    public  List<IdAndNameDTO> selectHallMessage(){
+        Map map = new HashMap();
+        return  archiveDAO.selectHallMessage(map);
+    }
+
+
 
 
 }

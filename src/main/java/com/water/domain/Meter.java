@@ -1,26 +1,38 @@
 package com.water.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Meter implements Serializable {
     private Integer id;
-
+     //品牌
     private String brand;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 
+    private String createTimeForHtml;
+
+    //模型
     private String model;
 
     private String name;
 
     private Integer size;
-
+    //说明书
     private String specification;
 
     private Integer isDelete;
 
     private static final long serialVersionUID = 1L;
+
+    public String getCreateTimeForHtml() {
+        return createTimeForHtml;
+    }
+
+    public void setCreateTimeForHtml(String createTimeForHtml) {
+        this.createTimeForHtml = createTimeForHtml;
+    }
 
     public Integer getId() {
         return id;
@@ -38,11 +50,12 @@ public class Meter implements Serializable {
         this.brand = brand;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTimeForHtml = createTime.toString();
         this.createTime = createTime;
     }
 

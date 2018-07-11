@@ -85,6 +85,35 @@
 
 
 
+  <select id="selectAreaMessage" resultType="com.water.domain.IdAndNameDTO"  >
+    select id , name from t_area
+    <where>
+      and is_delete = 0
+      <if test="AreaIds != null and AreaIds.size != 0">
+        and id in
+        <foreach collection="AreaIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </select>
+
+  <select id="selectHallMessage" resultType="com.water.domain.IdAndNameDTO"  >
+    select id , name from t_bizhall
+    <where>
+      and is_delete = 0
+      <if test="HallIds != null and HallIds.size != 0">
+        and id in
+        <foreach collection="HallIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </select>
+
+
 
 
 

@@ -113,7 +113,7 @@ public class FactotyController {
     }
 
     /**
-     * 取得所有的水厂的ID和Name
+     * 取得所有的雇员的ID和Name
      */
     @GetMapping(value = "/getEmployeeMessage")
     public List<IdAndNameDTO> getEmployeeMessage(){

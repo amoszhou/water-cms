@@ -20,11 +20,99 @@
     <result column="tel" property="tel" jdbcType="VARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="update_user" property="updateUser" jdbcType="INTEGER" />
+    <result column="factoryName" property="factoryName" jdbcType="VARCHAR" />
+    <result column="archiveName" property="archiveName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, address, archive_id, area_id, code, create_time, create_user, factory_id, family_count, 
     frequency, hall_id, id_card, is_delete, name, phone, tel, update_time, update_user
   </sql>
+  <!--权限过滤-->
+  <sql id="authSql">
+    <where>
+      and is_delete = 0
+      <if test="factoryIds != null and factoryIds.size != 0">
+        and factory_id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <!-- 查询条件 -->
+  <sql id="whereClause">
+    <where>
+      and is_delete = 0
+      <if test="name != null and name.trim() != ''">
+        and name like concat('%', trim(#{name}),'%')
+      </if>
+      <if test="code != null and code.trim() != ''">
+        and code like concat('%', trim(#{code}),'%')
+      </if>
+    </where>
+  </sql>
+  <select id="queryTotal" resultType="int">
+    select count(1) from t_customer
+    <include refid="whereClause"/>
+    <include refid="authSql"/>
+  </select>
+  <select id="queryList" resultMap="BaseResultMap">
+    select    a.id, a.address, a.archive_id, a.area_id, a.code, a.create_time, a.create_user, a.factory_id, a.family_count,
+    a.frequency, a.hall_id, a.id_card, a.is_delete, a.name, a.phone, a.tel, a.update_time, a.update_user,
+    b.name as factoryName,c.name as archiveName
+    from (select id,name from t_factory <include refid="authSql"/>)  as b  right JOIN (
+    select
+    <include refid="Base_Column_List"/>
+    from t_customer
+    <include refid="whereClause"/>
+    <include refid="authSql"/>
+    <choose>
+      <when test="sidx != null and sidx.trim() != ''">
+        order by ${sidx} ${order}
+      </when>
+      <otherwise>
+        order by id desc
+      </otherwise>
+    </choose>
+    <if test="offset != null and limit != null">
+      limit #{offset}, #{limit}
+    </if>
+    )as a on b.id = a.factory_id JOIN (select id,name from t_archive <include refid="authSql"/>) as c ON c.id = a.archive_id
+  </select>
+
+  <update id="updateDeleteState" parameterType="java.lang.Long">
+    update t_customer
+    set is_delete = 1
+    where id  =  #{id}
+  </update>
+
+  <select id="selectArchiveMessage" resultType="com.water.domain.IdAndNameDTO"  >
+    select id , name from t_archive
+    <where>
+      and is_delete = 0
+      <if test="AreaIds != null and AreaIds.size != 0">
+        and area_id in
+        <foreach collection="AreaIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

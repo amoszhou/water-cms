@@ -11,10 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -51,7 +48,16 @@ public class CommonTest {
 
     @Test
     public void test2() {
-        Map map = new HashMap();
-        archiveDAO.queryList(map);
+        Random r = new Random();
+        int[] result = new int[4];
+      for(int i = 0 ; i < 4 ; i ++){
+       result[i] = r.nextInt(10);
+      }
+        for(int i = 0 ; i < 4 ; i ++){
+            System.out.println(result[i]);
+        }
+
+     /*   Map map = new HashMap();
+        archiveDAO.queryList(map);*/
     }
 }

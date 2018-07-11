@@ -1,16 +1,19 @@
 package com.water.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Archive implements Serializable {
     private Integer id;
 
+    private String createTimeForHtml;
+
     private Integer areaId;
 
     private String code;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 
     private Integer hallId;
 
@@ -23,6 +26,14 @@ public class Archive implements Serializable {
     private String hallName;
 
     private String areaName;
+
+    public String getCreateTimeForHtml() {
+        return createTimeForHtml;
+    }
+
+    public void setCreateTimeForHtml(String createTimeForHtml) {
+        this.createTimeForHtml = createTimeForHtml;
+    }
 
     public String getHallName() {
         return hallName;
@@ -66,11 +77,12 @@ public class Archive implements Serializable {
         this.code = code;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTimeForHtml = createTime.toString();
         this.createTime = createTime;
     }
 

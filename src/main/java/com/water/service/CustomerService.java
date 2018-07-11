@@ -1,113 +1,99 @@
-/*
 package com.water.service;
 
-import com.water.constant.ChargeType;
-import com.water.domain.*;
-import com.water.exception.BizException;
-import com.water.repository.ChargeRecordRepository;
-import com.water.repository.CustomerAccountRepository;
-import com.water.repository.CustomerMeterRepository;
-import com.water.repository.CustomerRepository;
+import com.water.dao.ArchiveDAO;
+import com.water.dao.CustomerDAO;
+import com.water.domain.Archive;
+import com.water.domain.Customer;
+import com.water.domain.IdAndNameDTO;
+import com.water.util.PageUtil;
+import com.water.util.Query;
+import com.water.util.R;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-*/
 /**
- * 基础数据管理
- * Created by 周美华 on 2017/4/1.*//*
-
-
-
+ * @Author : 林吉达
+ * @Description :
+ * @Date: Created in 10:57 2018/7/10
+ * @Modified By:
+ */
 @Service
 public class CustomerService {
 
-    @Autowired
-    private CustomerRepository customerRepository;
-
-    private CustomerMeterRepository customerMeterRepository;
+    Logger logger = LoggerFactory.getLogger(CustomerService.class);
 
     @Autowired
-    private ChargeRecordRepository chargeRecordRepository;
-
-    @Autowired
-    private CustomerAccountRepository customerAccountRepository;
+    private CustomerDAO customerDAO;
 
 
-*/
-/**
-     * 查询所有可用的用户
-     *
-     * @return*//*
+    /**
+     * @Author : 林吉达
+     * @Description : 查询列表
+     * @Date : 17:39 2018/7/3
+     */
+    public R queryList(Map<String, Object> params) {
+        logger.info("CustomerService/queryList begin | params = {}", params.toString());
 
+        Query query = new Query(params);
+        int total_count = customerDAO.queryTotal(query);
+        logger.info("total:{}", total_count);
 
-
-      public List<Customer> findAllEnableCustomer() {
-        // TODO: 2017/4/3 status需要定义
-        return customerRepository.findByIsDelete(1);
-    }
-
-
-
-
-*/
-/**
-     * 查询所有可用的水表
-     *
-     * @return*//*
-
-
-
-    public List<CustomerMeter> findAllEnableMeter() {
-        // TODO: 2017/4/3 status需要定义
-        return customerMeterRepository.findByIsDelete(1);
-    }
-
-
-    public void createCustomer(Customer customer) {
-        customer = customerRepository.saveAndFlush(customer);
-
-        CustomerAccount account = new CustomerAccount();
-        account.setBalance(0);
-        account.setCustId(account.getId());
-        account.setVersion(0);
-        account.setUpdateTime(new Date());
-        account.setUpdateUser(customer.getCreateUser());
-        customerAccountRepository.saveAndFlush(account);
-    }
-
-
-*/
-/**
-     * 用户充值（预存）
-     *
-     * @param user   操作员
-     * @param record 充值信息*//*
-
-
-
-    public void prePay(Employee user, ChargeType type, ChargeRecord record) {
-        Customer customer = customerRepository.findOne(record.getCustId());
-        if (customer == null) {
-            throw new BizException("用户不存在，不能进行操作");
+        List<Customer> archives = null;
+        if (total_count > 0) {
+            archives = customerDAO.queryList(query);
+            logger.info("serviceList = {}", archives.toString());
         }
-        if (!customer.getFactoryId().equals(user.getFactoryId())) {
-            throw new BizException("您没有权限对该用户进行操作");
-        }
-        record.setCreateTime(new Date());
-        record.setCreateUser(user.getId());
-
-*/
-/**更新余额*//*
-
-
-        CustomerAccount account = customerAccountRepository.findByCustId(customer.getId());
-        customerAccountRepository.updateBalance(record.getAmount(), user.getId(), customer.getId(), account.getVersion());
-
-        chargeRecordRepository.save(record);
+        PageUtil pageUtil = new PageUtil(archives, total_count, query.getLimit(), query.getPage());
+        return R.ok().put("page", pageUtil);
     }
+
+    /**
+     * @Author : 林吉达
+     * @Description :保存
+     * @Date : 20:28 2018/6/26
+     */
+    public void save(Customer customer){
+        if (customer != null) {
+            //todo 获取用户名，填充recordUser           获取片区和营业厅列表
+            customer.setCreateUser(1);
+          customer.setUpdateUser(1);
+            customerDAO.insertSelective(customer);
+        }
+    }
+
+    public Customer queryObject(Integer id) {
+        return customerDAO.selectByPrimaryKey(id);
+    }
+
+    public void update(Customer customer) {
+        if (customer != null) {
+            customerDAO.updateByPrimaryKeySelective(customer);
+        }
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        if (id != null) {
+
+            customerDAO.updateDeleteState(id);
+            //todo 记得级联删除其他表的数据
+        }
+
+    }
+
+    public  List<IdAndNameDTO> selectArchiveMessage(){
+        Map map = new HashMap();
+        return  customerDAO.selectArchiveMessage(map);
+    }
+
+
+
+
 }
-*/

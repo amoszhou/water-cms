@@ -1,6 +1,7 @@
 package com.water.dao;
 
 import com.water.domain.Archive;
+import com.water.domain.IdAndNameDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,6 +20,10 @@ public interface ArchiveDAO {
     Archive selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(Archive record);
+
+    List<IdAndNameDTO> selectAreaMessage(Map<String, Object> map);
+
+    List<IdAndNameDTO> selectHallMessage(Map<String, Object> map);
 
 
 }

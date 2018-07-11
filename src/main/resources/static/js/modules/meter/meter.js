@@ -1,13 +1,12 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'archive/list',
+        url: baseURL + 'meter/list',
         datatype: "json",
         colModel: [
             { label: 'ID', name: 'id', index: "id", width: 30, key: true },
-            { label: '表册名', name: 'name', width: 40, sortable:false},
-            { label: '编码', name: 'code', width: 40, sortable:false},
-            { label: '片区名', name: 'areaName', width: 40, sortable:false},
-            { label: '营业厅名', name: 'hallName', width: 40, sortable:false},
+            { label: '水表名', name: 'name', width: 40, sortable:false},
+            { label: '品牌', name: 'brand', width: 40,sortable:false },
+            { label: '模型', name: 'model', width: 40, sortable:false/*, formatter: formatURL*/},
             /*{ label: '电话', name: 'deleteStatus', width: 30, formatter: function(value, options, row){
                 return value === 0 ?
                     '<span class="label label-success">正常</span>' :
@@ -15,7 +14,9 @@ $(function () {
             },sortable:false},*/
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
-            { label: '记录人', name: 'recordUser', width:40/*,formatter: operateMenu*/,sortable:false},
+            { label: '尺寸', name: 'size', width:40/*,formatter: operateMenu*/,sortable:false},
+            { label: '说明', name: 'specification', width:40/*,formatter: operateMenu*/,sortable:false},
+            { label: '创建时间', name: 'createTimeForHtml', width:40/*,formatter: operateMenu*/,sortable:false},
             { label: '操作', width:40,formatter: operateMenu,sortable:false},
         ],
         viewrecords: true,
@@ -48,37 +49,26 @@ $(function () {
 var vm = new Vue({
     el:'#rrapp',
     data:{
-        q:{
-            name: null
-        },
         showList: true,
         title:null,
         app:{
             id:'',
-            areaId:'',
-            code:'',
-            code:'',
-            hallId:'',
-            name:'',
-            recordUser:'',
-            hallName:'',
-            areaName:'',
+            brand:'',
             createTimeForHtml:'',
+            model:'',
+            name:'',
+            size:'',
+            specification:'',
         },
         q:{
             id:'',
-            areaId:'',
-            code:'',
-            code:'',
-            hallId:'',
-            name:'',
-            recordUser:'',
-            hallName:'',
-            areaName:'',
+            brand:'',
             createTimeForHtml:'',
+            model:'',
+            name:'',
+            size:'',
+            specification:'',
         },
-        AreaMessageList:[],
-        HallMessageList:[],
     },
     methods: {
         query: function () {
@@ -106,7 +96,7 @@ var vm = new Vue({
             }
 
             confirm('确定要删除选中的记录？', function(){
-                $.get(baseURL + "archive/"+id+"/del", function(r){
+                $.get(baseURL + "meter/"+id+"/del", function(r){
                     if (r.permissionCheck) {
                         alert(r.msg);
                         return;
@@ -125,9 +115,8 @@ var vm = new Vue({
             if(vm.validator()){
                 return ;
             }
-            delete vm.app.createTime;
-            console.log( vm.app);
-            var url = vm.app.id == null ? "archive/addArchive" : "archive/updateArchive";
+
+            var url = vm.app.id == null ? "meter/addMeter" : "meter/updateMeter";
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
@@ -149,23 +138,21 @@ var vm = new Vue({
             });
         },
         getApp: function(id){
-            $.get(baseURL + "archive/"+id+"/info", function(r){
+            $.get(baseURL + "meter/"+id+"/info", function(r){
                 if (r.permissionCheck) {
                     alert(r.msg);
                     return;
                 }
-                vm.app = r.archive;
-               /* vm.app.dateForHTML=     vm.app.dateForHTML.toString().replace("T"," ");*/
 
+                vm.app = r.meter;
+                delete vm.app.createTime;
             });
         },
         reload: function () {
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
-            if(vm.q.factoryId == -100)
-                vm.q.factoryId = null
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'name': vm.q.name,'factoryId':vm.q.factoryId},
+                postData:{'name': vm.q.name,'brand':vm.q.brand},
                 page:page
             }).trigger("reloadGrid");
         },
@@ -204,8 +191,7 @@ function openDetail(aid) {
 }
 
 function formatDate(cellvalue, options, rowObject) {
-    cellvalue = cellvalue.replace("T"," ");
-    /* console.log(cellvalue);*/
+    /*  cellvalue = cellvalue.replace("T"," ");*/
     return cellvalue;
 }
 
@@ -215,40 +201,6 @@ function formatURL(value, options, rowObject) {
     if(!(value.startsWith("http://") || (value.startsWith("https://"))) ) result="http://"+result;
     return '<a href="' + result + '" target="_blank">' + value + '</a>';
 }
-//页面加载时拿到所有的片区ID，Name
-$.ajax({
-    async: false, // 同步
-    type: 'GET',
-    url: "/archive/getAreaMessage",
-    dataType: "json",
-    contentType: 'application/json',
-    success: function (returnJsonData) {
-        vm.AreaMessageList = [];
-        for(var i = 0 ; i < returnJsonData.length ; i ++){
-            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
-            vm.AreaMessageList.push(tepm);
-        }
-    },error:function (returnJsonData) {
 
-    }
-});
-//页面加载时拿到所有的营业厅ID，Name
-$.ajax({
-    async: false, // 同步
-    type: 'GET',
-    url: "/archive/getHallMessage",
-    dataType: "json",
-    contentType: 'application/json',
-    success: function (returnJsonData) {
-        vm.HallMessageList = [];
-        for(var i = 0 ; i < returnJsonData.length ; i ++){
-            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
-            vm.HallMessageList.push(tepm);
-        }
-    },error:function (returnJsonData) {
 
-    }
-});
-/*
-AreaMessageList:[],
-    HallMessageList:[],*/
+

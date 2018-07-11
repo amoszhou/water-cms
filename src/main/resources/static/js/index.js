@@ -87,6 +87,16 @@ var vm = new Vue({
                 "menu": true,
                 "urls": "/employee.html",
                 "parentId": 442
+            },{
+                "id": 449,
+                "appId": 33,
+                "name": "水表管理",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/meter.html",
+                "parentId": 442
             },
                 {
                 "id": 452,
