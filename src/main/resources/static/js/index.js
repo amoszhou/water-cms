@@ -108,7 +108,17 @@ var vm = new Vue({
                 "menu": true,
                 "urls": "/archive.html",
                 "parentId": 442
-            }, {
+            },  {
+                    "id": 453,
+                    "appId": 33,
+                    "name": "价格管理",
+                    "createTime": "2017-11-10T17:16:25",
+                    "modifyTime": "2018-04-10T15:30:49",
+                    "link": false,
+                    "menu": true,
+                    "urls": "/priceType.html",
+                    "parentId": 442
+                },{
                 "id": 452,
                 "appId": 33,
                 "name": "水费管理",

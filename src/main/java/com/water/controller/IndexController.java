@@ -61,6 +61,15 @@ public class IndexController {
 
         return "hall";
     }
+    @RequestMapping("/priceType")
+    public String priceType(Model model) {
+
+        model.addAttribute("addPer","true");
+        model.addAttribute("updatePer","true");
+        model.addAttribute("deletePer","true");
+
+        return "priceType";
+    }
 
     @RequestMapping("/meter")
     public String meter(Model model) {
