@@ -51,22 +51,21 @@ var vm = new Vue({
         title:null,
         app:{
             id:'',
-            brand:'',
-            createTimeForHtml:'',
-            model:'',
+            factoryName:'',
+            factoryId:'',
             name:'',
-            size:'',
-            specification:'',
+            price:'',
+            sewage:'',
         },
         q:{
             id:'',
-            brand:'',
-            createTimeForHtml:'',
-            model:'',
+            factoryName:'',
+            factoryId:'',
             name:'',
-            size:'',
-            specification:'',
+            price:'',
+            sewage:'',
         },
+        FactoryMessageList:[],
     },
     methods: {
         query: function () {
@@ -94,7 +93,7 @@ var vm = new Vue({
             }
 
             confirm('确定要删除选中的记录？', function(){
-                $.get(baseURL + "meter/"+id+"/del", function(r){
+                $.get(baseURL + "priceType/"+id+"/del", function(r){
                     if (r.permissionCheck) {
                         alert(r.msg);
                         return;
@@ -114,7 +113,7 @@ var vm = new Vue({
                 return ;
             }
 
-            var url = vm.app.id == null ? "meter/addMeter" : "meter/updateMeter";
+            var url = vm.app.id == null ? "priceType/addPriceType" : "priceType/updatePriceType";
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
@@ -136,21 +135,23 @@ var vm = new Vue({
             });
         },
         getApp: function(id){
-            $.get(baseURL + "meter/"+id+"/info", function(r){
+            $.get(baseURL + "priceType/"+id+"/info", function(r){
                 if (r.permissionCheck) {
                     alert(r.msg);
                     return;
                 }
 
-                vm.app = r.meter;
+                vm.app = r.priceType;
                 delete vm.app.createTime;
             });
         },
         reload: function () {
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
+            if(vm.q.factoryId == -100)
+                vm.q.factoryId = null
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'name': vm.q.name,'brand':vm.q.brand},
+                postData:{'name': vm.q.name,'factoryId':vm.q.factoryId},
                 page:page
             }).trigger("reloadGrid");
         },
@@ -200,5 +201,20 @@ function formatURL(value, options, rowObject) {
     return '<a href="' + result + '" target="_blank">' + value + '</a>';
 }
 
+//页面加载时拿到所有的奖池编码
+$.ajax({
+    async: false, // 同步
+    type: 'GET',
+    url: "/hall/getFactoryMessage",
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (returnJsonData) {
+        vm.FactoryMessageList = [];
+        for(var i = 0 ; i < returnJsonData.length ; i ++){
+            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
+            vm.FactoryMessageList.push(tepm);
+        }
+    },error:function (returnJsonData) {
 
-
+    }
+});

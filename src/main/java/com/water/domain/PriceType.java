@@ -1,6 +1,7 @@
 package com.water.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class PriceType implements Serializable {
 
@@ -10,9 +11,9 @@ public class PriceType implements Serializable {
 
     private String name;
 
-    private Integer price;
+    private BigDecimal price;
 
-    private Integer sewage;
+    private BigDecimal sewage;
 
     private Integer isDelete;
 
@@ -52,19 +53,19 @@ public class PriceType implements Serializable {
         this.name = name;
     }
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public Integer getSewage() {
+    public BigDecimal getSewage() {
         return sewage;
     }
 
-    public void setSewage(Integer sewage) {
+    public void setSewage(BigDecimal sewage) {
         this.sewage = sewage;
     }
 

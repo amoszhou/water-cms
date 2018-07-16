@@ -5,9 +5,9 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="factory_id" property="factoryId" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="price" property="price"  />
     <result column="factoryName" property="factoryName" jdbcType="VARCHAR" />
-    <result column="sewage" property="sewage" jdbcType="INTEGER" />
+    <result column="sewage" property="sewage"  />
     <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
 
   </resultMap>
@@ -17,7 +17,7 @@
   <!--权限过滤-->
   <sql id="authSql">
     <where>
-      and is_delete ！= 0
+      and is_delete = 0
 
     </where>
   </sql>
@@ -28,7 +28,7 @@
       <if test="name != null and name.trim() != ''">
         and name like concat('%', trim(#{name}),'%')
       </if>
-      <if test="factoryId != null ">
+      <if test="factoryId != null and factoryId.trim() != '' ">
         and factory_id = #{factoryId}
       </if>
       <if test="factoryIds != null and factoryIds.size != 0">
@@ -51,7 +51,6 @@
     <include refid="Base_Column_List"/>
     from t_price_type
     <include refid="whereClause"/>
-    <include refid="authSql"/>
     <choose>
       <when test="sidx != null and sidx.trim() != ''">
         order by ${sidx} ${order}
@@ -114,10 +113,10 @@
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
-        #{price,jdbcType=INTEGER},
+        #{price},
       </if>
       <if test="sewage != null" >
-        #{sewage,jdbcType=INTEGER},
+        #{sewage},
       </if>
       <if test="isDelete != null" >
         #{isDelete,jdbcType=INTEGER},
@@ -134,10 +133,10 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
-        price = #{price,jdbcType=INTEGER},
+        price = #{price},
       </if>
       <if test="sewage != null" >
-        sewage = #{sewage,jdbcType=INTEGER},
+        sewage = #{sewage},
       </if>
       <if test="isDelete != null" >
         is_delete = #{isDelete,jdbcType=INTEGER},
