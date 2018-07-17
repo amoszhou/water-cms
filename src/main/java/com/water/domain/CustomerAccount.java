@@ -1,22 +1,53 @@
 package com.water.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class CustomerAccount implements Serializable {
     private Integer id;
 
-    private Integer balance;
+    private BigDecimal balance;
 
     private Integer custId;
 
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     private Integer updateUser;
 
     private Integer version;
 
     private Integer isDelete;
+
+    private String customerName;
+
+    private String updateTimeForHTML;
+
+    public String getUpdateTimeForHTML() {
+        return updateTimeForHTML;
+    }
+
+    public void setUpdateTimeForHTML(String updateTimeForHTML) {
+        this.updateTimeForHTML = updateTimeForHTML;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        setUpdateTimeForHTML(updateTime.toString());
+        this.updateTime = updateTime;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -28,11 +59,11 @@ public class CustomerAccount implements Serializable {
         this.id = id;
     }
 
-    public Integer getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
@@ -42,14 +73,6 @@ public class CustomerAccount implements Serializable {
 
     public void setCustId(Integer custId) {
         this.custId = custId;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 
     public Integer getUpdateUser() {
@@ -91,7 +114,6 @@ public class CustomerAccount implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getBalance() == null ? other.getBalance() == null : this.getBalance().equals(other.getBalance()))
             && (this.getCustId() == null ? other.getCustId() == null : this.getCustId().equals(other.getCustId()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getUpdateUser() == null ? other.getUpdateUser() == null : this.getUpdateUser().equals(other.getUpdateUser()))
             && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
             && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()));
@@ -104,7 +126,6 @@ public class CustomerAccount implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getBalance() == null) ? 0 : getBalance().hashCode());
         result = prime * result + ((getCustId() == null) ? 0 : getCustId().hashCode());
-        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getUpdateUser() == null) ? 0 : getUpdateUser().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());

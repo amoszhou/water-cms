@@ -119,6 +119,26 @@ var vm = new Vue({
                     "urls": "/priceType.html",
                     "parentId": 442
                 },{
+                    "id": 459,
+                    "appId": 33,
+                    "name": "顾客账号管理",
+                    "createTime": "2017-11-10T17:16:25",
+                    "modifyTime": "2018-04-10T15:30:49",
+                    "link": false,
+                    "menu": true,
+                    "urls": "/customerAccount.html",
+                    "parentId": 442
+                },{
+                    "id": 460,
+                    "appId": 33,
+                    "name": "消费记录管理",
+                    "createTime": "2017-11-10T17:16:25",
+                    "modifyTime": "2018-04-10T15:30:49",
+                    "link": false,
+                    "menu": true,
+                    "urls": "/chargeRecord.html",
+                    "parentId": 442
+                },{
                 "id": 452,
                 "appId": 33,
                 "name": "水费管理",

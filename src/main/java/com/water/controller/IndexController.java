@@ -71,6 +71,16 @@ public class IndexController {
         return "priceType";
     }
 
+
+    @RequestMapping("/chargeRecord")
+    public String chargeRecord(Model model) {
+        model.addAttribute("addPer","true");
+        model.addAttribute("updatePer","true");
+        model.addAttribute("deletePer","true");
+        return "chargeRecord";
+    }
+
+
     @RequestMapping("/meter")
     public String meter(Model model) {
 
@@ -79,6 +89,16 @@ public class IndexController {
         model.addAttribute("deletePer","true");
 
         return "meter";
+    }
+
+    @RequestMapping("/customerAccount")
+    public String customerAccount(Model model) {
+
+        model.addAttribute("addPer","true");
+        model.addAttribute("updatePer","true");
+        model.addAttribute("deletePer","true");
+
+        return "customerAccount";
     }
 
     @RequestMapping("/area")

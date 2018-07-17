@@ -60,4 +60,8 @@ public class CommonTest {
      /*   Map map = new HashMap();
         archiveDAO.queryList(map);*/
     }
+
+    public void test3() {
+
+    }
 }

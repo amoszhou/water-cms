@@ -1,126 +1,178 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.water.dao.ChargeRecordDAO" >
-  <resultMap id="BaseResultMap" type="com.water.domain.ChargeRecord" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="amount" property="amount" jdbcType="INTEGER" />
-    <result column="charge_type" property="chargeType" jdbcType="INTEGER" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="create_user" property="createUser" jdbcType="INTEGER" />
-    <result column="cust_code" property="custCode" jdbcType="VARCHAR" />
-    <result column="cust_id" property="custId" jdbcType="INTEGER" />
-    <result column="invoice_code" property="invoiceCode" jdbcType="VARCHAR" />
-    <result column="pay_type" property="payType" jdbcType="INTEGER" />
-    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.water.dao.ChargeRecordDAO">
+    <resultMap id="BaseResultMap" type="com.water.domain.ChargeRecord">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="amount" property="amount"/>
+        <result column="charge_type" property="chargeType" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="INTEGER"/>
+        <result column="cust_code" property="custCode" jdbcType="VARCHAR"/>
+        <result column="cust_id" property="custId" jdbcType="INTEGER"/>
+        <result column="invoice_code" property="invoiceCode" jdbcType="VARCHAR"/>
+        <result column="pay_type" property="payType" jdbcType="INTEGER"/>
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER"/>
+        <result column="customerName" property="customerName" jdbcType="VARCHAR"/>
+        <result column="createUserName" property="createUserName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, amount, charge_type, create_time, create_user, cust_code, cust_id, invoice_code, 
     pay_type, is_delete
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_charge_record
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <insert id="insertSelective" parameterType="com.water.domain.ChargeRecord" >
-    insert into t_charge_record
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="amount != null" >
-        amount,
-      </if>
-      <if test="chargeType != null" >
-        charge_type,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="createUser != null" >
-        create_user,
-      </if>
-      <if test="custCode != null" >
-        cust_code,
-      </if>
-      <if test="custId != null" >
-        cust_id,
-      </if>
-      <if test="invoiceCode != null" >
-        invoice_code,
-      </if>
-      <if test="payType != null" >
-        pay_type,
-      </if>
-      <if test="isDelete != null" >
-        is_delete,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="amount != null" >
-        #{amount,jdbcType=INTEGER},
-      </if>
-      <if test="chargeType != null" >
-        #{chargeType,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createUser != null" >
-        #{createUser,jdbcType=INTEGER},
-      </if>
-      <if test="custCode != null" >
-        #{custCode,jdbcType=VARCHAR},
-      </if>
-      <if test="custId != null" >
-        #{custId,jdbcType=INTEGER},
-      </if>
-      <if test="invoiceCode != null" >
-        #{invoiceCode,jdbcType=VARCHAR},
-      </if>
-      <if test="payType != null" >
-        #{payType,jdbcType=INTEGER},
-      </if>
-      <if test="isDelete != null" >
-        #{isDelete,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.water.domain.ChargeRecord" >
-    update t_charge_record
-    <set >
-      <if test="amount != null" >
-        amount = #{amount,jdbcType=INTEGER},
-      </if>
-      <if test="chargeType != null" >
-        charge_type = #{chargeType,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createUser != null" >
-        create_user = #{createUser,jdbcType=INTEGER},
-      </if>
-      <if test="custCode != null" >
-        cust_code = #{custCode,jdbcType=VARCHAR},
-      </if>
-      <if test="custId != null" >
-        cust_id = #{custId,jdbcType=INTEGER},
-      </if>
-      <if test="invoiceCode != null" >
-        invoice_code = #{invoiceCode,jdbcType=VARCHAR},
-      </if>
-      <if test="payType != null" >
-        pay_type = #{payType,jdbcType=INTEGER},
-      </if>
-      <if test="isDelete != null" >
-        is_delete = #{isDelete,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <!-- 查询条件 -->
+    <sql id="whereClause">
+        <where>
+            and is_delete = 0
+            <if test="custCode != null and custCode.trim() != ''">
+                and cust_code like concat('%', trim(#{custCode}),'%')
+            </if>
+            <if test="invoiceCode != null and invoiceCode.trim() != ''">
+                and invoice_code like concat('%', trim(#{invoiceCode}),'%')
+            </if>
+            <if test="id != null ">
+                and id = #{id}
+            </if>
+        </where>
+    </sql>
+    <!--权限过滤-->
+    <sql id="authSql">
+        <where>
+            and is_delete = 0
+            <if test="factoryIds != null and factoryIds.size != 0">
+                and factory_id in
+                <foreach collection="factoryIds" index="index" item="item"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+    <select id="queryTotal" resultType="int">
+        select count(1) from t_charge_record
+        <include refid="whereClause"/>
+    </select>
+    <select id="queryList" resultMap="BaseResultMap">
+        select  a.id, a.amount, a.charge_type, a.create_time, a.create_user, a.cust_code, a.cust_id, a.invoice_code,
+        a.pay_type, a.is_delete ,b.name as customerName,c.username as createUserName
+        FROM  (select id,name from t_customer    <include refid="authSql"/> ) as b join
+        (select
+        <include refid="Base_Column_List"/>
+        from t_charge_record
+        <include refid="whereClause"/>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if> )as a on a.cust_id = b.id join (select id,username from t_employee   <include refid="authSql"/> ) as c on a.create_user = c.id
+    </select>
+    <update id="updateDeleteState" parameterType="java.lang.Long">
+        update t_charge_record
+        set is_delete = 1
+        where id  =  #{id}
+    </update>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_charge_record
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <insert id="insertSelective" parameterType="com.water.domain.ChargeRecord">
+        insert into t_charge_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="chargeType != null">
+                charge_type,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="custCode != null">
+                cust_code,
+            </if>
+            <if test="custId != null">
+                cust_id,
+            </if>
+            <if test="invoiceCode != null">
+                invoice_code,
+            </if>
+            <if test="payType != null">
+                pay_type,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=INTEGER},
+            </if>
+            <if test="chargeType != null">
+                #{chargeType,jdbcType=INTEGER},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="custCode != null">
+                #{custCode,jdbcType=VARCHAR},
+            </if>
+            <if test="custId != null">
+                #{custId,jdbcType=INTEGER},
+            </if>
+            <if test="invoiceCode != null">
+                #{invoiceCode,jdbcType=VARCHAR},
+            </if>
+            <if test="payType != null">
+                #{payType,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.water.domain.ChargeRecord">
+        update t_charge_record
+        <set>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=INTEGER},
+            </if>
+            <if test="chargeType != null">
+                charge_type = #{chargeType,jdbcType=INTEGER},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="custCode != null">
+                cust_code = #{custCode,jdbcType=VARCHAR},
+            </if>
+            <if test="custId != null">
+                cust_id = #{custId,jdbcType=INTEGER},
+            </if>
+            <if test="invoiceCode != null">
+                invoice_code = #{invoiceCode,jdbcType=VARCHAR},
+            </if>
+            <if test="payType != null">
+                pay_type = #{payType,jdbcType=INTEGER},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

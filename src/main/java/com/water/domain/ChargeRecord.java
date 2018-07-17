@@ -1,18 +1,24 @@
 package com.water.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class ChargeRecord implements Serializable {
     private Integer id;
 
-    private Integer amount;
+    private BigDecimal amount;
 
     private Integer chargeType;
 
-    private Date createTime;
+    private String customerName;
+
+    private LocalDateTime createTime;
 
     private Integer createUser;
+
+    private String createUserName;
 
     private String custCode;
 
@@ -24,7 +30,37 @@ public class ChargeRecord implements Serializable {
 
     private Integer isDelete;
 
+    private String createForHTML;
+
+    public String getCreateUserName() {
+        return createUserName;
+    }
+
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName;
+    }
+
+    public String getCreateForHTML() {
+        return createForHTML;
+    }
+
+    public void setCreateForHTML(String createForHTML) {
+        this.createForHTML = createForHTML;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     private static final long serialVersionUID = 1L;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
     public Integer getId() {
         return id;
@@ -34,11 +70,11 @@ public class ChargeRecord implements Serializable {
         this.id = id;
     }
 
-    public Integer getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -50,11 +86,12 @@ public class ChargeRecord implements Serializable {
         this.chargeType = chargeType;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
+        setCreateForHTML(createTime.toString());
         this.createTime = createTime;
     }
 
@@ -149,22 +186,20 @@ public class ChargeRecord implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", amount=").append(amount);
-        sb.append(", chargeType=").append(chargeType);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", createUser=").append(createUser);
-        sb.append(", custCode=").append(custCode);
-        sb.append(", custId=").append(custId);
-        sb.append(", invoiceCode=").append(invoiceCode);
-        sb.append(", payType=").append(payType);
-        sb.append(", isDelete=").append(isDelete);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "ChargeRecord{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", chargeType=" + chargeType +
+                ", customerName='" + customerName + '\'' +
+                ", createTime=" + createTime +
+                ", createUser=" + createUser +
+                ", createUserName='" + createUserName + '\'' +
+                ", custCode='" + custCode + '\'' +
+                ", custId=" + custId +
+                ", invoiceCode='" + invoiceCode + '\'' +
+                ", payType=" + payType +
+                ", isDelete=" + isDelete +
+                ", createForHTML='" + createForHTML + '\'' +
+                '}';
     }
 }
