@@ -150,6 +150,24 @@ public class ArchiveController {
         return  list;
     }
 
+    /**
+     * 取得所有的表册的ID和Name
+     */
+    @GetMapping(value = "/getArchiveMessage")
+    public List<IdAndNameDTO> getArchiveMessage(){
+        logger.info("ArchiveController/getArchiveMessage begin");
+        List<IdAndNameDTO> list = new ArrayList<>();
+        try {
+            list = archiveService.getArchiveMessage();
+            for (IdAndNameDTO idAndNameDTO :list) {
+                idAndNameDTO.setIdAndName(idAndNameDTO.getId()+":"+ idAndNameDTO.getName());
+            }
+        } catch (Exception e) {
+            logger.info("ArchiveController/getArchiveMessage|查询失败，原因：{}", e.getMessage());
+            logger.error("ArchiveController/getArchiveMessage|Exception:"+e.getMessage(), e);
+        }
+        return  list;
+    }
 
 
 

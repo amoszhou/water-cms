@@ -22,6 +22,10 @@
     <result column="update_user" property="updateUser" jdbcType="INTEGER" />
     <result column="factoryName" property="factoryName" jdbcType="VARCHAR" />
     <result column="archiveName" property="archiveName" jdbcType="VARCHAR" />
+    <result column="updateUserName" property="updateUserName" jdbcType="VARCHAR" />
+    <result column="createUserName" property="createUserName" jdbcType="VARCHAR" />
+    <result column="areaName" property="areaName" jdbcType="VARCHAR" />
+
   </resultMap>
   <sql id="Base_Column_List" >
     id, address, archive_id, area_id, code, create_time, create_user, factory_id, family_count, 
@@ -47,26 +51,37 @@
       <if test="name != null and name.trim() != ''">
         and name like concat('%', trim(#{name}),'%')
       </if>
-      <if test="code != null and code.trim() != ''">
-        and code like concat('%', trim(#{code}),'%')
+      <if test="factoryId != null and factoryId.trim() != '' ">
+        and factory_id =#{factoryId}
       </if>
+      <if test="id != null ">
+        and id =#{id}
+      </if>
+      <if test="factoryIds != null and factoryIds.size != 0">
+        and factory_id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+
     </where>
   </sql>
   <select id="queryTotal" resultType="int">
     select count(1) from t_customer
     <include refid="whereClause"/>
-    <include refid="authSql"/>
   </select>
   <select id="queryList" resultMap="BaseResultMap">
     select    a.id, a.address, a.archive_id, a.area_id, a.code, a.create_time, a.create_user, a.factory_id, a.family_count,
     a.frequency, a.hall_id, a.id_card, a.is_delete, a.name, a.phone, a.tel, a.update_time, a.update_user,
-    b.name as factoryName,c.name as archiveName
+    b.name as factoryName,c.name as archiveName,  d.name as areaName,e.username as createUserName,f.username as updateUserName,
+    g.name as hallName
     from (select id,name from t_factory <include refid="authSql"/>)  as b  right JOIN (
     select
     <include refid="Base_Column_List"/>
     from t_customer
     <include refid="whereClause"/>
-    <include refid="authSql"/>
+
     <choose>
       <when test="sidx != null and sidx.trim() != ''">
         order by ${sidx} ${order}
@@ -78,7 +93,11 @@
     <if test="offset != null and limit != null">
       limit #{offset}, #{limit}
     </if>
-    )as a on b.id = a.factory_id JOIN (select id,name from t_archive <include refid="authSql"/>) as c ON c.id = a.archive_id
+    )as a on b.id = a.factory_id left JOIN (select id,name from t_archive where is_delete = 0) as c ON c.id = a.archive_id
+    left join (SELECT id,name from t_area <include refid="authSql"/> ) as d on d.id = a.area_id
+    left  join (SELECT id,username from t_employee <include refid="authSql"/> ) as e on e.id = a.create_user
+    left  join (SELECT id,username from t_employee <include refid="authSql"/> ) as f on f.id = a.update_user
+    left  join (SELECT id,name from t_bizhall <include refid="authSql"/> ) as g on g.id = a.hall_id
   </select>
 
   <update id="updateDeleteState" parameterType="java.lang.Long">

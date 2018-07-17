@@ -9,17 +9,22 @@ public class Customer implements Serializable {
    //地址
     private String address;
     //表册ID
-    private String archiveId;
+    private Integer archiveId;
     //表册名
     private String archiveName;
     //片区ID
     private Integer areaId;
+    //片区名
+    private String areaName;
     //编码
     private String code;
     //创建时间
     private LocalDateTime createTime;
     //创建人
     private Integer createUser;
+
+    private String createUserName;
+
     //水厂ID
     private Integer factoryId;
     //水厂名
@@ -30,6 +35,8 @@ public class Customer implements Serializable {
     private Integer frequency;
     //片区ID
     private Integer hallId;
+    //片区名
+    private String hallName;
     //身份证
     private String idCard;
     //
@@ -45,9 +52,59 @@ public class Customer implements Serializable {
     //更新人
     private Integer updateUser;
 
+    private String updateUserName;
+
     private String createTimeForHTML;
 
     private String updateTimeForHTML;
+
+    public String getHallName() {
+        return hallName;
+    }
+
+    public void setHallName(String hallName) {
+        this.hallName = hallName;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
+    public String getCreateUserName() {
+        return createUserName;
+    }
+
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName;
+    }
+
+    public String getUpdateUserName() {
+        return updateUserName;
+    }
+
+    public void setUpdateUserName(String updateUserName) {
+        this.updateUserName = updateUserName;
+    }
+
+    public String getArchiveName() {
+        return archiveName;
+    }
+
+    public void setArchiveName(String archiveName) {
+        this.archiveName = archiveName;
+    }
+
+    public String getFactoryName() {
+        return factoryName;
+    }
+
+    public void setFactoryName(String factoryName) {
+        this.factoryName = factoryName;
+    }
 
     public String getCreateTimeForHTML() {
         return createTimeForHTML;
@@ -83,11 +140,11 @@ public class Customer implements Serializable {
         this.address = address;
     }
 
-    public String getArchiveId() {
+    public Integer getArchiveId() {
         return archiveId;
     }
 
-    public void setArchiveId(String archiveId) {
+    public void setArchiveId(Integer archiveId) {
         this.archiveId = archiveId;
     }
 
@@ -272,30 +329,33 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", address=").append(address);
-        sb.append(", archiveId=").append(archiveId);
-        sb.append(", areaId=").append(areaId);
-        sb.append(", code=").append(code);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", createUser=").append(createUser);
-        sb.append(", factoryId=").append(factoryId);
-        sb.append(", familyCount=").append(familyCount);
-        sb.append(", frequency=").append(frequency);
-        sb.append(", hallId=").append(hallId);
-        sb.append(", idCard=").append(idCard);
-        sb.append(", isDelete=").append(isDelete);
-        sb.append(", name=").append(name);
-        sb.append(", phone=").append(phone);
-        sb.append(", tel=").append(tel);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", updateUser=").append(updateUser);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Customer{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", archiveId=" + archiveId +
+                ", archiveName='" + archiveName + '\'' +
+                ", areaId=" + areaId +
+                ", areaName='" + areaName + '\'' +
+                ", code='" + code + '\'' +
+                ", createTime=" + createTime +
+                ", createUser=" + createUser +
+                ", createUserName='" + createUserName + '\'' +
+                ", factoryId=" + factoryId +
+                ", factoryName='" + factoryName + '\'' +
+                ", familyCount=" + familyCount +
+                ", frequency=" + frequency +
+                ", hallId=" + hallId +
+                ", hallName='" + hallName + '\'' +
+                ", idCard='" + idCard + '\'' +
+                ", isDelete=" + isDelete +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", tel='" + tel + '\'' +
+                ", updateTime=" + updateTime +
+                ", updateUser=" + updateUser +
+                ", updateUserName='" + updateUserName + '\'' +
+                ", createTimeForHTML='" + createTimeForHTML + '\'' +
+                ", updateTimeForHTML='" + updateTimeForHTML + '\'' +
+                '}';
     }
 }

@@ -25,5 +25,7 @@ public interface ArchiveDAO {
 
     List<IdAndNameDTO> selectHallMessage(Map<String, Object> map);
 
+    List<IdAndNameDTO> getArchiveMessage(Map<String, Object> map);
+
 
 }

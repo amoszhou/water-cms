@@ -115,7 +115,7 @@ public class CustomerAccountController {
     }
 
     /**
-     * 取得所有的水厂的ID和Name
+     * 取得所有的消费者的ID和Name
      */
     @GetMapping(value = "/getCustomerMessageList")
     public List<IdAndNameDTO> getFactoryMessage(){

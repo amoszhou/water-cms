@@ -4,14 +4,14 @@
   <resultMap id="BaseResultMap" type="com.water.domain.Factory" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="manager_name" property="managerName" jdbcType="VARCHAR" />
+    <result column="managerName" property="managerName" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="tel" property="tel" jdbcType="VARCHAR" />
     <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
     <result column="manager_id" property="managerId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, address, manager_name, name, tel, is_delete,manager_id
+    id, address, name, tel, is_delete,manager_id
   </sql>
   <!-- 查询条件 -->
   <sql id="whereClause">
@@ -20,9 +20,9 @@
       <if test="name != null and name.trim() != ''">
         and name like concat('%', trim(#{name}),'%')
       </if>
-      <if test="managerName != null and managerName.trim() != ''">
+    <!--  <if test="managerName != null and managerName.trim() != ''">
         and manager_name like concat('%', trim(#{managerName}),'%')
-      </if>
+      </if>-->
     </where>
   </sql>
   <select id="queryTotal" resultType="int">
@@ -30,6 +30,9 @@
     <include refid="whereClause"/>
   </select>
   <select id="queryList" resultMap="BaseResultMap">
+    select   a.id, a.address, a.name, a.tel, a.is_delete,a.manager_id,b.username as managerName from
+    (select id,username from t_employee where is_delete = 0) as b join
+    (
     select
     <include refid="Base_Column_List"/>
     from t_factory
@@ -45,6 +48,7 @@
     <if test="offset != null and limit != null">
       limit #{offset}, #{limit}
     </if>
+    ) as a on a.manager_id = b.id
   </select>
   <update id="updateDeleteState" parameterType="java.lang.Long">
     update t_factory
@@ -54,7 +58,7 @@
 
 
 <select id="getEmployee" resultType="com.water.domain.IdAndNameDTO">
-  select id,real_name as name from t_employee where user_type = 1
+  select id,username as name from t_employee where user_type = 1
 </select>
 
 
@@ -85,9 +89,6 @@
       <if test="isDelete != null" >
         is_delete,
       </if>
-      <if test="managerName != null" >
-        manager_name,
-      </if>
       <if test="managerId != null" >
         manager_id,
       </if>
@@ -108,9 +109,6 @@
       <if test="isDelete != null" >
         #{isDelete,jdbcType=INTEGER},
       </if>
-      <if test="managerName != null" >
-       #{managerName,jdbcType=VARCHAR},
-      </if>
       <if test="managerId != null" >
      #{managerId,jdbcType=INTEGER},
       </if>
@@ -130,9 +128,6 @@
       </if>
       <if test="isDelete != null" >
         is_delete = #{isDelete,jdbcType=INTEGER},
-      </if>
-      <if test="managerName != null" >
-      manager_name =   #{managerName,jdbcType=VARCHAR},
       </if>
       <if test="managerId != null" >
         manager_id =  #{managerId,jdbcType=INTEGER},

@@ -94,7 +94,10 @@ public class ArchiveService {
         Map map = new HashMap();
         return  archiveDAO.selectHallMessage(map);
     }
-
+    public  List<IdAndNameDTO> getArchiveMessage(){
+        Map map = new HashMap();
+        return  archiveDAO.getArchiveMessage(map);
+    }
 
 
 

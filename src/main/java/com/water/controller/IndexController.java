@@ -80,6 +80,13 @@ public class IndexController {
         return "chargeRecord";
     }
 
+    @RequestMapping("/customer")
+    public String customer(Model model) {
+        model.addAttribute("addPer","true");
+        model.addAttribute("updatePer","true");
+        model.addAttribute("deletePer","true");
+        return "customer";
+    }
 
     @RequestMapping("/meter")
     public String meter(Model model) {

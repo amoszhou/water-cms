@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @Author : 林吉达
@@ -64,12 +65,16 @@ public class CustomerService {
             //todo 获取用户名，填充recordUser           获取片区和营业厅列表
             customer.setCreateUser(1);
           customer.setUpdateUser(1);
+          customer.setCode(UUID.randomUUID().toString());
             customerDAO.insertSelective(customer);
         }
     }
 
     public Customer queryObject(Integer id) {
-        return customerDAO.selectByPrimaryKey(id);
+        Map map = new HashMap();
+        map.put("id",id);
+        return (Customer) customerDAO.queryList(map).get(0);
+
     }
 
     public void update(Customer customer) {

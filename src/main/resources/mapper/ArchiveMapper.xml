@@ -113,6 +113,22 @@
     </where>
   </select>
 
+  <select id="getArchiveMessage" resultType="com.water.domain.IdAndNameDTO"  >
+    select id , name from t_archive
+    <where>
+      and is_delete = 0
+      <if test="ArchiveIds != null and ArchiveIds.size != 0">
+        and id in
+        <foreach collection="ArchiveIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </select>
+
+
+
 
 
 

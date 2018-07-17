@@ -119,6 +119,16 @@ var vm = new Vue({
                     "urls": "/priceType.html",
                     "parentId": 442
                 },{
+                    "id": 470,
+                    "appId": 33,
+                    "name": "顾客管理",
+                    "createTime": "2017-11-10T17:16:25",
+                    "modifyTime": "2018-04-10T15:30:49",
+                    "link": false,
+                    "menu": true,
+                    "urls": "/customer.html",
+                    "parentId": 442
+                },{
                     "id": 459,
                     "appId": 33,
                     "name": "顾客账号管理",
@@ -159,7 +169,7 @@ var vm = new Vue({
                 "urls": "/lateFee.html",
                 "parentId": 442
             }]
-        },{
+        }/*,{
             "id": 443,
             "appId": 33,
             "name": "用户管理",
@@ -189,7 +199,7 @@ var vm = new Vue({
                 "urls": "/area.html",
                 "parentId": 442
             }]
-        }],
+        }*/],
 		main:"welcome",
 		oldPassword:'',
 		newPassword:'',
