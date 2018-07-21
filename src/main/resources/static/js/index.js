@@ -87,16 +87,6 @@ var vm = new Vue({
                 "menu": true,
                 "urls": "/employee.html",
                 "parentId": 442
-            },{
-                "id": 449,
-                "appId": 33,
-                "name": "水表管理",
-                "createTime": "2017-11-10T17:16:25",
-                "modifyTime": "2018-04-10T15:30:49",
-                "link": false,
-                "menu": true,
-                "urls": "/meter.html",
-                "parentId": 442
             },
                 {
                 "id": 452,
@@ -108,47 +98,7 @@ var vm = new Vue({
                 "menu": true,
                 "urls": "/archive.html",
                 "parentId": 442
-            },  {
-                    "id": 453,
-                    "appId": 33,
-                    "name": "价格管理",
-                    "createTime": "2017-11-10T17:16:25",
-                    "modifyTime": "2018-04-10T15:30:49",
-                    "link": false,
-                    "menu": true,
-                    "urls": "/priceType.html",
-                    "parentId": 442
-                },{
-                    "id": 470,
-                    "appId": 33,
-                    "name": "顾客管理",
-                    "createTime": "2017-11-10T17:16:25",
-                    "modifyTime": "2018-04-10T15:30:49",
-                    "link": false,
-                    "menu": true,
-                    "urls": "/customer.html",
-                    "parentId": 442
-                },{
-                    "id": 459,
-                    "appId": 33,
-                    "name": "顾客账号管理",
-                    "createTime": "2017-11-10T17:16:25",
-                    "modifyTime": "2018-04-10T15:30:49",
-                    "link": false,
-                    "menu": true,
-                    "urls": "/customerAccount.html",
-                    "parentId": 442
-                },{
-                    "id": 460,
-                    "appId": 33,
-                    "name": "消费记录管理",
-                    "createTime": "2017-11-10T17:16:25",
-                    "modifyTime": "2018-04-10T15:30:49",
-                    "link": false,
-                    "menu": true,
-                    "urls": "/chargeRecord.html",
-                    "parentId": 442
-                },{
+            }/*,{
                 "id": 452,
                 "appId": 33,
                 "name": "水费管理",
@@ -168,38 +118,98 @@ var vm = new Vue({
                 "menu": true,
                 "urls": "/lateFee.html",
                 "parentId": 442
-            }]
-        }/*,{
-            "id": 443,
+            }*/]
+        },{
+            "id": 480,
             "appId": 33,
-            "name": "用户管理",
+            "name": "顾客",
             "createTime": "2017-11-10T17:16:25",
             "modifyTime": "2017-11-10T17:16:25",
             "link": false,
             "menu": true,
             "parentId": 440,
-            "children": [{
-                "id": 443,
+            "children": [,{
+                "id": 470,
                 "appId": 33,
-                "name": "基本管理",
-                "createTime": "2017-11-10T17:16:25",
-                "modifyTime": "2018-05-09T09:44:34",
-                "link": false,
-                "menu": true,
-                "urls": "/waterFactory.html",
-                "parentId": 442
-            }, {
-                "id": 447,
-                "appId": 33,
-                "name": "账户管理",
+                "name": "顾客管理",
                 "createTime": "2017-11-10T17:16:25",
                 "modifyTime": "2018-04-10T15:30:49",
                 "link": false,
                 "menu": true,
-                "urls": "/area.html",
+                "urls": "/customer.html",
+                "parentId": 442
+            },{
+                "id": 459,
+                "appId": 33,
+                "name": "顾客账户余额管理",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/customerAccount.html",
+                "parentId": 442
+            },{
+                "id": 460,
+                "appId": 33,
+                "name": "消费记录管理",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/chargeRecord.html",
+                "parentId": 442
+            },{
+                "id": 461,
+                "appId": 33,
+                "name": "用水记录管理",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/waterRecord.html",
+                "parentId": 442
+            },{
+                "id": 462,
+                "appId": 33,
+                "name": "缴费记录管理",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/payRecord.html",
                 "parentId": 442
             }]
-        }*/],
+        },{
+            "id": 481,
+            "appId": 33,
+            "name": "其他管理",
+            "createTime": "2017-11-10T17:16:25",
+            "modifyTime": "2017-11-10T17:16:25",
+            "link": false,
+            "menu": true,
+            "parentId": 440,
+            "children": [,{
+                "id": 449,
+                "appId": 33,
+                "name": "水表管理",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/meter.html",
+                "parentId": 442
+            },  {
+                "id": 453,
+                "appId": 33,
+                "name": "价格管理",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/priceType.html",
+                "parentId": 442
+            }]
+        }],
 		main:"welcome",
 		oldPassword:'',
 		newPassword:'',

@@ -71,6 +71,27 @@ public class IndexController {
         return "priceType";
     }
 
+    @RequestMapping("/waterRecord")
+    public String waterRecord(Model model) {
+
+        model.addAttribute("addPer","true");
+        model.addAttribute("updatePer","true");
+        model.addAttribute("deletePer","true");
+
+        return "waterRecord";
+    }
+
+    @RequestMapping("/payRecord")
+    public String payRecord(Model model) {
+
+        model.addAttribute("addPer","true");
+        model.addAttribute("updatePer","true");
+        model.addAttribute("deletePer","true");
+
+        return "payRecord";
+    }
+
+
 
     @RequestMapping("/chargeRecord")
     public String chargeRecord(Model model) {

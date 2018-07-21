@@ -150,7 +150,7 @@
 
         >
         </table>-->
-        <table tableName="t_price_type" domainObjectName="PriceType"
+        <table tableName="t_pay_record" domainObjectName="PayRecord"
                enableSelectByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
