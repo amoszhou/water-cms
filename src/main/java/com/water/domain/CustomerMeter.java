@@ -1,9 +1,16 @@
 package com.water.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class CustomerMeter implements Serializable {
+    //1---有效期内  2--已过期
+    private Integer validDate;
+
     private Integer id;
 
     private String code;
@@ -11,14 +18,95 @@ public class CustomerMeter implements Serializable {
     private String custCode;
 
     private Integer custId;
-
-    private Date enableDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate enableDate;
 
     private Integer isDelete;
 
     private Integer priceType;
 
     private String size;
+
+    private String customerName;
+
+    private String meterName;
+
+    private String factoryName;
+
+    private BigDecimal waterFee;
+
+    private BigDecimal sewageFee;
+
+    private String enableDateForHtml;
+
+    private Integer meterId;
+
+    private Integer factoryId;
+
+    public Integer getFactoryId() {
+        return factoryId;
+    }
+
+    public void setFactoryId(Integer factoryId) {
+        this.factoryId = factoryId;
+    }
+
+    public Integer getMeterId() {
+        return meterId;
+    }
+
+    public void setMeterId(Integer meterId) {
+        this.meterId = meterId;
+    }
+
+    public BigDecimal getWaterFee() {
+        return waterFee;
+    }
+
+    public void setWaterFee(BigDecimal waterFee) {
+        this.waterFee = waterFee;
+    }
+
+    public BigDecimal getSewageFee() {
+        return sewageFee;
+    }
+
+    public void setSewageFee(BigDecimal sewageFee) {
+        this.sewageFee = sewageFee;
+    }
+
+    public String getEnableDateForHtml() {
+        return enableDateForHtml;
+    }
+
+    public void setEnableDateForHtml(String enableDateForHtml) {
+        this.enableDateForHtml = enableDateForHtml;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getMeterName() {
+        return meterName;
+    }
+
+    public void setMeterName(String meterName) {
+        this.meterName = meterName;
+    }
+
+    public String getFactoryName() {
+        return factoryName;
+    }
+
+    public void setFactoryName(String factoryName) {
+        this.factoryName = factoryName;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -54,12 +142,21 @@ public class CustomerMeter implements Serializable {
         this.custId = custId;
     }
 
-    public Date getEnableDate() {
+    public LocalDate getEnableDate() {
         return enableDate;
     }
 
-    public void setEnableDate(Date enableDate) {
+    public void setEnableDate(LocalDate enableDate) {
+        this.enableDateForHtml = enableDate.toString();
         this.enableDate = enableDate;
+    }
+
+    public Integer getValidDate() {
+        return validDate;
+    }
+
+    public void setValidDate(Integer validDate) {
+        this.validDate = validDate;
     }
 
     public Integer getIsDelete() {
@@ -125,20 +222,24 @@ public class CustomerMeter implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", code=").append(code);
-        sb.append(", custCode=").append(custCode);
-        sb.append(", custId=").append(custId);
-        sb.append(", enableDate=").append(enableDate);
-        sb.append(", isDelete=").append(isDelete);
-        sb.append(", priceType=").append(priceType);
-        sb.append(", size=").append(size);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "CustomerMeter{" +
+                "validDate=" + validDate +
+                ", id=" + id +
+                ", code='" + code + '\'' +
+                ", custCode='" + custCode + '\'' +
+                ", custId=" + custId +
+                ", enableDate=" + enableDate +
+                ", isDelete=" + isDelete +
+                ", priceType=" + priceType +
+                ", size='" + size + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", meterName='" + meterName + '\'' +
+                ", factoryName='" + factoryName + '\'' +
+                ", waterFee=" + waterFee +
+                ", sewageFee=" + sewageFee +
+                ", enableDateForHtml='" + enableDateForHtml + '\'' +
+                ", meterId=" + meterId +
+                ", factoryId=" + factoryId +
+                '}';
     }
 }

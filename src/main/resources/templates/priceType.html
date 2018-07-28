@@ -86,6 +86,20 @@
                 </div>
             </div>
             <div class="form-group">
+                <div class="col-sm-2 control-label">类型</div>
+                <div class="col-sm-10">
+                    <select  v-model="app.type"
+                             style="width: 213px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
+                        <option value="0">
+                            生活用水
+                        </option>
+                        <option value="1">
+                            工业用水
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
                 &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>

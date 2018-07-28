@@ -96,5 +96,18 @@ public class HallService {
         return  hallDAO.selectFactoryMessage(map);
     }
 
+    public  List<IdAndNameDTO> getMeterMessage(){
+        Map map = new HashMap();
+        return  hallDAO.getMeterMessage(map);
+    }
+
+    public  List<IdAndNameDTO> getPriceTypeMessage(){
+        Map map = new HashMap();
+        return  hallDAO.getPriceTypeMessage(map);
+    }
+
+
+
+
 
 }

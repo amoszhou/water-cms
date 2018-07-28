@@ -19,6 +19,16 @@ public class PriceType implements Serializable {
 
     private String factoryName;
 
+    private Integer type;
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public String getFactoryName() {
         return factoryName;
     }
@@ -120,6 +130,7 @@ public class PriceType implements Serializable {
                 ", sewage=" + sewage +
                 ", isDelete=" + isDelete +
                 ", factoryName='" + factoryName + '\'' +
+                ", type=" + type +
                 '}';
     }
 }

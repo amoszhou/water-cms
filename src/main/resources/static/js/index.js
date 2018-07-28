@@ -199,6 +199,17 @@ var vm = new Vue({
                 "urls": "/meter.html",
                 "parentId": 442
             },  {
+                "id": 454,
+                "appId": 33,
+                "name": "水表用户关系",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/customerMeter.html",
+                "parentId": 442
+            },
+                {
                 "id": 453,
                 "appId": 33,
                 "name": "价格管理",
@@ -292,6 +303,10 @@ vm.getMenuList();
 function routerList(router, menuList){
 	for(var key in menuList){
 		var menuOne = menuList[key];
+		/*if (typeof(menuOne.urls)=="undefined"){
+		    console.log("here");
+		    continue;
+        }*/
 		if(menuOne.urls == null){
 			routerList(router, menuOne.children);
 		}else if(menuOne.urls != null){

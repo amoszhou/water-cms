@@ -45,15 +45,14 @@ public class CommonTest {
     }
 
 
-
     @Test
     public void test2() {
         Random r = new Random();
         int[] result = new int[4];
-      for(int i = 0 ; i < 4 ; i ++){
-       result[i] = r.nextInt(10);
-      }
-        for(int i = 0 ; i < 4 ; i ++){
+        for (int i = 0; i < 4; i++) {
+            result[i] = r.nextInt(10);
+        }
+        for (int i = 0; i < 4; i++) {
             System.out.println(result[i]);
         }
 
@@ -61,7 +60,12 @@ public class CommonTest {
         archiveDAO.queryList(map);*/
     }
 
+    @Test
     public void test3() {
+        BigDecimal one = new BigDecimal(100.00);
+        if(one.compareTo(BigDecimal.valueOf(one.intValue())) == 0)
+            System.out.println("1");
 
+        System.out.println(one.intValue());
     }
 }

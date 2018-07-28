@@ -90,6 +90,7 @@ var vm = new Vue({
             waterRecordEndDateForHtml:'',
         },
         FactoryMessageList:[],
+        CustomerMessageList:[],
     },
     methods: {
         query: function () {
@@ -174,8 +175,11 @@ var vm = new Vue({
             var page = $("#jqGrid").jqGrid('getGridParam','page');
             if(vm.q.factoryId == -100)
                 vm.q.factoryId = null
+            if(vm.q.customerId == -100)
+                vm.q.customerId = null
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'name': vm.q.name,'factoryId':vm.q.factoryId},
+                postData:{'customerId': vm.q.customerId,'factoryId':vm.q.factoryId,
+                'waterBeginDate':vm.q.waterBeginDate,'waterEndDate':vm.q.waterEndDate},
                 page:page
             }).trigger("reloadGrid");
         },
@@ -238,6 +242,25 @@ $.ajax({
             var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
             vm.FactoryMessageList.push(tepm);
         }
+    },error:function (returnJsonData) {
+
+    }
+});
+
+//页面加载时拿到所有的顾客编码
+$.ajax({
+    async: false, // 同步
+    type: 'GET',
+    url: "/customerAccount/getCustomerMessageList",
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (returnJsonData) {
+        vm.CustomerMessageList = [];
+        for(var i = 0 ; i < returnJsonData.length ; i ++){
+            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
+            vm.CustomerMessageList.push(tepm);
+        }
+        console.log(vm.CustomerMessageList);
     },error:function (returnJsonData) {
 
     }

@@ -15,6 +15,7 @@ $(function () {
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
             { label: '污水', name: 'sewage', width:40/*,formatter: operateMenu*/,sortable:false},
+            { label: '类型', name: 'type', width: 40, sortable:false/*, formatter: formatURL*/},
             { label: '操作', width:40,formatter: operateMenu,sortable:false},
         ],
         viewrecords: true,
@@ -56,6 +57,7 @@ var vm = new Vue({
             name:'',
             price:'',
             sewage:'',
+            type:'',
         },
         q:{
             id:'',
@@ -64,6 +66,7 @@ var vm = new Vue({
             name:'',
             price:'',
             sewage:'',
+            type:'',
         },
         FactoryMessageList:[],
     },

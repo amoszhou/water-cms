@@ -78,6 +78,38 @@
   </select>
 
 
+  <select id="getMeterMessage" resultType="com.water.domain.IdAndNameDTO"  >
+    select id , name from t_meter
+    <where>
+      and is_delete = 0
+     <!-- <if test="factoryIds != null and factoryIds.size != 0">
+        and id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>-->
+    </where>
+
+  </select>
+
+
+  <select id="getPriceTypeMessage" resultType="com.water.domain.IdAndNameDTO"  >
+    select id , name from t_price_type
+    <where>
+      and is_delete = 0
+       <if test="factoryIds != null and factoryIds.size != 0">
+         and factory_id in
+         <foreach collection="factoryIds" index="index" item="item"
+                  open="(" separator="," close=")">
+           #{item}
+         </foreach>
+       </if>
+    </where>
+  </select>
+
+
+
   <insert id="insertSelective" parameterType="com.water.domain.Hall" >
     insert into t_bizhall
     <trim prefix="(" suffix=")" suffixOverrides="," >

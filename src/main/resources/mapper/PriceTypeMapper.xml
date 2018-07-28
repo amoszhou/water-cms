@@ -9,16 +9,22 @@
     <result column="factoryName" property="factoryName" jdbcType="VARCHAR" />
     <result column="sewage" property="sewage"  />
     <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
-
+    <result column="type" property="type"  />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, factory_id, name, price, sewage, is_delete
+    id, factory_id, name, price, type,sewage, is_delete
   </sql>
   <!--权限过滤-->
   <sql id="authSql">
     <where>
       and is_delete = 0
-
+      <if test="factoryIds != null and factoryIds.size != 0">
+        and factory_id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
     </where>
   </sql>
   <!-- 查询条件 -->
@@ -38,6 +44,9 @@
           #{item}
         </foreach>
       </if>
+      <if test="id != null ">
+        and id = #{id}
+      </if>
     </where>
   </sql>
   <select id="queryTotal" resultType="int">
@@ -45,7 +54,7 @@
     <include refid="whereClause"/>
   </select>
   <select id="queryList" resultMap="BaseResultMap">
-    select  a.id, a.factory_id, a.name, a.price, a.sewage, a.is_delete ,b.name as factoryName
+    select  a.id, a.factory_id, a.name, a.price, a.sewage,a.type, a.is_delete ,b.name as factoryName
     FROM  (select id,name from t_factory    <include refid="authSql"/> ) as b join
     (select
     <include refid="Base_Column_List"/>
@@ -86,6 +95,9 @@
       <if test="id != null" >
         id,
       </if>
+      <if test="type != null" >
+        type,
+      </if>
       <if test="factoryId != null" >
         factory_id,
       </if>
@@ -105,6 +117,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
       </if>
       <if test="factoryId != null" >
         #{factoryId,jdbcType=INTEGER},
@@ -140,6 +155,9 @@
       </if>
       <if test="isDelete != null" >
         is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

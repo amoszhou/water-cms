@@ -1,25 +1,24 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'chargeRecord/list',
+        url: baseURL + 'customerMeter/list',
         datatype: "json",
         colModel: [
             { label: 'ID', name: 'id', index: "id", width: 30, key: true },
-            { label: '消费记录编码', name: 'custCode', width: 40,sortable:false },
-            { label: '金额', name: 'amount', width: 40, sortable:false/*, formatter: formatURL*/},
-            { label: '顾客名', name: 'customerName', width: 40, sortable:false/*, formatter: formatURL*/},
-            /*{ label: '电话', name: 'deleteStatus', width: 30, formatter: function(value, options, row){
+            { label: 'code', name: 'code', width: 40, sortable:false},
+            { label: '顾客code', name: 'custCode', width: 40,sortable:false },
+            { label: '顾客名称', name: 'customerName', width: 40,sortable:false },
+            { label: '水费价格', name: 'waterFee', width: 40, sortable:false/*, formatter: formatURL*/},
+            { label: '污水费价格', name: 'sewageFee', width: 40, sortable:false/*, formatter: formatURL*/},
+            { label: '水表名', name: 'meterName', width: 40, sortable:false/*, formatter: formatURL*/},
+             /*{ label: '电话', name: 'deleteStatus', width: 30, formatter: function(value, options, row){
                 return value === 0 ?
                     '<span class="label label-success">正常</span>' :
                     '<span class="label label-danger">禁用</span>';
             },sortable:false},*/
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
-            { label: '消费类型', name: 'chargeType', width: 40, sortable:false/*, formatter: formatURL*/},
-            { label: '发票编码', name: 'invoiceCode', width: 40, sortable:false/*, formatter: formatURL*/},
-            { label: '支付方式', name: 'payType', width: 40, sortable:false/*, formatter: formatURL*/},
-            { label: '创建人', name: 'createUserName', width: 40, sortable:false/*, formatter: formatURL*/},
-            { label: '创建时间', name: 'createForHTML', width:40/*,formatter: operateMenu*/,sortable:false},
-                { label: '操作', width:40,formatter: operateMenu,sortable:false},
+            { label: '有效时间', name: 'enableDateForHtml', width:40/*,formatter: operateMenu*/,sortable:false},
+            { label: '操作', width:40,formatter: operateMenu,sortable:false},
         ],
         viewrecords: true,
         height: screen.height * 0.55,
@@ -55,31 +54,42 @@ var vm = new Vue({
         title:null,
         app:{
             id:'',
-            amount:'',
-            chargeType:'',
-            customerName:'',
-            createUser:'',
-            createUserName:'',
+            code:'',
             custCode:'',
             custId:'',
-            invoiceCode:'',
-            payType:'',
-            createForHTML:'',
+            enableDate:'',
+            isDelete:'',
+            priceType:'',
+            size:'',
+            customerName:'',
+            meterName:'',
+            factoryName:'',
+            waterFee:'',
+            sewageFee:'',
+            enableDateForHtml:'',
+            validDate:'',
         },
         q:{
             id:'',
-            amount:'',
-            chargeType:'',
-            customerName:'',
-            createUser:'',
-            createUserName:'',
+            code:'',
             custCode:'',
             custId:'',
-            invoiceCode:'',
-            payType:'',
-            createForHTML:'',
+            enableDate:'',
+            isDelete:'',
+            priceType:'',
+            size:'',
+            customerName:'',
+            meterName:'',
+            factoryName:'',
+            waterFee:'',
+            sewageFee:'',
+            enableDateForHtml:'',
+            validDate:'',
         },
+        FactoryMessageList:[],
         CustomerMessageList:[],
+        PriceTypeMessageList:[],
+        MeterMessageList:[],
     },
     methods: {
         query: function () {
@@ -107,7 +117,7 @@ var vm = new Vue({
             }
 
             confirm('确定要删除选中的记录？', function(){
-                $.get(baseURL + "chargeRecord/"+id+"/del", function(r){
+                $.get(baseURL + "customerMeter/"+id+"/del", function(r){
                     if (r.permissionCheck) {
                         alert(r.msg);
                         return;
@@ -127,7 +137,7 @@ var vm = new Vue({
                 return ;
             }
 
-            var url = vm.app.id == null ? "chargeRecord/addChargeRecord" : "chargeRecord/updateChargeRecord";
+            var url = vm.app.id == null ? "customerMeter/addCustomerMeter" : "customerMeter/updateCustomerMeter";
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
@@ -149,20 +159,26 @@ var vm = new Vue({
             });
         },
         getApp: function(id){
-            $.get(baseURL + "chargeRecord/"+id+"/info", function(r){
+            $.get(baseURL + "customerMeter/"+id+"/info", function(r){
                 if (r.permissionCheck) {
                     alert(r.msg);
                     return;
                 }
-                vm.app = r.chargeRecord;
-                delete vm.app.createTime;
+
+                vm.app = r.customerMeter;
+              /*  delete vm.app.createTime;*/
+                vm.app.enableDate  =  vm.app.enableDateForHtml;
             });
         },
         reload: function () {
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
+            if(vm.q.factoryId == -100)
+                vm.q.factoryId = null
+            if(vm.q.validDate == 0)
+                vm.q.validDate = null
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'custCode': vm.q.custCode,'invoiceCode': vm.q.invoiceCode},
+                postData:{'custCode': vm.q.custCode,'validDate':vm.q.validDate},
                 page:page
             }).trigger("reloadGrid");
         },
@@ -212,6 +228,23 @@ function formatURL(value, options, rowObject) {
     return '<a href="' + result + '" target="_blank">' + value + '</a>';
 }
 
+//页面加载时拿到所有的水厂信息
+$.ajax({
+    async: false, // 同步
+    type: 'GET',
+    url: "/hall/getFactoryMessage",
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (returnJsonData) {
+        vm.FactoryMessageList = [];
+        for(var i = 0 ; i < returnJsonData.length ; i ++){
+            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
+            vm.FactoryMessageList.push(tepm);
+        }
+    },error:function (returnJsonData) {
+
+    }
+});
 //页面加载时拿到所有的顾客编码
 $.ajax({
     async: false, // 同步
@@ -228,5 +261,40 @@ $.ajax({
         console.log(vm.CustomerMessageList);
     },error:function (returnJsonData) {
 
+    }
+});
+//页面加载时拿到所有的水表编码
+$.ajax({
+    async: false, // 同步
+    type: 'GET',
+    url: "/getIdAndName/getMeterMessage",
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (returnJsonData) {
+        vm.MeterMessageList = [];
+        for(var i = 0 ; i < returnJsonData.length ; i ++){
+            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
+            vm.MeterMessageList.push(tepm);
+        }
+        console.log(vm.MeterMessageList);
+    },error:function (returnJsonData) {
+
+    }
+});
+//页面加载时拿到所有的priceType编码
+$.ajax({
+    async: false, // 同步
+    type: 'GET',
+    url: "/getIdAndName/getPriceTypeMessage",
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (returnJsonData) {
+        vm.PriceTypeMessageList = [];
+        for(var i = 0 ; i < returnJsonData.length ; i ++){
+            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
+            vm.PriceTypeMessageList.push(tepm);
+        }
+        console.log(vm.PriceTypeMessageList);
+    },error:function (returnJsonData) {
     }
 });

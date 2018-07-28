@@ -91,7 +91,14 @@ public class IndexController {
         return "payRecord";
     }
 
+    @RequestMapping("/customerMeter")
+    public String customerMeter(Model model) {
 
+        model.addAttribute("addPer","true");
+        model.addAttribute("updatePer","true");
+        model.addAttribute("deletePer","true");
+        return "customerMeter";
+    }
 
     @RequestMapping("/chargeRecord")
     public String chargeRecord(Model model) {

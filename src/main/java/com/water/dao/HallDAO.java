@@ -23,4 +23,8 @@ public interface HallDAO {
 
     int updateByPrimaryKeySelective(Hall record);
 
+    List<IdAndNameDTO> getMeterMessage(Map<String, Object> map);
+
+    List<IdAndNameDTO> getPriceTypeMessage(Map<String, Object> map);
+
 }

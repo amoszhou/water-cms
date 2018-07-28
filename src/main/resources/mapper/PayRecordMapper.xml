@@ -22,12 +22,6 @@
     id, water_record_id, pay_state, customer_id, water_begin_date, water_end_date, pay_type, 
     water_fee, sewage_fee, late_fee, total_fee, water_record_code, factory_id,is_delete
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_pay_record
-    where id = #{id,jdbcType=INTEGER}
-  </select>
   <!--权限过滤-->
   <sql id="authSql">
     <where>
@@ -44,14 +38,14 @@
   <sql id="whereClause">
     <where>
       and is_delete = 0
+      <if test="customerId != null and customerId.trim() != ''">
+        and    customer_id = #{customerId}
+      </if>
       <if test="waterBeginDate != null ">
-        water_begin_date &lt;= #{waterBeginDate}
+        and    water_begin_date &gt;= #{waterBeginDate}
       </if>
       <if test="waterEndDate != null ">
-        water_end_date &gt;= #{waterEndDate}
-      </if>
-      <if test="custId != null and custId.trim() != ''">
-        and cust_id = #{custId}
+        and    water_end_date &lt;= #{waterEndDate}
       </if>
       <if test="factoryId != null and factoryId.trim() != ''">
         and factory_id = #{factoryId}
@@ -101,7 +95,12 @@
     set is_delete = 1
     where id  =  #{id}
   </update>
-
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_pay_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
   <insert id="insertSelective" parameterType="com.water.domain.PayRecord" >
     insert into t_pay_record
     <trim prefix="(" suffix=")" suffixOverrides="," >
