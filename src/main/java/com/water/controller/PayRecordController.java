@@ -1,6 +1,7 @@
 package com.water.controller;
 
 import com.water.domain.PayRecord;
+import com.water.domain.PriceType;
 import com.water.service.PayRecordService;
 import com.water.util.R;
 import org.slf4j.Logger;
@@ -61,4 +62,21 @@ public class PayRecordController {
             return R.error();
         }
     }
+
+    /**
+     * 修改
+     */
+    @PostMapping("/updatePayRecord")
+    public R update(@RequestBody PayRecord dto){
+        try {
+            payRecordService.update(dto);
+        } catch (Exception e) {
+            logger.info("PayRecordController/update|修改失败，原因：{}", e.getMessage());
+            logger.error("PayRecordController/update|Exception:"+e.getMessage(), e);
+            return R.error();
+        }
+        return R.ok();
+    }
+
+
 }

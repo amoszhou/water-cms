@@ -6,6 +6,7 @@ $(function () {
             { label: 'ID', name: 'id', index: "id", width: 30, key: true },
             { label: '水厂名', name: 'factoryName', width: 40,sortable:false },
             { label: '用水记录编码', name: 'waterRecordCode', width: 40, sortable:false/*, formatter: formatURL*/},
+            { label: '顾客Code', name: 'customerCode', width: 40, sortable:false/*, formatter: formatURL*/},
             { label: '正常水费', name: 'waterFee', width:40/*,formatter: operateMenu*/,sortable:false},
             { label: '污水水费', name: 'sewageFee', width:40/*,formatter: operateMenu*/,sortable:false},
             { label: '滞纳金', name: 'lateFee', width:40/*,formatter: operateMenu*/,sortable:false},
@@ -60,6 +61,7 @@ var vm = new Vue({
             customerId:'',
             waterBeginDate:'',
             waterEndDate:'',
+            customerCode:'',
             payType:'',
             waterFee:'',
             sewageFee:'',
@@ -73,6 +75,7 @@ var vm = new Vue({
         },
         q:{
             id:'',
+            customerCode:'',
             waterRecordId:'',
             payState:'',
             customerId:'',
@@ -108,6 +111,16 @@ var vm = new Vue({
             }
             vm.showList = false;
             vm.title = "修改";
+
+            vm.getApp(id);
+        },
+        payFeeMethod:function () {
+            var id = getSelectedRow();
+            if(id == null){
+                return ;
+            }
+            vm.showList = false;
+            vm.title = "缴费";
 
             vm.getApp(id);
         },
@@ -212,7 +225,9 @@ function operateMenu(cellvalue, options, rowObject) {
     result += detailBtn;
     return result;
 }
-
+function payFeeDetail(aid) {
+    vm.payFeeMethod(aid);
+}
 function openDetail(aid) {
     vm.getApp(aid);
 }

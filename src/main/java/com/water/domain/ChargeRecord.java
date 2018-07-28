@@ -9,7 +9,7 @@ public class ChargeRecord implements Serializable {
     private Integer id;
 
     private BigDecimal amount;
-
+    //消费类型（1--充值，2--缴费）
     private Integer chargeType;
 
     private String customerName;

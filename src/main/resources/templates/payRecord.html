@@ -59,46 +59,84 @@
                 <input type="date" class="form-control" v-model="q.waterEndDate" @keyup.enter="query" placeholder="水费开始时间">
             </div>
             <a class="btn btn-default" @click="query">查询</a>
-            <a  th:if="${addPer=='true'}"  class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-            <a th:if="${updatePer=='true'}" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+            <a  th:if="${addPer=='true'}"  class="btn btn-primary" @click="payFeeMethod"><i class="fa fa-plus"></i>&nbsp;缴费</a>
+         <!--   <a th:if="${updatePer=='true'}" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>-->
             <a th:if="${deletePer=='true'}" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;禁用</a>
         </div>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
     </div>
 
-    <!--   新增   -->
+
+
+    <!--   点击缴费之后的界面   -->
     <div v-show="!showList" class="panel panel-default">
         <div class="panel-heading">{{title}}</div>
         <form class="form-horizontal">
             <div class="form-group">
-                <div class="col-sm-2 control-label">水表名</div>
+                <div class="col-sm-2 control-label">用水记录Code</div>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="app.name" placeholder="水表名"/>
+                    <input type="text" class="form-control" v-model="app.waterRecordCode" placeholder="用水记录Code" readonly="readonly" />
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-2 control-label">品牌</div>
+                <div class="col-sm-2 control-label">顾客Code</div>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="app.brand" placeholder="品牌"/>
+                    <input type="text" class="form-control" v-model="app.customerCode" placeholder="顾客Code"  readonly="readonly" />
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-2 control-label">模型</div>
+                <div class="col-sm-2 control-label">正常水费</div>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="app.model" placeholder="模型"/>
+                    <input type="text" class="form-control" v-model="app.waterFee" placeholder="正常水费"   readonly="readonly"/>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-2 control-label">尺寸</div>
+                <div class="col-sm-2 control-label">污水水费</div>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="app.size" placeholder="尺寸"/>
+                    <input type="text" class="form-control" v-model="app.sewageFee" placeholder="污水水费"  readonly="readonly"/>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-2 control-label">说明</div>
+                <div class="col-sm-2 control-label">滞纳金</div>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="app.specification" placeholder="说明"/>
+                    <input type="text" class="form-control" v-model="app.lateFee" placeholder="滞纳金"  readonly="readonly"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">汇总费用</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="app.totalFee" placeholder="汇总费用"   readonly="readonly"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">是否缴费</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="app.payState" placeholder="是否缴费"  readonly="readonly"/>
+                </div>
+            </div>
+            <!--支付方式(1支付宝，2微信，3现金,4账号余额,-1暂未缴费)-->
+            <div class="form-group">
+                <div class="col-sm-2 control-label">支付方式</div>
+                <div class="col-sm-10">
+                    <select  v-model="app.payType"
+                             style="width: 213px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
+                        <option value="1">
+                            支付宝
+                        </option>
+                        <option value="2">
+                            微信
+                        </option>
+                        <option value="3">
+                            现金
+                        </option>
+                        <option value="4">
+                            账号余额
+                        </option>
+                        <option value="-1">
+                            暂未缴费
+                        </option>
+                    </select>
                 </div>
             </div>
 
@@ -109,6 +147,8 @@
             </div>
         </form>
     </div>
+
+
 
 
 

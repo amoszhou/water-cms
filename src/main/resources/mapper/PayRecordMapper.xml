@@ -14,6 +14,7 @@
     <result column="late_fee" property="lateFee" jdbcType="DECIMAL" />
     <result column="total_fee" property="totalFee" jdbcType="DECIMAL" />
     <result column="water_record_code" property="waterRecordCode" jdbcType="VARCHAR" />
+    <result column="customerCode" property="customerCode" jdbcType="VARCHAR" />
     <result column="factory_id" property="factoryId" jdbcType="INTEGER" />
     <result column="water_record_code" property="waterRecordCode" jdbcType="VARCHAR" />
     <result column="is_delete" property="isDelete" jdbcType="INTEGER"/>
@@ -41,10 +42,10 @@
       <if test="customerId != null and customerId.trim() != ''">
         and    customer_id = #{customerId}
       </if>
-      <if test="waterBeginDate != null ">
+      <if test="waterBeginDate != null and waterBeginDate.trim() != '' ">
         and    water_begin_date &gt;= #{waterBeginDate}
       </if>
-      <if test="waterEndDate != null ">
+      <if test="waterEndDate != null  and waterEndDate.trim() != ''">
         and    water_end_date &lt;= #{waterEndDate}
       </if>
       <if test="factoryId != null and factoryId.trim() != ''">
@@ -69,7 +70,7 @@
   <select id="queryList" resultMap="BaseResultMap">
     select  a.id, a.water_record_id, a.pay_state, a.customer_id, a.water_begin_date, a.water_end_date, a.pay_type,
     a.water_fee, a.sewage_fee, a.late_fee, a.total_fee, a.water_record_code, a.factory_id,b.name as
-    factoryName
+    factoryName,c.code as customerCode
     from (select id,name from t_factory<include refid="authSql"/>) as b right JOIN (
     select
     <include refid="Base_Column_List"/>
@@ -86,7 +87,7 @@
     <if test="offset != null and limit != null">
       limit #{offset}, #{limit}
     </if>
-    )as a on b.id = a.factory_id
+    )as a on b.id = a.factory_id LEFT JOIN (SELECT id,name,code from t_customer  <include refid="authSql"/>) as c on c.id = a.customer_id
   </select>
 
 
@@ -226,6 +227,6 @@
         factory_id = #{factoryId,jdbcType=INTEGER},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and   pay_type = -1
   </update>
 </mapper>

@@ -9,15 +9,17 @@ public class PayRecord implements Serializable {
     private Integer id;
     //用水记录ID
     private Integer waterRecordId;
-    //缴费状态（0为未缴费，1为缴费）
+    //缴费状态（-1为未缴费，1为缴费）
     private Integer payState;
     //消费者id
     private Integer customerId;
+    //消费者Code
+    private String customerCode;
     //产生水费开始时间
     private LocalDate waterBeginDate;
     //产生水费结束时间
     private LocalDate waterEndDate;
-    //支付方式(1支付宝，2微信，3现金,-1暂未缴费)'
+    //支付方式(1支付宝，2微信，3现金,4账号余额,-1暂未缴费)
     private Integer payType;
     //正常水费
     private BigDecimal waterFee;
@@ -38,6 +40,14 @@ public class PayRecord implements Serializable {
     private Integer isDelete;
 
     private String waterRecordEndDateForHtml;
+
+    public String getCustomerCode() {
+        return customerCode;
+    }
+
+    public void setCustomerCode(String customerCode) {
+        this.customerCode = customerCode;
+    }
 
     public Integer getIsDelete() {
         return isDelete;

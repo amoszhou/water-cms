@@ -76,7 +76,6 @@ public class ChargeRecordService {
 
     public int update(ChargeRecord chargeRecord) {
         if (chargeRecord != null) {
-
             //使用updateTime作为乐观锁
             return chargeRecordDAO.updateByPrimaryKeySelective(chargeRecord);
         }

@@ -62,10 +62,22 @@ public class CommonTest {
 
     @Test
     public void test3() {
-        BigDecimal one = new BigDecimal(100.00);
-        if(one.compareTo(BigDecimal.valueOf(one.intValue())) == 0)
-            System.out.println("1");
-
-        System.out.println(one.intValue());
+         TESTDTO x = new TESTDTO();
+         TESTDTO y = new TESTDTO();
+        TESTDTO z = new TESTDTO();
+         x.setX(1);
+         y.setX(2);
+         y.setY(3);
+         x.setY(3);
+         z.setX(3);
+         z.setY(4);
+         List<TESTDTO> list = new ArrayList<>();
+         list.add(x);
+         list.add(y);
+        list.add(z);
+         list.sort(Comparator.comparing(TESTDTO::getX).reversed());
+         list.sort(Comparator.comparing(TESTDTO::getY));
+         for(TESTDTO testdto:list)
+             System.out.println(testdto.toString());
     }
 }

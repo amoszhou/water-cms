@@ -1,6 +1,7 @@
 package com.water.service;
 
 import com.water.dao.CustomerAccountDAO;
+import com.water.domain.ChargeRecord;
 import com.water.domain.CustomerAccount;
 import com.water.domain.IdAndNameDTO;
 import com.water.util.PageUtil;
@@ -29,6 +30,8 @@ public class CustomerAccountService {
     Logger logger = LoggerFactory.getLogger(CustomerAccountService.class);
      @Autowired
     private CustomerAccountDAO customerAccountDAO;
+    @Autowired
+    private ChargeRecordService chargeRecordService;
 
     /**
      * @Author : 林吉达
@@ -67,15 +70,28 @@ public class CustomerAccountService {
     public CustomerAccount queryObject(Integer id) {
         return customerAccountDAO.selectByPrimaryKey(id);
     }
-
+    //充值成功之后要生成消费记录
+    @Transactional
     public int update(CustomerAccount customerAccount) {
         if (customerAccount != null) {
             customerAccount.setUpdateTime(LocalDateTime.parse(customerAccount.getUpdateTimeForHTML()));
             //获取user
             customerAccount.setUpdateUser(1);
             //使用updateTime作为乐观锁
-            return customerAccountDAO.updateByPrimaryKeySelective(customerAccount);
+           int result =  customerAccountDAO.updateByPrimaryKeySelective(customerAccount);
+
+            //生成消费记录
+          /*  ChargeRecord chargeRecord = new ChargeRecord();
+            chargeRecord.setCustId(customerAccount.getCustId());
+            chargeRecord.setCustCode(customerAccount.getC());
+            chargeRecord.setAmount(payRecord.getTotalFee());
+            //后期做成枚举  消费类型（1--充值，2--缴费）
+            chargeRecord.setChargeType(1);
+            chargeRecord.setPayType(customerAccount.get());*/
+           /* chargeRecordService.save(chargeRecord);*/
+            return result;
         }
+
         return 0;
     }
 
