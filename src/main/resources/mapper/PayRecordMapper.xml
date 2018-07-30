@@ -227,6 +227,6 @@
         factory_id = #{factoryId,jdbcType=INTEGER},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER} and   pay_type = -1
+    where id = #{id,jdbcType=INTEGER} and   pay_type = -1 and pay_state = -1
   </update>
 </mapper>

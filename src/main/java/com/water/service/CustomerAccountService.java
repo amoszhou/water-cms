@@ -1,6 +1,7 @@
 package com.water.service;
 
 import com.water.dao.CustomerAccountDAO;
+import com.water.dao.CustomerDAO;
 import com.water.domain.ChargeRecord;
 import com.water.domain.CustomerAccount;
 import com.water.domain.IdAndNameDTO;
@@ -32,6 +33,8 @@ public class CustomerAccountService {
     private CustomerAccountDAO customerAccountDAO;
     @Autowired
     private ChargeRecordService chargeRecordService;
+    @Autowired
+    private CustomerDAO customerDAO;
 
     /**
      * @Author : 林吉达
@@ -80,15 +83,18 @@ public class CustomerAccountService {
             //使用updateTime作为乐观锁
            int result =  customerAccountDAO.updateByPrimaryKeySelective(customerAccount);
 
+           //根据userId查出userCode
+               customerDAO.selectByPrimaryKey(customerAccount.getCustId());
+
             //生成消费记录
-          /*  ChargeRecord chargeRecord = new ChargeRecord();
+            ChargeRecord chargeRecord = new ChargeRecord();
             chargeRecord.setCustId(customerAccount.getCustId());
-            chargeRecord.setCustCode(customerAccount.getC());
-            chargeRecord.setAmount(payRecord.getTotalFee());
+            chargeRecord.setCustCode( customerDAO.selectByPrimaryKey(customerAccount.getCustId()).getCode());
+            chargeRecord.setAmount(customerAccount.getRaiseMoney());
             //后期做成枚举  消费类型（1--充值，2--缴费）
             chargeRecord.setChargeType(1);
-            chargeRecord.setPayType(customerAccount.get());*/
-           /* chargeRecordService.save(chargeRecord);*/
+          /*  chargeRecord.setPayType(customerAccount.get());*/
+            chargeRecordService.save(chargeRecord);
             return result;
         }
 

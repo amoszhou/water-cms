@@ -57,6 +57,7 @@ var vm = new Vue({
             updateUser:'',
             customerName:'',
             updateTimeForHTML:'',
+            raiseMoney:'',
         },
         q:{
             id:'',
@@ -65,6 +66,7 @@ var vm = new Vue({
             updateUser:'',
             customerName:'',
             updateTimeForHTML:'',
+            raiseMoney:'',
         },
         CustomerMessageList:[],
     },

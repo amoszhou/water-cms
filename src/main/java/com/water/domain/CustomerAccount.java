@@ -24,6 +24,20 @@ public class CustomerAccount implements Serializable {
 
     private String updateTimeForHTML;
 
+    private BigDecimal raiseMoney;
+
+    public BigDecimal getRaiseMoney() {
+        return raiseMoney;
+    }
+
+    public void setRaiseMoney(BigDecimal raiseMoney) {
+        this.raiseMoney = raiseMoney;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public String getUpdateTimeForHTML() {
         return updateTimeForHTML;
     }
@@ -134,19 +148,17 @@ public class CustomerAccount implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", balance=").append(balance);
-        sb.append(", custId=").append(custId);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", updateUser=").append(updateUser);
-        sb.append(", version=").append(version);
-        sb.append(", isDelete=").append(isDelete);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "CustomerAccount{" +
+                "id=" + id +
+                ", balance=" + balance +
+                ", custId=" + custId +
+                ", updateTime=" + updateTime +
+                ", updateUser=" + updateUser +
+                ", version=" + version +
+                ", isDelete=" + isDelete +
+                ", customerName='" + customerName + '\'' +
+                ", updateTimeForHTML='" + updateTimeForHTML + '\'' +
+                ", raiseMoney=" + raiseMoney +
+                '}';
     }
 }

@@ -25,7 +25,7 @@ public class ChargeRecord implements Serializable {
     private Integer custId;
 
     private String invoiceCode;
-
+    //支付方式(1支付宝，2微信，3现金,4账号余额，5充值类型，无支付类型)
     private Integer payType;
 
     private Integer isDelete;

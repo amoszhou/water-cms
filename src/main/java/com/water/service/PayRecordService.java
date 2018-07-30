@@ -81,7 +81,10 @@ public class PayRecordService {
         if(payRecord.getPayType() == -1){
             return;
         }
+
         if (payRecord != null) {
+            //修改状态变成已支付
+            payRecord.setPayState(1);
             payRecordDAO.updateByPrimaryKeySelective(payRecord);
         }
         //顾客账号余额缴费，需检查用户余额并扣除余额
