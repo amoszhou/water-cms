@@ -284,7 +284,21 @@ var vm = new Vue({
 			});
 		},
         logout: function () {
-		    alert("点击退出");
+
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/employeeOper/logout",
+                    dataType: "json",
+                    success: function (returnJsonData) {
+                        window.location.href="/index";
+                    },
+                    error: function (returnJsonData) {
+                        alert("出现异常!请联系管理员!");
+                    }
+                });
+
+
 		/*	//删除本地token
             localStorage.removeItem("token");
             //跳转到登录页面

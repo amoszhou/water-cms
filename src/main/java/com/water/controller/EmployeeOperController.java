@@ -1,5 +1,7 @@
 package com.water.controller;
 
+import com.water.config.Globals;
+import com.water.config.HttpServletRequestUtil;
 import com.water.domain.Employee;
 import com.water.service.EmployeeService;
 import com.water.util.R;
@@ -26,6 +28,8 @@ public class EmployeeOperController {
     @Autowired
     private EmployeeService employeeService;
 
+    //登出成功
+    private final static int LOOUTSUCCESS = 1;
 
     //登录失败
     private final static int LOGINFAIL = -1;
@@ -46,6 +50,16 @@ public class EmployeeOperController {
             logger.error("EmployeeOperController/employeeLogin|数据:{}|Exception:" + e.getMessage(), employee, e);
         }
         return ResultDTO.buildSuccessResult(LOGINFAIL);
+    }
+
+    @GetMapping("/logout")
+    public ResultDTO employeeLogOut(){
+        try{
+            HttpServletRequestUtil.getRequst().getSession().removeAttribute(Globals.USERID);
+        }catch (Exception e){
+            logger.error("EmployeeOperController/employeeLogOut|Exception:" + e.getMessage(), e);
+        }
+        return ResultDTO.buildSuccessResult(LOOUTSUCCESS);
     }
 
 }

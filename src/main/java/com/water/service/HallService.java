@@ -1,5 +1,7 @@
 package com.water.service;
 
+import com.water.config.HttpServletRequestUtil;
+import com.water.constant.EmployeeType;
 import com.water.dao.HallDAO;
 import com.water.domain.IdAndNameDTO;
 import com.water.domain.Hall;
@@ -30,11 +32,15 @@ public class HallService {
     @Autowired
     private HallDAO hallDAO;
 
-/**
-  * @Author : 林吉达
-  * @Description : 查询列表
-  * @Date : 10:13 2018/7/3
-  */
+    private static final String FACTORYIDS = "factoryIds";
+
+    private static final String USERTYPE = "userType";
+
+    /**
+     * @Author : 林吉达
+     * @Description : 查询列表
+     * @Date : 10:13 2018/7/3
+     */
     public R queryList(Map<String, Object> params) {
         logger.info("HallService/queryList begin | params = {}", params.toString());
 
@@ -91,23 +97,23 @@ public class HallService {
     }
 
 
-    public  List<IdAndNameDTO> selectFactoryMessage(){
+    public List<IdAndNameDTO> selectFactoryMessage() {
         Map map = new HashMap();
-        return  hallDAO.selectFactoryMessage(map);
+        int userType = (Integer) HttpServletRequestUtil.getRequst().getSession().getAttribute(USERTYPE);
+        if (userType == EmployeeType.NORMAL_MANAGER.getTypeId())
+            map.put(FACTORYIDS,HttpServletRequestUtil.getRequst().getSession().getAttribute(FACTORYIDS));
+            return hallDAO.selectFactoryMessage(map);
     }
 
-    public  List<IdAndNameDTO> getMeterMessage(){
+    public List<IdAndNameDTO> getMeterMessage() {
         Map map = new HashMap();
-        return  hallDAO.getMeterMessage(map);
+        return hallDAO.getMeterMessage(map);
     }
 
-    public  List<IdAndNameDTO> getPriceTypeMessage(){
+    public List<IdAndNameDTO> getPriceTypeMessage() {
         Map map = new HashMap();
-        return  hallDAO.getPriceTypeMessage(map);
+        return hallDAO.getPriceTypeMessage(map);
     }
-
-
-
 
 
 }

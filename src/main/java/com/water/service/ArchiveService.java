@@ -1,5 +1,9 @@
 package com.water.service;
 
+import com.water.annotation.FactoryIds;
+import com.water.config.Globals;
+import com.water.config.HttpServletRequestUtil;
+import com.water.constant.EmployeeType;
 import com.water.dao.ArchiveDAO;
 import com.water.domain.Archive;
 import com.water.domain.Area;
@@ -36,6 +40,7 @@ public class ArchiveService {
      * @Description : 查询列表
      * @Date : 17:39 2018/7/3
      */
+    @FactoryIds
     public R queryList(Map<String, Object> params) {
         logger.info("ArchiveService/queryList begin | params = {}", params.toString());
 
@@ -87,11 +92,17 @@ public class ArchiveService {
 
     public  List<IdAndNameDTO> selectAreaMessage(){
         Map map = new HashMap();
+        int userType = (Integer) HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERTYPE);
+        if (userType == EmployeeType.NORMAL_MANAGER.getTypeId())
+            map.put(Globals.FACTORYIDS,HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.FACTORYIDS));
         return  archiveDAO.selectAreaMessage(map);
     }
 
     public  List<IdAndNameDTO> selectHallMessage(){
         Map map = new HashMap();
+        int userType = (Integer) HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERTYPE);
+        if (userType == EmployeeType.NORMAL_MANAGER.getTypeId())
+            map.put(Globals.FACTORYIDS,HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.FACTORYIDS));
         return  archiveDAO.selectHallMessage(map);
     }
     public  List<IdAndNameDTO> getArchiveMessage(){

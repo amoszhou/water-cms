@@ -27,6 +27,16 @@ public class Archive implements Serializable {
 
     private String areaName;
 
+    private Integer factoryId;
+
+    public Integer getFactoryId() {
+        return factoryId;
+    }
+
+    public void setFactoryId(Integer factoryId) {
+        this.factoryId = factoryId;
+    }
+
     public String getCreateTimeForHtml() {
         return createTimeForHtml;
     }
@@ -157,20 +167,19 @@ public class Archive implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", areaId=").append(areaId);
-        sb.append(", code=").append(code);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", hallId=").append(hallId);
-        sb.append(", name=").append(name);
-        sb.append(", recordUser=").append(recordUser);
-        sb.append(", isDelete=").append(isDelete);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Archive{" +
+                "id=" + id +
+                ", createTimeForHtml='" + createTimeForHtml + '\'' +
+                ", areaId=" + areaId +
+                ", code='" + code + '\'' +
+                ", createTime=" + createTime +
+                ", hallId=" + hallId +
+                ", name='" + name + '\'' +
+                ", recordUser=" + recordUser +
+                ", isDelete=" + isDelete +
+                ", hallName='" + hallName + '\'' +
+                ", areaName='" + areaName + '\'' +
+                ", factoryId=" + factoryId +
+                '}';
     }
 }

@@ -28,9 +28,9 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         // TODO Auto-generated method stub
-        logger.info("------preHandle------");
+       // logger.info("------preHandle------");
         //获取session
-        logger.info("requsstUrl:"+request.getRequestURL());
+        /*logger.info("requsstUrl:"+request.getRequestURL());*/
         HttpSession session = request.getSession(true);
         //判断用户ID是否存在，不存在就跳转到登录界面
         if(session.getAttribute("userId") == null){

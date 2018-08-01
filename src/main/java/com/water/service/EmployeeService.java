@@ -86,6 +86,7 @@ public class EmployeeService {
             return LOGINFAIL;
         }
         if (employFromTable.getPassword().equals(employee.getPassword())) {
+            request.getSession(true).setAttribute("userType", employFromTable.getUserType());
             //登录成功
             if (employFromTable.getUserType() == EmployeeType.NORMAL_MANAGER.getTypeId()) {
                 request.getSession(true).setAttribute("userId", employFromTable.getTelPhone());
