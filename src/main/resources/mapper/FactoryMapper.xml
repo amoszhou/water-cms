@@ -20,6 +20,13 @@
       <if test="name != null and name.trim() != ''">
         and name like concat('%', trim(#{name}),'%')
       </if>
+      <if test="factoryIds != null and factoryIds.size != 0">
+        and id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
     <!--  <if test="managerName != null and managerName.trim() != ''">
         and manager_name like concat('%', trim(#{managerName}),'%')
       </if>-->

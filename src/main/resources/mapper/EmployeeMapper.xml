@@ -74,6 +74,10 @@
     where id  =  #{id}
   </update>
 
+  <select id="queryObject" resultMap="BaseResultMap">
+     select password,factory_id,user_type,tel_phone from t_employee where is_delete = 0 and tel_phone = #{telPhone}
+  </select>
+
 
   <insert id="insertSelective" parameterType="com.water.domain.Employee" >
     insert into t_employee

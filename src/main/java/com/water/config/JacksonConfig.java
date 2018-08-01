@@ -19,5 +19,6 @@ public class JacksonConfig {
         objectMapper.findAndRegisterModules();
         return objectMapper;
     }
+
 }
 

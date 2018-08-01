@@ -78,7 +78,7 @@ public class PayRecordService {
     @Transactional
     public void update(PayRecord payRecord) {
         //不缴费，不做任何修改
-        if(payRecord.getPayType() == -1){
+        if(payRecord.getPayType() == -1 || payRecord.getPayState() != -1){
             return;
         }
 
@@ -87,10 +87,12 @@ public class PayRecordService {
             payRecord.setPayState(1);
             payRecordDAO.updateByPrimaryKeySelective(payRecord);
         }
-        //顾客账号余额缴费，需检查用户余额并扣除余额
+
+        //todo 顾客账号余额缴费，需检查用户余额并扣除余额
         if (payRecord.getPayType() == 4) {
 
         }
+
         //生成消费记录
         ChargeRecord chargeRecord = new ChargeRecord();
         chargeRecord.setCustId(payRecord.getCustomerId());

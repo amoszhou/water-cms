@@ -10,7 +10,7 @@ public class Employee implements Serializable {
     private String password;
 
     private String realName;
-
+   //数据库做了唯一索引检查
     private String telPhone;
 
     private String username;

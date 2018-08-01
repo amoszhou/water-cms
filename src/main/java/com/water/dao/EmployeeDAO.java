@@ -20,5 +20,6 @@ public interface EmployeeDAO {
 
     int updateByPrimaryKeySelective(Employee record);
 
+    Employee queryObject(Employee employee);
 
 }

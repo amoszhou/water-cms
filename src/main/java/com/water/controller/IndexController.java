@@ -42,6 +42,12 @@ public class IndexController {
         return "factory";
     }
 
+    @RequestMapping("/admin/login")
+    public String admin(Model model) {
+
+        return "login";
+    }
+
 
     @RequestMapping("/employee")
     public String employee(Model model) {

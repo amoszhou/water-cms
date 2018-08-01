@@ -1,5 +1,7 @@
 package com.water.service;
 
+import com.water.config.HttpServletRequestUtil;
+import com.water.constant.EmployeeType;
 import com.water.dao.EmployeeDAO;
 import com.water.domain.Employee;
 import com.water.domain.Factory;
@@ -11,7 +13,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +36,16 @@ public class EmployeeService {
     @Autowired
     private EmployeeDAO employeeDAO;
 
-/**
-  * @Author : 林吉达
-  * @Description : 查询列表
-  * @Date : 16:53 2018/6/28
-  */
+    //登录失败
+    private final static int LOGINFAIL = -1;
+    //登录成功
+    private final static int LOGINSUCCESS = 1;
+
+    /**
+     * @Author : 林吉达
+     * @Description : 查询列表
+     * @Date : 16:53 2018/6/28
+     */
     public R queryList(Map<String, Object> params) {
         logger.info("EmployeeService/queryList begin | params = {}", params.toString());
 
@@ -67,6 +79,27 @@ public class EmployeeService {
     }
 
 
+    public Integer employeeLogin(Employee employee) {
+        HttpServletRequest request = HttpServletRequestUtil.getRequst();
+        Employee employFromTable = employeeDAO.queryObject(employee);
+        if (employFromTable == null) {
+            return LOGINFAIL;
+        }
+        if (employFromTable.getPassword().equals(employee.getPassword())) {
+            //登录成功
+            if (employFromTable.getUserType() == EmployeeType.NORMAL_MANAGER.getTypeId()) {
+                request.getSession(true).setAttribute("userId", employFromTable.getTelPhone());
+                request.getSession(true).setAttribute("factoryIds", Arrays.asList(employFromTable.getFactoryId()));
+            } else {
+                //超级管理员,不需要设置factoryId
+                request.getSession(true).setAttribute("userId", employFromTable.getTelPhone());
+            }
+
+            return LOGINSUCCESS;
+        }
+        return LOGINFAIL;
+    }
+
 
     public void update(Employee employee) {
         if (employee != null) {
@@ -87,7 +120,6 @@ public class EmployeeService {
         }
 
     }
-
 
 
 }

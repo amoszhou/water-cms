@@ -1,5 +1,6 @@
 package com.water.service;
 
+import com.water.annotation.FactoryIds;
 import com.water.dao.EmployeeDAO;
 import com.water.dao.FactoryDAO;
 import com.water.domain.Employee;
@@ -41,6 +42,7 @@ public class FactoryService {
      * @Description : 查询列表
      * @Date : 20:28 2018/6/26
      */
+    @FactoryIds
     public R queryList(Map<String, Object> params) {
         logger.info("FactoryService/queryList begin | params = {}", params.toString());
 
