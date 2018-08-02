@@ -1,10 +1,14 @@
 package com.water.service;
 
+import com.water.annotation.FactoryIds;
+import com.water.config.HttpServletRequestUtil;
+import com.water.constant.EmployeeType;
 import com.water.dao.CustomerAccountDAO;
 import com.water.dao.CustomerDAO;
 import com.water.domain.ChargeRecord;
 import com.water.domain.CustomerAccount;
 import com.water.domain.IdAndNameDTO;
+import com.water.exception.BizException;
 import com.water.util.PageUtil;
 import com.water.util.Query;
 import com.water.util.R;
@@ -29,18 +33,23 @@ import java.util.Map;
 public class CustomerAccountService {
 
     Logger logger = LoggerFactory.getLogger(CustomerAccountService.class);
-     @Autowired
+    @Autowired
     private CustomerAccountDAO customerAccountDAO;
     @Autowired
     private ChargeRecordService chargeRecordService;
     @Autowired
     private CustomerDAO customerDAO;
 
+    private static final String FACTORYIDS = "factoryIds";
+
+    private static final String USERTYPE = "userType";
+
     /**
      * @Author : 林吉达
      * @Description : 查询列表
      * @Date : 10:13 2018/7/3
      */
+    @FactoryIds
     public R queryList(Map<String, Object> params) {
         logger.info("CustomerAccountService/queryList begin | params = {}", params.toString());
 
@@ -64,6 +73,12 @@ public class CustomerAccountService {
      */
     public void save(CustomerAccount customerAccount) {
         if (customerAccount != null) {
+
+            //检查这个customerId 是否已经存在customerAccount表中
+            if (customerAccountDAO.selectByCustId(customerAccount.getCustId()) > 0) {
+                 throw  new BizException("此顾客已经有账号了！");
+            }
+
             //获取user
             customerAccount.setUpdateUser(1);
             customerAccountDAO.insertSelective(customerAccount);
@@ -71,8 +86,11 @@ public class CustomerAccountService {
     }
 
     public CustomerAccount queryObject(Integer id) {
-        return customerAccountDAO.selectByPrimaryKey(id);
+        Map map = new HashMap();
+        map.put("id", id);
+        return (CustomerAccount) customerAccountDAO.queryList(map).get(0);
     }
+
     //充值成功之后要生成消费记录
     @Transactional
     public int update(CustomerAccount customerAccount) {
@@ -81,23 +99,19 @@ public class CustomerAccountService {
             //获取user
             customerAccount.setUpdateUser(1);
             //使用updateTime作为乐观锁
-           int result =  customerAccountDAO.updateByPrimaryKeySelective(customerAccount);
-
-           //根据userId查出userCode
-               customerDAO.selectByPrimaryKey(customerAccount.getCustId());
-
+            int result = customerAccountDAO.updateByPrimaryKeySelective(customerAccount);
             //生成消费记录
             ChargeRecord chargeRecord = new ChargeRecord();
             chargeRecord.setCustId(customerAccount.getCustId());
-            chargeRecord.setCustCode( customerDAO.selectByPrimaryKey(customerAccount.getCustId()).getCode());
+            chargeRecord.setCustCode(customerDAO.selectByPrimaryKey(customerAccount.getCustId()).getCode());
             chargeRecord.setAmount(customerAccount.getRaiseMoney());
             //后期做成枚举  消费类型（1--充值，2--缴费）
             chargeRecord.setChargeType(1);
+            chargeRecord.setFactoryId(customerAccount.getFactoryId());
           /*  chargeRecord.setPayType(customerAccount.get());*/
             chargeRecordService.save(chargeRecord);
             return result;
         }
-
         return 0;
     }
 
@@ -109,9 +123,12 @@ public class CustomerAccountService {
         }
     }
 
-    public  List<IdAndNameDTO> selectCustomerMessage(){
+    public List<IdAndNameDTO> selectCustomerMessage() {
         Map map = new HashMap();
-        return  customerAccountDAO.selectCustomerMessage(map);
+        int userType = (Integer) HttpServletRequestUtil.getRequst().getSession().getAttribute(USERTYPE);
+        if (userType == EmployeeType.NORMAL_MANAGER.getTypeId())
+            map.put(FACTORYIDS, HttpServletRequestUtil.getRequst().getSession().getAttribute(FACTORYIDS));
+        return customerAccountDAO.selectCustomerMessage(map);
     }
 
 }

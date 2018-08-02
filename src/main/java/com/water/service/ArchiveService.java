@@ -107,6 +107,9 @@ public class ArchiveService {
     }
     public  List<IdAndNameDTO> getArchiveMessage(){
         Map map = new HashMap();
+        int userType = (Integer) HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERTYPE);
+        if (userType == EmployeeType.NORMAL_MANAGER.getTypeId())
+            map.put(Globals.FACTORYIDS,HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.FACTORYIDS));
         return  archiveDAO.getArchiveMessage(map);
     }
 

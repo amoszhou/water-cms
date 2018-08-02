@@ -30,10 +30,10 @@ public class EmployeeOperController {
     @Autowired
     private EmployeeService employeeService;
 
-    //登出成功
+    //成功
     private final static int SUCCESSFLAG = 1;
 
-    //登录失败
+    //失败
     private final static int FAILFLAG = -1;
 
     @GetMapping("/login")
@@ -83,7 +83,10 @@ public class EmployeeOperController {
             map.put("oldPassword",oldPassword);
             map.put("newPassword",newPassword);
             map.put("telPhone", HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERID));
-            return ResultDTO.buildSuccessResult(employeeService.modifyPassword(map));
+            if(employeeService.modifyPassword(map) == SUCCESSFLAG){
+                employeeLogOut();
+                return ResultDTO.buildSuccessResult(SUCCESSFLAG);
+            }
         } catch (Exception e) {
             logger.info("EmployeeOperController/modifyMyPassword|修改密码失败，数据:{},原因：{}", map.toString(), e.getMessage());
             logger.error("EmployeeOperController/modifyMyPassword|数据:{}|Exception:" + e.getMessage(),  map.toString(), e);

@@ -3,6 +3,7 @@ package com.water.controller;
 import com.water.domain.CustomerAccount;
 import com.water.domain.IdAndNameDTO;
 import com.water.domain.PriceType;
+import com.water.exception.BizException;
 import com.water.service.CustomerAccountService;
 import com.water.util.R;
 import org.slf4j.Logger;
@@ -10,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLDataException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +53,8 @@ public class CustomerAccountController {
     public R save(@RequestBody CustomerAccount dto) {
         try {
             customerAccountService.save(dto);
+        }catch (BizException e){
+            return R.error(e.getMessage());
         } catch (Exception e) {
             logger.info("CustomerAccountController/save|添加失败，原因：{}", e.getMessage());
             logger.error("CustomerAccountController/save|Exception:" + e.getMessage(), e);
@@ -90,7 +95,10 @@ public class CustomerAccountController {
             int result = customerAccountService.update(dto);
             if (result != 0)
                 return R.ok();
-        } catch (Exception e) {
+        }catch (BizException e){
+            return R.error(e.getMessage());
+        }
+        catch (Exception e) {
             logger.info("CustomerAccountController/update|修改失败，原因：{}", e.getMessage());
             logger.error("CustomerAccountController/update|Exception:" + e.getMessage(), e);
             return R.error();

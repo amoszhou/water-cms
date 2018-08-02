@@ -58,6 +58,7 @@ var vm = new Vue({
             customerName:'',
             updateTimeForHTML:'',
             raiseMoney:'',
+            factoryId:'',
         },
         q:{
             id:'',
@@ -67,8 +68,10 @@ var vm = new Vue({
             customerName:'',
             updateTimeForHTML:'',
             raiseMoney:'',
+            factoryId:'',
         },
         CustomerMessageList:[],
+        FactoryMessageList:[],
     },
     methods: {
         query: function () {
@@ -202,7 +205,7 @@ function formatURL(value, options, rowObject) {
     return '<a href="' + result + '" target="_blank">' + value + '</a>';
 }
 
-//页面加载时拿到所有的奖池编码
+//页面加载时拿到所有的顾客信息
 $.ajax({
     async: false, // 同步
     type: 'GET',
@@ -216,6 +219,24 @@ $.ajax({
             vm.CustomerMessageList.push(tepm);
         }
         console.log(vm.CustomerMessageList);
+    },error:function (returnJsonData) {
+
+    }
+});
+//页面加载时拿到所有的水厂信息
+$.ajax({
+    async: false, // 同步
+    type: 'GET',
+    url: "/hall/getFactoryMessage",
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (returnJsonData) {
+        vm.FactoryMessageList = [];
+        for(var i = 0 ; i < returnJsonData.length ; i ++){
+            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
+            vm.FactoryMessageList.push(tepm);
+        }
+        console.log(vm.FactoryMessageList);
     },error:function (returnJsonData) {
 
     }

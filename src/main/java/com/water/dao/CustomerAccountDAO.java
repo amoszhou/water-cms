@@ -23,5 +23,7 @@ public interface CustomerAccountDAO {
 
     List<IdAndNameDTO> selectCustomerMessage(Map<String, Object> map);
 
+    int selectByCustId(Integer customerId);
+
 
 }

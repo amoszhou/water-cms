@@ -32,6 +32,16 @@ public class ChargeRecord implements Serializable {
 
     private String createForHTML;
 
+    private Integer factoryId;
+
+    public Integer getFactoryId() {
+        return factoryId;
+    }
+
+    public void setFactoryId(Integer factoryId) {
+        this.factoryId = factoryId;
+    }
+
     public String getCreateUserName() {
         return createUserName;
     }
@@ -200,6 +210,7 @@ public class ChargeRecord implements Serializable {
                 ", payType=" + payType +
                 ", isDelete=" + isDelete +
                 ", createForHTML='" + createForHTML + '\'' +
+                ", factoryId=" + factoryId +
                 '}';
     }
 }

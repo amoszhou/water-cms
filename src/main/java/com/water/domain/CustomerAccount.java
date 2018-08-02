@@ -26,6 +26,16 @@ public class CustomerAccount implements Serializable {
 
     private BigDecimal raiseMoney;
 
+    private Integer factoryId;
+
+    public Integer getFactoryId() {
+        return factoryId;
+    }
+
+    public void setFactoryId(Integer factoryId) {
+        this.factoryId = factoryId;
+    }
+
     public BigDecimal getRaiseMoney() {
         return raiseMoney;
     }
@@ -159,6 +169,7 @@ public class CustomerAccount implements Serializable {
                 ", customerName='" + customerName + '\'' +
                 ", updateTimeForHTML='" + updateTimeForHTML + '\'' +
                 ", raiseMoney=" + raiseMoney +
+                ", factoryId=" + factoryId +
                 '}';
     }
 }

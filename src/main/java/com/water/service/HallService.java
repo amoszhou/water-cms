@@ -103,11 +103,17 @@ public class HallService {
 
     public List<IdAndNameDTO> getMeterMessage() {
         Map map = new HashMap();
+        int userType = (Integer) HttpServletRequestUtil.getRequst().getSession().getAttribute(USERTYPE);
+        if (userType == EmployeeType.NORMAL_MANAGER.getTypeId())
+            map.put(FACTORYIDS,HttpServletRequestUtil.getRequst().getSession().getAttribute(FACTORYIDS));
         return hallDAO.getMeterMessage(map);
     }
 
     public List<IdAndNameDTO> getPriceTypeMessage() {
         Map map = new HashMap();
+        int userType = (Integer) HttpServletRequestUtil.getRequst().getSession().getAttribute(USERTYPE);
+        if (userType == EmployeeType.NORMAL_MANAGER.getTypeId())
+            map.put(FACTORYIDS,HttpServletRequestUtil.getRequst().getSession().getAttribute(FACTORYIDS));
         return hallDAO.getPriceTypeMessage(map);
     }
 

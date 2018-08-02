@@ -44,6 +44,19 @@
       </if>
     </where>
   </sql>
+  <!--权限过滤  for t_factory  -->
+  <sql id="authSqlForFactoryTable">
+    <where>
+      and is_delete = 0
+      <if test="factoryIds != null and factoryIds.size != 0">
+        and id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </sql>
   <!-- 查询条件 -->
   <sql id="whereClause">
     <where>
@@ -76,7 +89,7 @@
     a.frequency, a.hall_id, a.id_card, a.is_delete, a.name, a.phone, a.tel, a.update_time, a.update_user,
     b.name as factoryName,c.name as archiveName,  d.name as areaName,e.username as createUserName,f.username as updateUserName,
     g.name as hallName
-    from (select id,name from t_factory <include refid="authSql"/>)  as b  right JOIN (
+    from (select id,name from t_factory <include refid="authSqlForFactoryTable"/>)  as b  right JOIN (
     select
     <include refid="Base_Column_List"/>
     from t_customer
