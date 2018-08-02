@@ -1,5 +1,6 @@
 package com.water.service;
 
+import com.water.annotation.FactoryIds;
 import com.water.config.HttpServletRequestUtil;
 import com.water.constant.EmployeeType;
 import com.water.dao.HallDAO;
@@ -41,6 +42,7 @@ public class HallService {
      * @Description : 查询列表
      * @Date : 10:13 2018/7/3
      */
+    @FactoryIds
     public R queryList(Map<String, Object> params) {
         logger.info("HallService/queryList begin | params = {}", params.toString());
 
@@ -64,24 +66,18 @@ public class HallService {
      */
     public void save(Hall hall) {
         if (hall != null) {
-            String[] result = hall.getFactoryName().split(":");
-            hall.setFactoryId(Integer.parseInt(result[0]));
-            hall.setFactoryName(result[1]);
-            logger.info(hall.toString());
             hallDAO.insertSelective(hall);
         }
     }
 
     public Hall queryObject(Integer id) {
-        return hallDAO.selectByPrimaryKey(id);
+             Map map = new HashMap();
+             map.put("id",id);
+        return (Hall) hallDAO.queryList(map).get(0);
     }
 
     public void update(Hall hall) {
         if (hall != null) {
-            String[] result = hall.getFactoryName().split(":");
-            hall.setFactoryId(Integer.parseInt(result[0]));
-            hall.setFactoryName(result[1]);
-            logger.info(hall.toString());
             hallDAO.updateByPrimaryKeySelective(hall);
         }
     }

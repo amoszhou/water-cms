@@ -11,32 +11,48 @@
     <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, address, factory_id, is_delete, name, tel, factory_name
+    id, address, factory_id, is_delete, name, tel
   </sql>
-
+  <!--权限过滤-->
+  <sql id="authSql">
+    <where>
+      and is_delete = 0
+      <if test="factoryIds != null and factoryIds.size != 0">
+        and id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </sql>
   <!-- 查询条件 -->
   <sql id="whereClause">
     <where>
       and is_delete = 0
-      <if test="factoryName != null and factoryName.trim() != ''">
-        and factory_name like concat('%', trim(#{factoryName}),'%')
+      <if test="factoryId != null and factoryId.trim() != ''">
+        and factory_id = #{factoryId}
       </if>
-      <if test="id != null and id.trim() != ''">
+      <if test="id != null ">
         and  id = #{id,jdbcType=INTEGER}
       </if>
-
+      <if test="factoryIds != null and factoryIds.size != 0">
+        and factory_id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
     </where>
   </sql>
   <select id="queryTotal" resultType="int">
     select count(1) from t_bizhall
     <include refid="whereClause"/>
   </select>
-  <update id="updateDeleteState" parameterType="java.lang.Long">
-    update t_bizhall
-    set is_delete = 1
-    where id  =  #{id}
-  </update>
+
   <select id="queryList" resultMap="BaseResultMap">
+    select  a.id, a.address, a.factory_id, a.is_delete, a.name, a.tel,b.name as factory_name
+    from (select id,name from t_factory <include refid="authSql"/>) as b  right JOIN (
     select
     <include refid="Base_Column_List"/>
     from t_bizhall
@@ -52,8 +68,14 @@
     <if test="offset != null and limit != null">
       limit #{offset}, #{limit}
     </if>
+    )as a on b.id = a.factory_id
   </select>
 
+  <update id="updateDeleteState" parameterType="java.lang.Long">
+    update t_bizhall
+    set is_delete = 1
+    where id  =  #{id}
+  </update>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 

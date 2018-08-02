@@ -1,5 +1,6 @@
 package com.water.service;
 
+import com.water.annotation.FactoryIds;
 import com.water.dao.AreaDAO;
 import com.water.domain.Area;
 import com.water.util.PageUtil;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,11 +32,12 @@ public class AreaService {
     @Autowired
     private EmployeeService employeeService;
 
-  /**
-    * @Author : 林吉达
-    * @Description : 查询列表
-    * @Date : 17:39 2018/7/3
-    */
+    /**
+     * @Author : 林吉达
+     * @Description : 查询列表
+     * @Date : 17:39 2018/7/3
+     */
+    @FactoryIds
     public R queryList(Map<String, Object> params) {
         logger.info("AreaService/queryList begin | params = {}", params.toString());
 
@@ -56,9 +59,9 @@ public class AreaService {
      * @Description :保存
      * @Date : 20:28 2018/6/26
      */
-    public void save(Area area){
+    public void save(Area area) {
         if (area != null) {
-           //组装创建人
+            //组装创建人
             area.setCreateUser(1);
             area.setCreateUserName(employeeService.queryObject(1).getRealName());
             areaDAO.insertSelective(area);
@@ -66,7 +69,9 @@ public class AreaService {
     }
 
     public Area queryObject(Integer id) {
-        return areaDAO.selectByPrimaryKey(id);
+        Map map = new HashMap();
+        map.put("id", id);
+        return (Area) areaDAO.queryList(map).get(0);
     }
 
     public void update(Area area) {
@@ -84,8 +89,6 @@ public class AreaService {
         }
 
     }
-
-
 
 
 }

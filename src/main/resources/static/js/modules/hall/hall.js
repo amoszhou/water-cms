@@ -150,8 +150,11 @@ var vm = new Vue({
         reload: function () {
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
+            if(vm.q.factoryId == -100){
+                vm.q.factoryId = null;
+            }
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'factoryName':vm.q.factoryName},
+                postData:{'factoryId':vm.q.factoryId},
                 page:page
             }).trigger("reloadGrid");
         },

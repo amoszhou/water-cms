@@ -8,9 +8,11 @@ package com.water.config;
  */
 public interface Globals {
 
-    public static final String FACTORYIDS = "factoryIds";
+  String FACTORYIDS = "factoryIds";
 
-    public static final String USERTYPE = "userType";
+   String USERTYPE = "userType";
 
-    public static final String USERID = "userId";
+   String USERID = "userId";
+
+   String USERNAME = "userName";
 }

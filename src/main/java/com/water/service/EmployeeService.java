@@ -36,10 +36,10 @@ public class EmployeeService {
     @Autowired
     private EmployeeDAO employeeDAO;
 
-    //登录失败
-    private final static int LOGINFAIL = -1;
-    //登录成功
-    private final static int LOGINSUCCESS = 1;
+    //失败
+    private final static int FAILFLAG = -1;
+    //成功
+    private final static int SUCCESSFLAG = 1;
 
     /**
      * @Author : 林吉达
@@ -83,10 +83,11 @@ public class EmployeeService {
         HttpServletRequest request = HttpServletRequestUtil.getRequst();
         Employee employFromTable = employeeDAO.queryObject(employee);
         if (employFromTable == null) {
-            return LOGINFAIL;
+            return FAILFLAG;
         }
         if (employFromTable.getPassword().equals(employee.getPassword())) {
             request.getSession(true).setAttribute("userType", employFromTable.getUserType());
+            request.getSession(true).setAttribute("userName", employFromTable.getRealName());
             //登录成功
             if (employFromTable.getUserType() == EmployeeType.NORMAL_MANAGER.getTypeId()) {
                 request.getSession(true).setAttribute("userId", employFromTable.getTelPhone());
@@ -96,11 +97,21 @@ public class EmployeeService {
                 request.getSession(true).setAttribute("userId", employFromTable.getTelPhone());
             }
 
-            return LOGINSUCCESS;
+            return SUCCESSFLAG;
         }
-        return LOGINFAIL;
+        return FAILFLAG;
     }
 
+    public  int modifyPassword(Map map){
+       Employee oldEmployee = new Employee();
+       oldEmployee.setTelPhone((String) map.get("telPhone"));
+       oldEmployee = employeeDAO.queryObject(oldEmployee);
+       if(!oldEmployee.getPassword().equals(map.get("oldPassword"))){
+             return FAILFLAG;
+       }
+       oldEmployee.setPassword((String) map.get("newPassword"));
+       return  employeeDAO.modifyPassword(oldEmployee);
+    }
 
     public void update(Employee employee) {
         if (employee != null) {

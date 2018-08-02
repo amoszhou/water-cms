@@ -1,5 +1,7 @@
 package com.water.controller;
 
+import com.water.config.Globals;
+import com.water.config.HttpServletRequestUtil;
 import com.water.domain.Employee;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,8 @@ public class IndexController {
 
         model.addAttribute("addPer","true");
         model.addAttribute("updatePer","true");
+        //获取用户名
+        model.addAttribute("userName", HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERNAME));
         return "cover";
     }
 

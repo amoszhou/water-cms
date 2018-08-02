@@ -22,4 +22,6 @@ public interface EmployeeDAO {
 
     Employee queryObject(Employee employee);
 
+    int modifyPassword(Employee employee);
+
 }

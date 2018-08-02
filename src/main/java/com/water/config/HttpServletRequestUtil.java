@@ -19,5 +19,11 @@ public  class  HttpServletRequestUtil {
         return request;
     }
 
+    public static void removeAttr(){
+        getRequst().getSession().removeAttribute(Globals.FACTORYIDS);
+        getRequst().getSession().removeAttribute(Globals.USERTYPE);
+        getRequst().getSession().removeAttribute(Globals.USERID);
+    }
+
 
 }

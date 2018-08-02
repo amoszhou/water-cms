@@ -261,17 +261,17 @@ var vm = new Vue({
 					var data = "oldPassword="+vm.oldPassword+"&newPassword="+vm.newPassword+"&twicePassword="+vm.twicePassword;
 					$.ajax({
 						type: "POST",
-					    url: baseURL + "employee/modifyMyPassword",
+					    url: baseURL + "employeeOper/modifyMyPassword",
 					    data: data,
 					    dataType: "json",
 					    success: function(r){
-							if(r.code == 0){
+							if(r.data == 1){
 								layer.close(index);
 								layer.alert('修改成功', function(){
 									location.reload();
 								});
 							}else{
-								layer.alert(r.msg);
+								layer.alert("修改失败！");
 							}
 						}
 					});
@@ -285,7 +285,7 @@ var vm = new Vue({
 		},
         logout: function () {
 
-
+            confirm('确定要离开吗？', function(){
                 $.ajax({
                     type: 'GET',
                     url: "/employeeOper/logout",
@@ -297,6 +297,8 @@ var vm = new Vue({
                         alert("出现异常!请联系管理员!");
                     }
                 });
+            });
+
 
 
 		/*	//删除本地token

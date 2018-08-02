@@ -68,14 +68,21 @@
     </if>
     )as b ON b.factory_id = a.id
   </select>
-  <update id="updateDeleteState" parameterType="java.lang.Long">
+  <update id="updateDeleteState"  parameterType="java.lang.Long" >
     update t_employee
     set is_delete = 1
     where id  =  #{id}
   </update>
 
+  <update id="modifyPassword" parameterType="com.water.domain.Employee">
+    update t_employee
+    set password   =   #{password,jdbcType=VARCHAR}
+    where tel_phone =     #{telPhone,jdbcType=VARCHAR}
+  </update>
+
+
   <select id="queryObject" resultMap="BaseResultMap">
-     select password,factory_id,user_type,tel_phone from t_employee where is_delete = 0 and tel_phone = #{telPhone}
+     select password,factory_id,user_type,tel_phone,real_name from t_employee where is_delete = 0 and tel_phone = #{telPhone}
   </select>
 
 

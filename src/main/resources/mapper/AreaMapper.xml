@@ -20,7 +20,7 @@
   <sql id="authSql">
     <where>
     <if test="factoryIds != null and factoryIds.size != 0">
-      and factory_id in
+      and id in
       <foreach collection="factoryIds" index="index" item="item"
                open="(" separator="," close=")">
         #{item}
@@ -37,6 +37,16 @@
       </if>
       <if test="factoryId != null and factoryId.trim() != ''">
         and factory_id = #{factoryId}
+      </if>
+      <if test="id != null ">
+        and id =#{id}
+      </if>
+      <if test="factoryIds != null and factoryIds.size != 0">
+        and factory_id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
       </if>
     </where>
   </sql>

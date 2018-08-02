@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author : 林吉达
@@ -29,18 +31,18 @@ public class EmployeeOperController {
     private EmployeeService employeeService;
 
     //登出成功
-    private final static int LOOUTSUCCESS = 1;
+    private final static int SUCCESSFLAG = 1;
 
     //登录失败
-    private final static int LOGINFAIL = -1;
+    private final static int FAILFLAG = -1;
 
     @GetMapping("/login")
-    public ResultDTO employeeLogin(@RequestParam(value = "telPhone")String telPhone
-            ,@RequestParam(value = "password")String password){
+    public ResultDTO employeeLogin(@RequestParam(value = "telPhone") String telPhone
+            , @RequestParam(value = "password") String password) {
         Employee employee = new Employee();
         try {
-            if(telPhone ==null || password == null)
-                return ResultDTO.buildSuccessResult(LOGINFAIL);
+            if (telPhone == null || password == null)
+                return ResultDTO.buildSuccessResult(FAILFLAG);
 
             employee.setTelPhone(telPhone);
             employee.setPassword(password);
@@ -49,17 +51,44 @@ public class EmployeeOperController {
             logger.info("EmployeeOperController/employeeLogin|登录失败，数据:{},原因：{}", employee, e.getMessage());
             logger.error("EmployeeOperController/employeeLogin|数据:{}|Exception:" + e.getMessage(), employee, e);
         }
-        return ResultDTO.buildSuccessResult(LOGINFAIL);
+        return ResultDTO.buildSuccessResult(FAILFLAG);
     }
 
     @GetMapping("/logout")
-    public ResultDTO employeeLogOut(){
-        try{
-            HttpServletRequestUtil.getRequst().getSession().removeAttribute(Globals.USERID);
-        }catch (Exception e){
+    public ResultDTO employeeLogOut() {
+        try {
+            HttpServletRequestUtil.removeAttr();
+        } catch (Exception e) {
             logger.error("EmployeeOperController/employeeLogOut|Exception:" + e.getMessage(), e);
         }
-        return ResultDTO.buildSuccessResult(LOOUTSUCCESS);
+        return ResultDTO.buildSuccessResult(SUCCESSFLAG);
+    }
+
+    /**
+     * @Author : 林吉达
+     * @Description : 修改密码
+     * @Date : 11:24 2018/8/2
+     */
+    @PostMapping("/modifyMyPassword")
+    public ResultDTO modifyMyPassword(@RequestParam(value = "oldPassword") String oldPassword
+            , @RequestParam(value = "newPassword") String newPassword
+            , @RequestParam(value = "twicePassword") String twicePassword) {
+        Map map = new HashMap();
+        try {
+            if (oldPassword == null || newPassword == null || twicePassword == null
+                    || oldPassword.trim().length() == 0 || newPassword.trim().length() == 0
+                    || twicePassword.trim().length() == 0 || !newPassword.equals(twicePassword) || oldPassword.equals(newPassword))
+                return ResultDTO.buildSuccessResult(FAILFLAG);
+
+            map.put("oldPassword",oldPassword);
+            map.put("newPassword",newPassword);
+            map.put("telPhone", HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERID));
+            return ResultDTO.buildSuccessResult(employeeService.modifyPassword(map));
+        } catch (Exception e) {
+            logger.info("EmployeeOperController/modifyMyPassword|修改密码失败，数据:{},原因：{}", map.toString(), e.getMessage());
+            logger.error("EmployeeOperController/modifyMyPassword|数据:{}|Exception:" + e.getMessage(),  map.toString(), e);
+        }
+        return ResultDTO.buildSuccessResult(FAILFLAG);
     }
 
 }
