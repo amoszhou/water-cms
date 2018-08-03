@@ -27,6 +27,19 @@
       </if>
     </where>
   </sql>
+  <!--权限过滤 for factory -->
+  <sql id="authSqlForFactory">
+    <where>
+      and is_delete = 0
+      <if test="factoryIds != null and factoryIds.size != 0">
+        and id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </sql>
   <!-- 查询条件 -->
   <sql id="whereClause">
     <where>
@@ -55,7 +68,7 @@
   </select>
   <select id="queryList" resultMap="BaseResultMap">
     select  a.id, a.factory_id, a.name, a.price, a.sewage,a.type, a.is_delete ,b.name as factoryName
-    FROM  (select id,name from t_factory    <include refid="authSql"/> ) as b join
+    FROM  (select id,name from t_factory    <include refid="authSqlForFactory"/> ) as b join
     (select
     <include refid="Base_Column_List"/>
     from t_price_type
@@ -79,7 +92,9 @@
   </update>
 
 
-
+  <select id="checkTypeIsExist" resultType="java.lang.Integer" parameterType="com.water.domain.PriceType" >
+     select count(1) from t_price_type where is_delete = 0 and factory_id = #{factoryId} and type = #{type}
+  </select>
 
 
 

@@ -2,6 +2,7 @@ package com.water.controller;
 
 import com.water.domain.Meter;
 import com.water.domain.PriceType;
+import com.water.exception.BizException;
 import com.water.service.MeterService;
 import com.water.service.PriceTypeService;
 import com.water.util.R;
@@ -48,7 +49,12 @@ public class PriceTypeController {
     public R save(@RequestBody PriceType dto){
         try {
             priceTypeService.save(dto);
-        } catch (Exception e) {
+        }catch (BizException e){
+            logger.info("PriceTypeController/save|添加失败，原因：{}", e.getMessage());
+            logger.error("PriceTypeController/save|Exception:"+e.getMessage(), e);
+            return R.error(e.getMessage());
+        }
+        catch (Exception e) {
             logger.info("PriceTypeController/save|添加失败，原因：{}", e.getMessage());
             logger.error("PriceTypeController/save|Exception:"+e.getMessage(), e);
             return R.error();

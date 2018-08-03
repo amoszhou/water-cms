@@ -149,6 +149,9 @@ var vm = new Vue({
 
                 vm.app = r.customerAccount;
                 delete vm.app.updateTime;
+
+
+
             });
         },
         reload: function () {

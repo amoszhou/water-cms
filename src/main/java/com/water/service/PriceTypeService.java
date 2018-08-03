@@ -1,9 +1,11 @@
 package com.water.service;
 
+import com.water.annotation.FactoryIds;
 import com.water.dao.MeterDAO;
 import com.water.dao.PriceTypeDAO;
 import com.water.domain.Meter;
 import com.water.domain.PriceType;
+import com.water.exception.BizException;
 import com.water.util.PageUtil;
 import com.water.util.Query;
 import com.water.util.R;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +39,7 @@ public class PriceTypeService {
      * @Description : 查询列表
      * @Date : 10:13 2018/7/3
      */
+    @FactoryIds
     public R queryList(Map<String, Object> params) {
         logger.info("PriceTypeService/queryList begin | params = {}", params.toString());
 
@@ -59,12 +63,18 @@ public class PriceTypeService {
      */
     public void save(PriceType priceType) {
         if (priceType != null) {
+            //priceType表  由factory 和 type 组成联合唯一索引。 所以在这里检查是否已经存在
+            if (priceTypeDAO.checkTypeIsExist(priceType) > 0) {
+                throw new BizException("该水厂已经有了该类型的水价！");
+            }
             priceTypeDAO.insertSelective(priceType);
         }
     }
 
     public PriceType queryObject(Integer id) {
-        return priceTypeDAO.selectByPrimaryKey(id);
+        Map map = new HashMap();
+        map.put("id",id);
+        return (PriceType)priceTypeDAO.queryList(map).get(0);
     }
 
     public void update(PriceType priceType) {

@@ -71,7 +71,9 @@ public class ArchiveService {
     }
 
     public Archive queryObject(Integer id) {
-        return archiveDAO.selectByPrimaryKey(id);
+        Map map = new HashMap();
+        map.put("id",id);
+        return (Archive)archiveDAO.queryList(map).get(0);
     }
 
     public void update(Archive archive) {

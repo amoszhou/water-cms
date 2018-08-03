@@ -20,4 +20,6 @@ public interface PriceTypeDAO {
 
     int updateByPrimaryKeySelective(PriceType record);
 
+    int checkTypeIsExist(PriceType record);
+
 }

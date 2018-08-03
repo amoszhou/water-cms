@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,22 +68,21 @@ public class FactoryService {
     @Transactional
     public void save(Factory factory) {
         if (factory != null) {
-            String[] result = factory.getManagerName().split(":");
-            factory.setManagerId(Integer.parseInt(result[0]));
-            factory.setManagerName(result[1]);
             logger.info(factory.toString());
             int factoryId = factoryDAO.insertSelective(factory);
             //修改employee表
             Employee employee = new Employee();
             employee.setFactoryId(factoryId);
-            employee.setId(Integer.parseInt(result[0]));
+            employee.setId(factory.getManagerId());
             employee.setFactoryName(factory.getName());
             employeeDAO.updateByPrimaryKeySelective(employee);
          }
     }
 
     public Factory queryObject(Integer id) {
-        return factoryDAO.selectByPrimaryKey(id);
+        Map map = new HashMap();
+        map.put("id",id);
+        return (Factory)factoryDAO.queryList(map).get(0);
     }
 
     @Transactional

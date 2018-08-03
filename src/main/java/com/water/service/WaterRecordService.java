@@ -1,5 +1,6 @@
 package com.water.service;
 
+import com.water.annotation.FactoryIds;
 import com.water.dao.PayRecordDAO;
 import com.water.dao.PriceTypeDAO;
 import com.water.dao.WaterRecordDAO;
@@ -46,6 +47,7 @@ public class WaterRecordService {
      * @Description : 查询列表
      * @Date : 17:39 2018/7/3
      */
+    @FactoryIds
     public R queryList(Map<String, Object> params) {
         logger.info("WaterRecordService/queryList begin | params = {}", params.toString());
 

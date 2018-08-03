@@ -75,7 +75,8 @@ var vm = new Vue({
             factoryName:'',
             hallName:'',
             userType:''
-        }
+        },
+        FactoryMessageList:[]
     },
     methods: {
         query: function () {
@@ -206,3 +207,21 @@ function formatURL(value, options, rowObject) {
     if(!(value.startsWith("http://") || (value.startsWith("https://"))) ) result="http://"+result;
     return '<a href="' + result + '" target="_blank">' + value + '</a>';
 }
+
+//页面加载时拿到所有的水厂编码
+$.ajax({
+    async: false, // 同步
+    type: 'GET',
+    url: "/hall/getFactoryMessage",
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (returnJsonData) {
+        vm.FactoryMessageList = [];
+        for(var i = 0 ; i < returnJsonData.length ; i ++){
+            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
+            vm.FactoryMessageList.push(tepm);
+        }
+    },error:function (returnJsonData) {
+
+    }
+});

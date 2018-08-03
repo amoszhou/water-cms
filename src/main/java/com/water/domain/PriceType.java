@@ -18,7 +18,7 @@ public class PriceType implements Serializable {
     private Integer isDelete;
 
     private String factoryName;
-
+    //价格类型(0生活用水，1工业用水)
     private Integer type;
 
     public Integer getType() {

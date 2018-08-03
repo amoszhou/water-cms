@@ -204,7 +204,7 @@ function formatURL(value, options, rowObject) {
     return '<a href="' + result + '" target="_blank">' + value + '</a>';
 }
 
-//页面加载时拿到所有的奖池编码
+//页面加载时拿到所有的水厂编码
 $.ajax({
     async: false, // 同步
     type: 'GET',

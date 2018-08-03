@@ -294,7 +294,7 @@ var vm = new Vue({
                         window.location.href="/index";
                     },
                     error: function (returnJsonData) {
-                        alert("出现异常!请联系管理员!");
+                        window.location.href="/index";
                     }
                 });
             });

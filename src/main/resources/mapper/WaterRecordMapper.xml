@@ -30,6 +30,19 @@
     id, charge_id, create_time, create_user, curr_number, cust_code, cust_id, fee, last_number, 
     meter_id, pay, update_time, update_user, is_delete,code,factory_id,water_record_begin_date,water_record_end_date
   </sql>
+    <!--权限过滤 for factory -->
+    <sql id="authSqlForFactory">
+        <where>
+            and is_delete = 0
+            <if test="factoryIds != null and factoryIds.size != 0">
+                and id in
+                <foreach collection="factoryIds" index="index" item="item"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
     <!--权限过滤-->
     <sql id="authSql">
         <where>
@@ -94,9 +107,9 @@
         </if>
         )as a on b.id = a.create_user LEFT JOIN (select id,username from t_employee<include refid="authSql"/>) as c on c.id
         = a.update_user
-        join (select id,name from t_meter<include refid="authSql"/>) as d on d.id = a.meter_id
-        join (select id,name from t_customer<include refid="authSql"/>) as e on e.id = a.cust_id
-        join (select id,name from t_factory<include refid="authSql"/>) as f on f.id = a.factory_id
+        LEFT join (select id,name from t_meter where is_delete = 0 ) as d on d.id = a.meter_id
+        LEFT join (select id,name from t_customer<include refid="authSql"/>) as e on e.id = a.cust_id
+        LEFT join (select id,name from t_factory<include refid="authSqlForFactory"/>) as f on f.id = a.factory_id
     </select>
 
     <update id="updateDeleteState" parameterType="java.lang.Long">

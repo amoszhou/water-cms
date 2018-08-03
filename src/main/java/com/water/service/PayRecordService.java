@@ -1,5 +1,6 @@
 package com.water.service;
 
+import com.water.annotation.FactoryIds;
 import com.water.dao.PayRecordDAO;
 import com.water.domain.ChargeRecord;
 import com.water.domain.PayRecord;
@@ -37,6 +38,7 @@ public class PayRecordService {
      * @Description : 查询列表
      * @Date : 10:13 2018/7/3
      */
+    @FactoryIds
     public R queryList(Map<String, Object> params) {
         logger.info("PayRecordService/queryList begin | params = {}", params.toString());
 
@@ -98,6 +100,7 @@ public class PayRecordService {
         chargeRecord.setCustId(payRecord.getCustomerId());
         chargeRecord.setCustCode(payRecord.getCustomerCode());
         chargeRecord.setAmount(payRecord.getTotalFee());
+        chargeRecord.setFactoryId(payRecord.getFactoryId());
         //后期做成枚举  消费类型（1--充值，2--缴费）
         chargeRecord.setChargeType(2);
         chargeRecord.setPayType(payRecord.getPayType());

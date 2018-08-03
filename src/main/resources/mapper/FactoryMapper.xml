@@ -27,6 +27,9 @@
           #{item}
         </foreach>
       </if>
+      <if test="id != null ">
+        and id =#{id}
+      </if>
     <!--  <if test="managerName != null and managerName.trim() != ''">
         and manager_name like concat('%', trim(#{managerName}),'%')
       </if>-->
@@ -37,8 +40,8 @@
     <include refid="whereClause"/>
   </select>
   <select id="queryList" resultMap="BaseResultMap">
-    select   a.id, a.address, a.name, a.tel, a.is_delete,a.manager_id,b.username as managerName from
-    (select id,username from t_employee where is_delete = 0) as b join
+    select   a.id, a.address, a.name, a.tel, a.is_delete,a.manager_id,b.real_name as managerName from
+    (select id,real_name from t_employee where is_delete = 0) as b join
     (
     select
     <include refid="Base_Column_List"/>

@@ -23,6 +23,19 @@
     id, water_record_id, pay_state, customer_id, water_begin_date, water_end_date, pay_type, 
     water_fee, sewage_fee, late_fee, total_fee, water_record_code, factory_id,is_delete
   </sql>
+  <!--权限过滤  t_factory -->
+  <sql id="authSqlForFactoryTable">
+    <where>
+      and is_delete = 0
+      <if test="factoryIds != null and factoryIds.size != 0">
+        and id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </sql>
   <!--权限过滤-->
   <sql id="authSql">
     <where>
@@ -71,7 +84,7 @@
     select  a.id, a.water_record_id, a.pay_state, a.customer_id, a.water_begin_date, a.water_end_date, a.pay_type,
     a.water_fee, a.sewage_fee, a.late_fee, a.total_fee, a.water_record_code, a.factory_id,b.name as
     factoryName,c.code as customerCode
-    from (select id,name from t_factory<include refid="authSql"/>) as b right JOIN (
+    from (select id,name from t_factory<include refid="authSqlForFactoryTable"/>) as b right JOIN (
     select
     <include refid="Base_Column_List"/>
     from t_pay_record

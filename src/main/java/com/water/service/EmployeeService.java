@@ -1,5 +1,6 @@
 package com.water.service;
 
+import com.water.annotation.FactoryIds;
 import com.water.config.HttpServletRequestUtil;
 import com.water.constant.EmployeeType;
 import com.water.dao.EmployeeDAO;
@@ -17,10 +18,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author : 林吉达
@@ -46,6 +44,7 @@ public class EmployeeService {
      * @Description : 查询列表
      * @Date : 16:53 2018/6/28
      */
+    @FactoryIds
     public R queryList(Map<String, Object> params) {
         logger.info("EmployeeService/queryList begin | params = {}", params.toString());
 
@@ -75,7 +74,9 @@ public class EmployeeService {
     }
 
     public Employee queryObject(Integer id) {
-        return employeeDAO.selectByPrimaryKey(id);
+        Map map = new HashMap();
+        map.put("id",id);
+        return (Employee)employeeDAO.queryList(map).get(0);
     }
 
 

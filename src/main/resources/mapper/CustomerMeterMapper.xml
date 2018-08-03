@@ -35,6 +35,19 @@
       </if>
     </where>
   </sql>
+  <!--权限过滤-->
+  <sql id="authSqlForFactoryTable">
+    <where>
+      and is_delete = 0
+      <if test="factoryIds != null and factoryIds.size != 0">
+        and id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </sql>
   <!-- 查询条件 -->
   <sql id="whereClause">
     <where>
@@ -90,8 +103,8 @@
     </choose>
     <if test="offset != null and limit != null">
       limit #{offset}, #{limit}
-    </if> )as a on a.cust_id = b.id LEFT  JOIN  (select id,name from t_meter    <include refid="authSql"/> ) as c on c.id = a.meter_id
-    JOIN  (select id,name from t_factory    <include refid="authSql"/> ) as d on d.id = a.factory_id
+    </if> )as a on a.cust_id = b.id LEFT  JOIN  (select id,name from t_meter where is_delete = 0 ) as c on c.id = a.meter_id
+    JOIN  (select id,name from t_factory    <include refid="authSqlForFactoryTable"/> ) as d on d.id = a.factory_id
     JOIN (select id,price from t_price_type    <include refid="authSql"/> ) as e on e.id = a.price_type
     JOIN (select id,sewage from t_price_type    <include refid="authSql"/> ) as f on f.id = a.price_type
   </select>
