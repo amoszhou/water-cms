@@ -25,6 +25,11 @@ public class IndexController {
         model.addAttribute("updatePer","true");
         //获取用户名
         model.addAttribute("userName", HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERNAME));
+        //获取用户type
+        if((Integer)HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERTYPE) == 1)
+            model.addAttribute(Globals.USERTYPE,"普通管理员");
+        else
+            model.addAttribute(Globals.USERTYPE,"超级管理员");
         return "cover";
     }
 

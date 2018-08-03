@@ -104,6 +104,11 @@
      select password,factory_id,user_type,tel_phone,real_name from t_employee where is_delete = 0 and tel_phone = #{telPhone}
   </select>
 
+  <!--检查employee是否已经有了水厂，如果有，则不允许（因为一个管理员只允许管理一个水厂）-->
+  <select id="checkFactoryEmployeeIsExist" resultType="java.lang.Integer" parameterType="com.water.domain.Employee" >
+    SELECT COUNT(1) from t_employee where is_delete = 0 and factory_id &gt;-100 and id = #{id}
+  </select>
+
 
   <insert id="insertSelective" parameterType="com.water.domain.Employee" >
     insert into t_employee

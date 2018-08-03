@@ -2,6 +2,7 @@ package com.water.controller;
 
 import com.water.domain.Factory;
 import com.water.domain.IdAndNameDTO;
+import com.water.exception.BizException;
 import com.water.service.FactoryService;
 import com.water.util.R;
 import org.slf4j.Logger;
@@ -87,7 +88,12 @@ public class FactotyController {
     public R update(@RequestBody Factory dto){
         try {
             factoryService.update(dto);
-        } catch (Exception e) {
+        }catch (BizException e){
+            logger.info("FactotyController/update|修改失败，原因：{}", e.getMessage());
+            logger.error("FactotyController/update|Exception:"+e.getMessage(), e);
+            return R.error(e.getMessage());
+        }
+        catch (Exception e) {
             logger.info("FactotyController/update|修改失败，原因：{}", e.getMessage());
             logger.error("FactotyController/update|Exception:"+e.getMessage(), e);
             return R.error();

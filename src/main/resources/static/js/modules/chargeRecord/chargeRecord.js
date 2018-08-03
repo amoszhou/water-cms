@@ -14,9 +14,9 @@ $(function () {
             },sortable:false},*/
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
-            { label: '消费类型', name: 'chargeType', width: 40, sortable:false/*, formatter: formatURL*/},
+            { label: '消费类型', name: 'chargeType', width: 40, sortable:false, formatter: formatChargeType},
             { label: '发票编码', name: 'invoiceCode', width: 40, sortable:false/*, formatter: formatURL*/},
-            { label: '支付方式', name: 'payType', width: 40, sortable:false/*, formatter: formatURL*/},
+            { label: '支付方式', name: 'payType', width: 40, sortable:false, formatter: formatPayType},
             { label: '创建人', name: 'createUserName', width: 40, sortable:false/*, formatter: formatURL*/},
             { label: '创建时间', name: 'createForHTML', width:40/*,formatter: operateMenu*/,sortable:false},
                 { label: '操作', width:40,formatter: operateMenu,sortable:false},
@@ -205,11 +205,25 @@ function formatDate(cellvalue, options, rowObject) {
     return cellvalue;
 }
 
-function formatURL(value, options, rowObject) {
-    var token = localStorage.getItem('token');
-    var result = value + '?token=' + token + '&setToken=true';
-    if(!(value.startsWith("http://") || (value.startsWith("https://"))) ) result="http://"+result;
-    return '<a href="' + result + '" target="_blank">' + value + '</a>';
+function formatChargeType(value, options, rowObject) {
+ if(value == 1)
+     return "充值";
+ return "缴费"
+}
+
+function formatPayType(value, options, rowObject) {
+    //支付方式(1支付宝，2微信，3现金,4账号余额，5充值类型，无支付类型)',
+    if(value == 1)
+        return "支付宝";
+    if(value == 2)
+        return "微信";
+    if(value == 3)
+        return "现金";
+    if(value == 4)
+        return "账号余额";
+
+        return "充值";
+
 }
 
 //页面加载时拿到所有的顾客编码

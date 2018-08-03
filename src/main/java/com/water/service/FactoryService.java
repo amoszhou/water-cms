@@ -6,6 +6,7 @@ import com.water.dao.FactoryDAO;
 import com.water.domain.Employee;
 import com.water.domain.Factory;
 import com.water.domain.IdAndNameDTO;
+import com.water.exception.BizException;
 import com.water.util.PageUtil;
 import com.water.util.Query;
 import com.water.util.R;
@@ -88,15 +89,19 @@ public class FactoryService {
     @Transactional
     public void update(Factory factory) {
         if (factory != null) {
-            String[] result = factory.getManagerName().split(":");
-            factory.setManagerId(Integer.parseInt(result[0]));
-            factory.setManagerName(result[1]);
             logger.info(factory.toString());
             factoryDAO.updateByPrimaryKeySelective(factory);
-            //修改employee表
+
             Employee employee = new Employee();
+            employee.setId(factory.getManagerId());
+            //检查employee是否已经有了水厂，如果有，则不允许（因为一个管理员只允许管理一个水厂）
+            if(employeeDAO.checkFactoryEmployeeIsExist(employee) > 0)
+                throw  new BizException("该管理员已经有所属水厂了!");
+
+            //修改employee表
+
             employee.setFactoryId(factory.getId());
-            employee.setId(Integer.parseInt(result[0]));
+
             employee.setFactoryName(factory.getName());
             employeeDAO.updateByPrimaryKeySelective(employee);
         }
