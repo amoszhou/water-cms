@@ -105,6 +105,7 @@ var vm = new Vue({
             waterRecordEndDateForHtml:'',
         },
         FactoryMessageList:[],
+        CustomerMessageList:[],
     },
     methods: {
         query: function () {
@@ -188,10 +189,14 @@ var vm = new Vue({
         reload: function () {
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
-            if(vm.q.factoryId == -100)
-                vm.q.factoryId = null
+            if(vm.q.custId == -100){
+                vm.q.custId = null;
+            }
+            if(vm.q.factoryId == -100){
+                vm.q.factoryId = null;
+            }
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'name': vm.q.name,'factoryId':vm.q.factoryId},
+                postData:{'custId': vm.q.custId,'factoryId':vm.q.factoryId},
                 page:page
             }).trigger("reloadGrid");
         },
@@ -241,8 +246,7 @@ function formatURL(value, options, rowObject) {
     return '<a href="' + result + '" target="_blank">' + value + '</a>';
 }
 
-/*
-//页面加载时拿到所有的奖池编码
+//页面加载时拿到所有的水厂编码
 $.ajax({
     async: false, // 同步
     type: 'GET',
@@ -258,4 +262,22 @@ $.ajax({
     },error:function (returnJsonData) {
 
     }
-});*/
+});
+//页面加载时拿到所有的顾客信息
+$.ajax({
+    async: false, // 同步
+    type: 'GET',
+    url: "/customerAccount/getCustomerMessageList",
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (returnJsonData) {
+        vm.CustomerMessageList = [];
+        for(var i = 0 ; i < returnJsonData.length ; i ++){
+            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
+            vm.CustomerMessageList.push(tepm);
+        }
+        console.log(vm.CustomerMessageList);
+    },error:function (returnJsonData) {
+
+    }
+});

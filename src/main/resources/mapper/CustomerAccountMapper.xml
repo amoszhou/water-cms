@@ -35,6 +35,9 @@
       <if test="custId != null and custId.trim() != ''">
         and cust_id = #{custId}
       </if>
+      <if test="factoryId != null and factoryId.trim() != '' ">
+        and factory_id = #{factoryId}
+      </if>
       <if test="factoryIds != null and factoryIds.size != 0">
         and factory_id in
         <foreach collection="factoryIds" index="index" item="item"

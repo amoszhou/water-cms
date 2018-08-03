@@ -23,14 +23,16 @@
     <script src="../../plugins/jqgrid/jquery.jqGrid.min.js"></script>
     <script src="../../plugins/ztree/jquery.ztree.all.min.js"></script>
     <script src="../../js/common.js"></script>
+    <style>
+        #rrapp{}
+    </style>
 </head>
 <body>
 <div id="rrapp" v-cloak>
     <div v-show="showList">
         <div class="grid-btn">
-            <div class="form-group col-md-1">
-                <select  v-model="q.factoryId"
-                         style="width: 213px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
+            <div class="form-group col-md-1" style="width:300px;">
+                <select  v-model="q.factoryId" style="width: 260px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
                     <option value="-100">
                         所有水厂
                     </option>
@@ -38,11 +40,9 @@
                         {{ option.id+":"+option.name }}
                     </option>
                 </select>
-            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;
-            <div class="form-group col-md-1">
-                <select  v-model="q.customerId"
-                         style="width: 213px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
+            </div>
+            <div class="form-group col-md-1" style="width:300px;">
+                <select  v-model="q.customerId" style="width: 260px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
                     <option value="-100">
                         所有顾客
                     </option>
@@ -50,12 +50,11 @@
                         {{ option.id+":"+option.name }}
                     </option>
                 </select>
-            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <div class="form-group col-sm-2">
+            </div>
+            <div class="form-group col-sm-2" style="width:300px;">
                 <input type="date" class="form-control" v-model="q.waterBeginDate" @keyup.enter="query" placeholder="水费开始时间">
             </div>
-            <div class="form-group col-sm-2">
+            <div class="form-group col-sm-2" style="width:300px;margin-right: 10px;">
                 <input type="date" class="form-control" v-model="q.waterEndDate" @keyup.enter="query" placeholder="水费开始时间">
             </div>
             <a class="btn btn-default" @click="query">查询</a>

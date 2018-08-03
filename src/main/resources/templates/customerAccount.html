@@ -29,12 +29,36 @@
     <div v-show="showList">
         <div class="grid-btn">
             <div class="form-group col-sm-2">
-                <input type="text" class="form-control" v-model="q.name" @keyup.enter="query" placeholder="价格名">
+                <div class="col-sm-10">
+                    <!--<input type="text" v-model="activityInfo.id" class="hidden"/>-->
+                    <select  v-model="q.factoryId"
+                             style="width: 375px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
+                        <option value="-100">
+                            所有水厂
+                        </option>
+                        <option v-for="option in FactoryMessageList" v-bind:value="option.id">
+                            {{ option.id+":"+option.name }}
+                        </option>
+                    </select>
+                </div>
             </div>
-
+            <div class="form-group col-sm-2">
+                <div class="col-sm-10">
+                    <!--<input type="text" v-model="activityInfo.id" class="hidden"/>-->
+                    <select  v-model="q.custId"
+                             style="width: 375px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
+                        <option value="-100">
+                            所有顾客
+                        </option>
+                        <option v-for="option in CustomerMessageList" v-bind:value="option.id">
+                            {{ option.id+":"+option.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
             <a class="btn btn-default" @click="query">查询</a>
             <a  th:if="${addPer=='true'}"  class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-            <a th:if="${updatePer=='true'}" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+            <a th:if="${updatePer=='true'}" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;充值</a>
             <a th:if="${deletePer=='true'}" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;禁用</a>
         </div>
         <table id="jqGrid"></table>

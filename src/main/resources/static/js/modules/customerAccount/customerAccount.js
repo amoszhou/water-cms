@@ -157,8 +157,14 @@ var vm = new Vue({
         reload: function () {
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
+            if(vm.q.custId == -100){
+                vm.q.custId = null;
+            }
+            if(vm.q.factoryId == -100){
+                vm.q.factoryId = null;
+            }
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'name': vm.q.name,'factoryId':vm.q.factoryId},
+                postData:{'custId': vm.q.custId,'factoryId':vm.q.factoryId},
                 page:page
             }).trigger("reloadGrid");
         },
