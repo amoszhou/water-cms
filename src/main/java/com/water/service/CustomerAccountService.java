@@ -2,7 +2,9 @@ package com.water.service;
 
 import com.water.annotation.FactoryIds;
 import com.water.config.HttpServletRequestUtil;
+import com.water.constant.ChargeType;
 import com.water.constant.EmployeeType;
+import com.water.constant.PayType;
 import com.water.dao.CustomerAccountDAO;
 import com.water.dao.CustomerDAO;
 import com.water.domain.ChargeRecord;
@@ -76,10 +78,10 @@ public class CustomerAccountService {
 
             //检查这个customerId 是否已经存在customerAccount表中
             if (customerAccountDAO.selectByCustId(customerAccount.getCustId()) > 0) {
-                 throw  new BizException("此顾客已经有账号了！");
+                throw new BizException("此顾客已经有账号了！");
             }
 
-            //获取user
+            //todo 获取user
             customerAccount.setUpdateUser(1);
             customerAccountDAO.insertSelective(customerAccount);
         }
@@ -93,22 +95,29 @@ public class CustomerAccountService {
 
     //充值成功之后要生成消费记录
     @Transactional
-    public int update(CustomerAccount customerAccount) {
+    public int update(CustomerAccount customerAccount,int flag) {
         if (customerAccount != null) {
             customerAccount.setUpdateTime(LocalDateTime.parse(customerAccount.getUpdateTimeForHTML()));
-            //获取user
+            //todo 获取user
             customerAccount.setUpdateUser(1);
             //使用updateTime作为乐观锁
             int result = customerAccountDAO.updateByPrimaryKeySelective(customerAccount);
+            if (result == 0)
+                throw new BizException("缴费失败，有多人同时操作该用户的账户余额!");
+
+            if(flag == ChargeType.JIAOFEI.getChargeTpe())
+                return  result;
+
             //生成消费记录
             ChargeRecord chargeRecord = new ChargeRecord();
             chargeRecord.setCustId(customerAccount.getCustId());
             chargeRecord.setCustCode(customerDAO.selectByPrimaryKey(customerAccount.getCustId()).getCode());
             chargeRecord.setAmount(customerAccount.getRaiseMoney());
             //后期做成枚举  消费类型（1--充值，2--缴费）
-            chargeRecord.setChargeType(1);
+            chargeRecord.setChargeType(ChargeType.YUCUN.getChargeTpe());
             chargeRecord.setFactoryId(customerAccount.getFactoryId());
-          /*  chargeRecord.setPayType(customerAccount.get());*/
+            //充值的支付类型全部为5
+            chargeRecord.setPayType(PayType.CHONGZHI.getPayType());
             chargeRecordService.save(chargeRecord);
             return result;
         }

@@ -63,7 +63,14 @@
                 <li class="header">导航菜单</li>
 
                 <!-- vue生成的菜单 -->
-                <menu-item :item="item" :index="index" v-for="(item, index) in menuList"></menu-item>
+               <!-- <div v-if="userType == 1">
+                    <menu-item :item="item" :index="index" v-for="(item, index) in menuList"></menu-item>
+                </div>
+                <div v-else>
+
+                    <menu-item :item="item" :index="index" v-for="(item, index) in managerList"></menu-item>
+                </div>-->
+                <menu-item :item="item" :index="index" v-for="(item, index) in resultList"></menu-item>
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -136,12 +143,14 @@
 <script src="libs/app.js"></script>
 <script src="plugins/layer/layer.js"></script>
 <script src="js/common.js"></script>
-<script src="js/index.js"></script>
+
 <script th:inline="javascript">
     var userName = [[${userName}]];
     var userType = [[${userType}]];
+    var userTypeEnum = [[${userTypeEnum}]];
     $("#userName").html("欢迎 "+userName);
     $("#userType").html("您的角色: "+userType);
 </script>
+<script src="js/index.js"></script>
 </body>
 </html>

@@ -6,7 +6,6 @@ import com.water.config.HttpServletRequestUtil;
 import com.water.constant.EmployeeType;
 import com.water.dao.ArchiveDAO;
 import com.water.domain.Archive;
-import com.water.domain.Area;
 import com.water.domain.IdAndNameDTO;
 import com.water.util.PageUtil;
 import com.water.util.Query;
@@ -64,8 +63,8 @@ public class ArchiveService {
      */
     public void save(Archive archive){
         if (archive != null) {
-            //todo 获取用户名，填充recordUser           获取片区和营业厅列表
-            archive.setRecordUser(1);
+            //todo         获取片区和营业厅列表
+            archive.setRecordUser(HttpServletRequestUtil.getUserId());
             archiveDAO.insertSelective(archive);
         }
     }

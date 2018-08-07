@@ -25,5 +25,7 @@ public interface CustomerAccountDAO {
 
     int selectByCustId(Integer customerId);
 
+    CustomerAccount  getByCustId(Integer id);
+
 
 }

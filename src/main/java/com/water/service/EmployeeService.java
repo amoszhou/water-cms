@@ -89,6 +89,7 @@ public class EmployeeService {
         if (employFromTable.getPassword().equals(employee.getPassword())) {
             request.getSession(true).setAttribute("userType", employFromTable.getUserType());
             request.getSession(true).setAttribute("userName", employFromTable.getRealName());
+            request.getSession(true).setAttribute("userKey", employFromTable.getId());
             //登录成功
             if (employFromTable.getUserType() == EmployeeType.NORMAL_MANAGER.getTypeId()) {
                 request.getSession(true).setAttribute("userId", employFromTable.getTelPhone());

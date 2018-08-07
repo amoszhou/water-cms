@@ -25,5 +25,9 @@ public  class  HttpServletRequestUtil {
         getRequst().getSession().removeAttribute(Globals.USERID);
     }
 
+    public static Integer getUserId(){
+        return  (Integer)getRequst().getSession().getAttribute(Globals.USERKEY);
+    }
+
 
 }

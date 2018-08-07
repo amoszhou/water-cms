@@ -1,9 +1,15 @@
 package com.water.service;
 
 import com.water.annotation.FactoryIds;
+import com.water.constant.ChargeType;
+import com.water.constant.PayState;
+import com.water.constant.PayType;
+import com.water.dao.CustomerAccountDAO;
 import com.water.dao.PayRecordDAO;
 import com.water.domain.ChargeRecord;
+import com.water.domain.CustomerAccount;
 import com.water.domain.PayRecord;
+import com.water.exception.BizException;
 import com.water.util.PageUtil;
 import com.water.util.Query;
 import com.water.util.R;
@@ -13,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +39,10 @@ public class PayRecordService {
     private PayRecordDAO payRecordDAO;
     @Autowired
     private ChargeRecordService chargeRecordService;
+    @Autowired
+    private CustomerAccountService customerAccountService;
+    @Autowired
+    private CustomerAccountDAO customerAccountDAO;
 
     /**
      * @Author : 林吉达
@@ -80,20 +91,33 @@ public class PayRecordService {
     @Transactional
     public void update(PayRecord payRecord) {
         //不缴费，不做任何修改
-        if(payRecord.getPayType() == -1 || payRecord.getPayState() != -1){
-            return;
+        if (payRecord.getPayType() == PayType.NOTPAYYET.getPayType() || payRecord.getPayState() != PayState.NOTPAY.getState()) {
+            throw new BizException("此条记录已缴费!请勿重复交费!");
+        }
+
+
+        //todo 顾客账号余额缴费，需检查用户余额并扣除余额
+        if (payRecord.getPayType() == PayType.BALANCE.getPayType()) {
+            CustomerAccount customerAccount = customerAccountDAO.getByCustId(payRecord.getCustomerId());
+            //如果用户没有账户,创建一个
+
+            //余额不足缴费
+            if (customerAccount.getBalance().compareTo(payRecord.getTotalFee()) < 0)
+                throw new BizException("缴费失败，顾客账户余额不足!");
+
+                customerAccount.setRaiseMoney(payRecord.getTotalFee().multiply(BigDecimal.valueOf(-1)));
+
+            int result = customerAccountService.update(customerAccount,ChargeType.JIAOFEI.getChargeTpe());
+            if (result == 0)
+                throw new BizException("缴费失败，余额不足或有多人同时操作顾客账户!");
         }
 
         if (payRecord != null) {
             //修改状态变成已支付
-            payRecord.setPayState(1);
+            payRecord.setPayState(PayState.PAY.getState());
             payRecordDAO.updateByPrimaryKeySelective(payRecord);
         }
 
-        //todo 顾客账号余额缴费，需检查用户余额并扣除余额
-        if (payRecord.getPayType() == 4) {
-
-        }
 
         //生成消费记录
         ChargeRecord chargeRecord = new ChargeRecord();
@@ -102,7 +126,7 @@ public class PayRecordService {
         chargeRecord.setAmount(payRecord.getTotalFee());
         chargeRecord.setFactoryId(payRecord.getFactoryId());
         //后期做成枚举  消费类型（1--充值，2--缴费）
-        chargeRecord.setChargeType(2);
+        chargeRecord.setChargeType(ChargeType.JIAOFEI.getChargeTpe());
         chargeRecord.setPayType(payRecord.getPayType());
         chargeRecordService.save(chargeRecord);
 

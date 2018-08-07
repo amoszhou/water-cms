@@ -5,7 +5,7 @@ $(function () {
         colModel: [			
 			{ label: 'ID', name: 'id', index: "id", width: 30, key: true },
 			{ label: '水厂名', name: 'name', width: 40, sortable:false},
-			{ label: '管理员', name: 'managerName', width: 40,sortable:false },
+			{ label: '管理员', name: 'managerName', width: 40,sortable:false , formatter: formatManagerName},
             { label: '地址', name: 'address', width: 40, sortable:false/*, formatter: formatURL*/},
 			/*{ label: '电话', name: 'deleteStatus', width: 30, formatter: function(value, options, row){
 				return value === 0 ? 
@@ -192,6 +192,12 @@ function formatDate(cellvalue, options, rowObject) {
   /*  cellvalue = cellvalue.replace("T"," ");*/
     return cellvalue;
 }
+function formatManagerName(cellvalue, options, rowObject) {
+   if(cellvalue != null)
+    return cellvalue;
+   return "暂未分配管理员";
+}
+
 
 function formatURL(value, options, rowObject) {
     var token = localStorage.getItem('token');

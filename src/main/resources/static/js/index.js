@@ -38,6 +38,88 @@ var vm = new Vue({
 		user:{
 			"username":"LJD",
 		},
+        managerList:[ {
+            "id": 442,
+            "appId": 33,
+            "name": "顾客",
+            "createTime": "2017-11-10T17:16:25",
+            "modifyTime": "2017-11-10T17:16:25",
+            "link": false,
+            "menu": true,
+            "parentId": 440,
+            "children": [,{
+                "id": 470,
+                "appId": 33,
+                "name": "顾客管理",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/customer.html",
+                "parentId": 442
+            },{
+                "id": 459,
+                "appId": 33,
+                "name": "顾客账户余额管理",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/customerAccount.html",
+                "parentId": 442
+            }]
+        },{
+            "id": 483,
+            "appId": 33,
+            "name": "用水管理",
+            "createTime": "2017-11-10T17:16:25",
+            "modifyTime": "2017-11-10T17:16:25",
+            "link": false,
+            "menu": true,
+            "parentId": 440,
+            "children": [,{
+                "id": 461,
+                "appId": 33,
+                "name": "用水记录管理",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/waterRecord.html",
+                "parentId": 442
+            },{
+                "id": 462,
+                "appId": 33,
+                "name": "缴费记录管理",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/payRecord.html",
+                "parentId": 442
+            }]
+        },{
+            "id": 484,
+            "appId": 33,
+            "name": "金额流水",
+            "createTime": "2017-11-10T17:16:25",
+            "modifyTime": "2017-11-10T17:16:25",
+            "link": false,
+            "menu": true,
+            "parentId": 440,
+            "children": [,{
+                "id": 460,
+                "appId": 33,
+                "name": "消费记录管理",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/chargeRecord.html",
+                "parentId": 442
+            }]
+        }],
+        resultList:[],
 		menuList:[ {
             "id": 442,
             "appId": 33,
@@ -246,13 +328,24 @@ var vm = new Vue({
 		newPassword:'',
 		twicePassword:'',
         preNavTitle:"",
-        navTitle:"欢迎"
+        navTitle:"欢迎",
+        userType: 1,
 	},
 	methods: {
 		getMenuList: function () {
 			/*$.getJSON(baseURL + "app/nav", function(r){*/
 				/*vm.menuList = */
-				var list = vm.menuList;
+				//超级管理员的菜单
+            if (userTypeEnum == 1){
+                var list = vm.menuList;
+                vm.userType = 1;
+                vm.resultList = vm.menuList;
+            }else{
+                var list = vm.managerList;
+                vm.resultList = vm.managerList;
+                vm.userType = 2;
+            }
+
                 window.permissions =  ["/employee/freeze", "/role/getAllRole",
                     "/role/getAllRoleNames", "/employee.html", "/app/listByEmpInfo", "/app/select", "/role/list", "/app/nav",
                     "/app/add", "/employee/add", "/console.html", "/permission/saveOrUpdate", "/role.html", "/group/queryAllGroup",
@@ -337,6 +430,7 @@ var vm = new Vue({
 vm.getMenuList();
 
 function routerList(router, menuList){
+    console.log(menuList.length);
 	for(var key in menuList){
 		var menuOne = menuList[key];
 		/*if (typeof(menuOne.urls)=="undefined"){

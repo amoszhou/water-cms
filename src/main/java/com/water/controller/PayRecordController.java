@@ -2,6 +2,7 @@ package com.water.controller;
 
 import com.water.domain.PayRecord;
 import com.water.domain.PriceType;
+import com.water.exception.BizException;
 import com.water.service.PayRecordService;
 import com.water.util.R;
 import org.slf4j.Logger;
@@ -28,14 +29,14 @@ public class PayRecordController {
 
 
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
-        logger.info("PayRecordController.queryList|begin ---> params : {}",params.toString());
-        try{
+    public R list(@RequestParam Map<String, Object> params) {
+        logger.info("PayRecordController.queryList|begin ---> params : {}", params.toString());
+        try {
             R result = payRecordService.queryList(params);
-            logger.info("PayRecordController.queryList|end ---> result : {}",result.get("page").toString());
+            logger.info("PayRecordController.queryList|end ---> result : {}", result.get("page").toString());
             return result;
-        }catch (Exception e) {
-            logger.info("PayRecordController.queryList|查询失败，原因：{}",e.getMessage());
+        } catch (Exception e) {
+            logger.info("PayRecordController.queryList|查询失败，原因：{}", e.getMessage());
             logger.error("PayRecordController.queryList|", e);
             return R.error();
         }
@@ -58,7 +59,7 @@ public class PayRecordController {
             }
         } catch (Exception e) {
             logger.info("PayRecordController/info|查询失败，原因：{}", e.getMessage());
-            logger.error("PayRecordController/info|Exception:"+e.getMessage(), e);
+            logger.error("PayRecordController/info|Exception:" + e.getMessage(), e);
             return R.error();
         }
     }
@@ -67,12 +68,16 @@ public class PayRecordController {
      * 修改
      */
     @PostMapping("/updatePayRecord")
-    public R update(@RequestBody PayRecord dto){
+    public R update(@RequestBody PayRecord dto) {
         try {
             payRecordService.update(dto);
+        } catch (BizException e) {
+            logger.info("PayRecordController/update|修改失败，原因：{}", e.getMessage());
+            logger.error("PayRecordController/update|Exception:" + e.getMessage(), e);
+            return R.error(e.getMessage());
         } catch (Exception e) {
             logger.info("PayRecordController/update|修改失败，原因：{}", e.getMessage());
-            logger.error("PayRecordController/update|Exception:"+e.getMessage(), e);
+            logger.error("PayRecordController/update|Exception:" + e.getMessage(), e);
             return R.error();
         }
         return R.ok();

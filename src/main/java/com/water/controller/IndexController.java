@@ -9,7 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Created by zhoumeihua on 2018/6/11.*/
+ * Created by zhoumeihua on 2018/6/11.
+ */
 
 
 @Controller
@@ -21,32 +22,37 @@ public class IndexController {
     @RequestMapping("/index")
     public String index(Model model) {
 
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
         //获取用户名
         model.addAttribute("userName", HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERNAME));
         //获取用户type
-        if((Integer)HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERTYPE) == 1)
-            model.addAttribute(Globals.USERTYPE,"普通管理员");
-        else
-            model.addAttribute(Globals.USERTYPE,"超级管理员");
+        if ((Integer) HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERTYPE) == 1) {
+            model.addAttribute(Globals.USERTYPE, "普通管理员");
+            model.addAttribute(Globals.USERTYPEENUM,  2);
+        } else {
+            model.addAttribute(Globals.USERTYPE, "超级管理员");
+            model.addAttribute(Globals.USERTYPEENUM, 1);
+        }
+
+
         return "cover";
     }
 
     @RequestMapping("/app")
     public String app(Model model) {
 
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
         return "app";
     }
 
     @RequestMapping("/factory")
     public String factory(Model model) {
 
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
-        model.addAttribute("deletePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
+        model.addAttribute("deletePer", "true");
 
         return "factory";
     }
@@ -61,27 +67,28 @@ public class IndexController {
     @RequestMapping("/employee")
     public String employee(Model model) {
 
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
-        model.addAttribute("deletePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
+        model.addAttribute("deletePer", "true");
         return "employee";
     }
 
     @RequestMapping("/hall")
     public String hall(Model model) {
 
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
-        model.addAttribute("deletePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
+        model.addAttribute("deletePer", "true");
 
         return "hall";
     }
+
     @RequestMapping("/priceType")
     public String priceType(Model model) {
 
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
-        model.addAttribute("deletePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
+        model.addAttribute("deletePer", "true");
 
         return "priceType";
     }
@@ -89,9 +96,9 @@ public class IndexController {
     @RequestMapping("/waterRecord")
     public String waterRecord(Model model) {
 
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
-        model.addAttribute("deletePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
+        model.addAttribute("deletePer", "true");
 
         return "waterRecord";
     }
@@ -99,9 +106,9 @@ public class IndexController {
     @RequestMapping("/payRecord")
     public String payRecord(Model model) {
 
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
-        model.addAttribute("deletePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
+        model.addAttribute("deletePer", "true");
 
         return "payRecord";
     }
@@ -109,34 +116,34 @@ public class IndexController {
     @RequestMapping("/customerMeter")
     public String customerMeter(Model model) {
 
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
-        model.addAttribute("deletePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
+        model.addAttribute("deletePer", "true");
         return "customerMeter";
     }
 
     @RequestMapping("/chargeRecord")
     public String chargeRecord(Model model) {
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
-        model.addAttribute("deletePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
+        model.addAttribute("deletePer", "true");
         return "chargeRecord";
     }
 
     @RequestMapping("/customer")
     public String customer(Model model) {
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
-        model.addAttribute("deletePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
+        model.addAttribute("deletePer", "true");
         return "customer";
     }
 
     @RequestMapping("/meter")
     public String meter(Model model) {
 
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
-        model.addAttribute("deletePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
+        model.addAttribute("deletePer", "true");
 
         return "meter";
     }
@@ -144,9 +151,9 @@ public class IndexController {
     @RequestMapping("/customerAccount")
     public String customerAccount(Model model) {
 
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
-        model.addAttribute("deletePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
+        model.addAttribute("deletePer", "true");
 
         return "customerAccount";
     }
@@ -154,9 +161,9 @@ public class IndexController {
     @RequestMapping("/area")
     public String area(Model model) {
 
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
-        model.addAttribute("deletePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
+        model.addAttribute("deletePer", "true");
 
         return "area";
     }
@@ -164,9 +171,9 @@ public class IndexController {
     @RequestMapping("/archive")
     public String archive(Model model) {
 
-        model.addAttribute("addPer","true");
-        model.addAttribute("updatePer","true");
-        model.addAttribute("deletePer","true");
+        model.addAttribute("addPer", "true");
+        model.addAttribute("updatePer", "true");
+        model.addAttribute("deletePer", "true");
 
         return "archive";
     }

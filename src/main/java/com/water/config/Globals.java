@@ -7,12 +7,16 @@ package com.water.config;
  * @Modified By:
  */
 public interface Globals {
+    //超级管理员没有factoryIds
+    String FACTORYIDS = "factoryIds";
 
-  String FACTORYIDS = "factoryIds";
+    String USERTYPE = "userType";
+    //保存的是user的telPhoneNumber
+    String USERID = "userId";
+    //保存的是user的realName
+    String USERNAME = "userName";
+    //保存的是user的ID主键
+    String USERKEY = "userKey";
 
-   String USERTYPE = "userType";
-
-   String USERID = "userId";
-
-   String USERNAME = "userName";
+    String USERTYPEENUM = "userTypeEnum";
 }

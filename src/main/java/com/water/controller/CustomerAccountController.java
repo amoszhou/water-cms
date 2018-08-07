@@ -1,5 +1,6 @@
 package com.water.controller;
 
+import com.water.constant.ChargeType;
 import com.water.domain.CustomerAccount;
 import com.water.domain.IdAndNameDTO;
 import com.water.domain.PriceType;
@@ -92,7 +93,7 @@ public class CustomerAccountController {
     @PostMapping("/updateCustomerAccount")
     public R update(@RequestBody CustomerAccount dto) {
         try {
-            int result = customerAccountService.update(dto);
+            int result = customerAccountService.update(dto, ChargeType.YUCUN.getChargeTpe());
             if (result != 0)
                 return R.ok();
         }catch (BizException e){

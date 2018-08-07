@@ -100,6 +100,13 @@
     where cust_id = #{customerId,jdbcType=INTEGER}
   </select>
 
+  <select id="getByCustId" resultMap="BaseResultMap"  parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_customer_account
+    where cust_id = #{customerId,jdbcType=INTEGER}
+  </select>
+
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -179,7 +186,7 @@
         factory_id = #{factoryId,jdbcType=INTEGER},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER} AND  update_time = #{updateTime,jdbcType=TIMESTAMP} AND  balance = #{balance}
+    where id = #{id,jdbcType=INTEGER} AND  update_time = #{updateTime,jdbcType=TIMESTAMP} AND  balance = #{balance} AND  #{balance} + #{raiseMoney}  &gt;= 0
   </update>
 </mapper>
 

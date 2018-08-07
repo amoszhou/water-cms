@@ -1,25 +1,37 @@
 package com.water.constant;
 
 /**
- * Created by Administrator on 2017/4/11.
+ * @Author : 林吉达
+ * @Description : 消费类型  t_charge_record 表  charge_type字段
+ * @Date: Created in 10:13 2018/8/7
+ * @Modified By:
  */
 public enum ChargeType {
-    /**
-     * 正常缴费
-     */
-    NORMAL_PAY(1),
-    /**
-     * 预存
-     */
-    PRE_PAY(2);
 
-    private int value;
+    YUCUN(1,"预存账户余额"),
+    JIAOFEI(2,"缴费")
+    ;
+    private Integer chargeTpe;
+    private String desc;
 
-    ChargeType(int value) {
-        this.value = value;
+    ChargeType(Integer chargeTpe, String desc) {
+        this.chargeTpe = chargeTpe;
+        this.desc = desc;
     }
 
-    public int getValue() {
-        return value;
+    public Integer getChargeTpe() {
+        return chargeTpe;
+    }
+
+    public void setChargeTpe(Integer chargeTpe) {
+        this.chargeTpe = chargeTpe;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 }
