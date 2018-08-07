@@ -1,6 +1,7 @@
 package com.water.service;
 
 import com.water.annotation.FactoryIds;
+import com.water.config.HttpServletRequestUtil;
 import com.water.dao.ChargeRecordDAO;
 import com.water.dao.CustomerAccountDAO;
 import com.water.domain.ChargeRecord;
@@ -64,8 +65,8 @@ public class ChargeRecordService {
     public void save(ChargeRecord chargeRecord) {
         if (chargeRecord != null) {
             //获取user
-            chargeRecord.setCustCode(UUID.randomUUID().toString());
-            chargeRecord.setCreateUser(1);
+          /*  chargeRecord.setCustCode(UUID.randomUUID().toString());*/
+            chargeRecord.setCreateUser(HttpServletRequestUtil.getUserId());
             chargeRecordDAO.insertSelective(chargeRecord);
         }
     }

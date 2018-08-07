@@ -17,8 +17,9 @@
     id, code, create_time, create_user, is_delete, name, factory_id,create_user_name
   </sql>
   <!--权限过滤-->
-  <sql id="authSql">
+  <sql id="authSqlForFactory">
     <where>
+      and is_delete = 0
     <if test="factoryIds != null and factoryIds.size != 0">
       and id in
       <foreach collection="factoryIds" index="index" item="item"
@@ -28,12 +29,27 @@
     </if>
     </where>
   </sql>
+  <!--权限过滤-->
+  <sql id="authSql">
+    <where>
+      and is_delete = 0
+      <if test="factoryIds != null and factoryIds.size != 0">
+        and factory_id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+
+
   <!-- 查询条件 -->
   <sql id="whereClause">
     <where>
       and is_delete = 0
-      <if test="name != null and name.trim() != ''">
-        and name like concat('%', trim(#{name}),'%')
+      <if test="code != null and code.trim() != ''">
+        and code like concat('%', trim(#{code}),'%')
       </if>
       <if test="factoryId != null and factoryId.trim() != ''">
         and factory_id = #{factoryId}
@@ -56,8 +72,9 @@
   </select>
 
   <select id="queryList" resultMap="BaseResultMap">
-    select  a.create_user_name ,a.id  , a.code, a.create_time, a.create_user,  a.is_delete, a.name , a.factory_id ,b.name as factory_name
-    from (select id,name from t_factory <include refid="authSql"/>)  as b  right JOIN (
+    select  a.id  , a.code, a.create_time, a.create_user,  a.is_delete, a.name , a.factory_id ,b.name as factory_name,
+     c.real_name as create_user_name
+    from (select id,name from t_factory <include refid="authSqlForFactory"/>)  as b  right JOIN (
     select
     <include refid="Base_Column_List"/>
     from t_area
@@ -73,7 +90,7 @@
     <if test="offset != null and limit != null">
       limit #{offset}, #{limit}
     </if>
-    )as a on b.id = a.factory_id
+    )as a on b.id = a.factory_id LEFT join (select id,real_name from t_employee <include refid="authSql"/> ) as c on c.id = a.create_user
   </select>
 
   <update id="updateDeleteState" parameterType="java.lang.Long">

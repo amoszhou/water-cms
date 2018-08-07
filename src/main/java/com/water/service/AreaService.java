@@ -1,6 +1,7 @@
 package com.water.service;
 
 import com.water.annotation.FactoryIds;
+import com.water.config.HttpServletRequestUtil;
 import com.water.dao.AreaDAO;
 import com.water.domain.Area;
 import com.water.util.PageUtil;
@@ -62,8 +63,7 @@ public class AreaService {
     public void save(Area area) {
         if (area != null) {
             //组装创建人
-            area.setCreateUser(1);
-            area.setCreateUserName(employeeService.queryObject(1).getRealName());
+            area.setCreateUser(HttpServletRequestUtil.getUserId());
             areaDAO.insertSelective(area);
         }
     }

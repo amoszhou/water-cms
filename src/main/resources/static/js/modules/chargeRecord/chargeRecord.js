@@ -4,7 +4,7 @@ $(function () {
         datatype: "json",
         colModel: [
             { label: 'ID', name: 'id', index: "id", width: 30, key: true },
-            { label: '消费记录编码', name: 'custCode', width: 40,sortable:false },
+            { label: '顾客编码', name: 'custCode', width: 40,sortable:false },
             { label: '金额', name: 'amount', width: 40, sortable:false/*, formatter: formatURL*/},
             { label: '顾客名', name: 'customerName', width: 40, sortable:false/*, formatter: formatURL*/},
             /*{ label: '电话', name: 'deleteStatus', width: 30, formatter: function(value, options, row){
@@ -15,10 +15,11 @@ $(function () {
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
             { label: '消费类型', name: 'chargeType', width: 40, sortable:false, formatter: formatChargeType},
-            { label: '发票编码', name: 'invoiceCode', width: 40, sortable:false/*, formatter: formatURL*/},
+
             { label: '支付方式', name: 'payType', width: 40, sortable:false, formatter: formatPayType},
             { label: '创建人', name: 'createUserName', width: 40, sortable:false/*, formatter: formatURL*/},
-            { label: '创建时间', name: 'createForHTML', width:40/*,formatter: operateMenu*/,sortable:false},
+            { label: '发票编码', name: 'invoiceCode', width: 40, sortable:false/*, formatter: formatURL*/},
+            { label: '创建时间', name: 'createForHTML', width:40,formatter: formatDate,sortable:false},
                 { label: '操作', width:40,formatter: operateMenu,sortable:false},
         ],
         viewrecords: true,
@@ -201,7 +202,7 @@ function openDetail(aid) {
 }
 
 function formatDate(cellvalue, options, rowObject) {
-    /*  cellvalue = cellvalue.replace("T"," ");*/
+      cellvalue = cellvalue.replace("T"," ");
     return cellvalue;
 }
 

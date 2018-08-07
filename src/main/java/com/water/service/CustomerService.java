@@ -1,6 +1,7 @@
 package com.water.service;
 
 import com.water.annotation.FactoryIds;
+import com.water.config.HttpServletRequestUtil;
 import com.water.dao.ArchiveDAO;
 import com.water.dao.CustomerDAO;
 import com.water.domain.Archive;
@@ -65,8 +66,8 @@ public class CustomerService {
     public void save(Customer customer){
         if (customer != null) {
             //todo 获取用户名，填充recordUser           获取片区和营业厅列表
-            customer.setCreateUser(1);
-          customer.setUpdateUser(1);
+            customer.setCreateUser(HttpServletRequestUtil.getUserId());
+          customer.setUpdateUser(HttpServletRequestUtil.getUserId());
           customer.setCode(UUID.randomUUID().toString());
             customerDAO.insertSelective(customer);
         }
@@ -81,6 +82,7 @@ public class CustomerService {
 
     public void update(Customer customer) {
         if (customer != null) {
+            customer.setUpdateUser(HttpServletRequestUtil.getUserId());
             customerDAO.updateByPrimaryKeySelective(customer);
         }
     }

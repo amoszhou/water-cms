@@ -75,7 +75,6 @@ public class FactoryService {
             Employee employee = new Employee();
             employee.setFactoryId(factoryId);
             employee.setId(factory.getManagerId());
-            employee.setFactoryName(factory.getName());
             employeeDAO.updateByPrimaryKeySelective(employee);
          }
     }
@@ -99,10 +98,7 @@ public class FactoryService {
                 throw  new BizException("该管理员已经有所属水厂了!");
 
             //修改employee表
-
             employee.setFactoryId(factory.getId());
-
-            employee.setFactoryName(factory.getName());
             employeeDAO.updateByPrimaryKeySelective(employee);
         }
     }

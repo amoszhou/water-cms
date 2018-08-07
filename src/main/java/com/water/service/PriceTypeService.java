@@ -67,6 +67,7 @@ public class PriceTypeService {
             if (priceTypeDAO.checkTypeIsExist(priceType) > 0) {
                 throw new BizException("该水厂已经有了该类型的水价！");
             }
+
             priceTypeDAO.insertSelective(priceType);
         }
     }

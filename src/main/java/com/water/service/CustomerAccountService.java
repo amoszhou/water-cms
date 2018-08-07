@@ -82,7 +82,7 @@ public class CustomerAccountService {
             }
 
             //todo 获取user
-            customerAccount.setUpdateUser(1);
+            customerAccount.setUpdateUser(HttpServletRequestUtil.getUserId());
             customerAccountDAO.insertSelective(customerAccount);
         }
     }
@@ -99,7 +99,7 @@ public class CustomerAccountService {
         if (customerAccount != null) {
             customerAccount.setUpdateTime(LocalDateTime.parse(customerAccount.getUpdateTimeForHTML()));
             //todo 获取user
-            customerAccount.setUpdateUser(1);
+            customerAccount.setUpdateUser(HttpServletRequestUtil.getUserId());
             //使用updateTime作为乐观锁
             int result = customerAccountDAO.updateByPrimaryKeySelective(customerAccount);
             if (result == 0)
@@ -110,6 +110,7 @@ public class CustomerAccountService {
 
             //生成消费记录
             ChargeRecord chargeRecord = new ChargeRecord();
+            chargeRecord.setCreateUser(HttpServletRequestUtil.getUserId());
             chargeRecord.setCustId(customerAccount.getCustId());
             chargeRecord.setCustCode(customerDAO.selectByPrimaryKey(customerAccount.getCustId()).getCode());
             chargeRecord.setAmount(customerAccount.getRaiseMoney());

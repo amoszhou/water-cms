@@ -1,6 +1,7 @@
 package com.water.service;
 
 import com.water.annotation.FactoryIds;
+import com.water.config.HttpServletRequestUtil;
 import com.water.dao.PayRecordDAO;
 import com.water.dao.PriceTypeDAO;
 import com.water.dao.WaterRecordDAO;
@@ -82,7 +83,7 @@ public class WaterRecordService {
         if (waterRecord != null) {
             //组装创建人
             String waterRecordCode = UUID.randomUUID().toString();
-            waterRecord.setCreateUser(1);
+            waterRecord.setCreateUser(HttpServletRequestUtil.getUserId());
             waterRecord.setCode(waterRecordCode);
 
             //计算 正常水费，污水费，汇总水费
@@ -126,7 +127,7 @@ public class WaterRecordService {
     public void update(WaterRecord waterRecord) {
         if (waterRecord != null) {
             //
-            waterRecord.setUpdateUser(1);
+            waterRecord.setUpdateUser(HttpServletRequestUtil.getUserId());
             //这里没这么简单，修改的话需要修改t_pay_Record表的数据，如果t_pay_Record的记录为已支付，则不允许修改。
             waterRecordDAO.updateByPrimaryKeySelective(waterRecord);
         }

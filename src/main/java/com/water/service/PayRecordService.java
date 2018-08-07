@@ -5,6 +5,7 @@ import com.water.constant.ChargeType;
 import com.water.constant.PayState;
 import com.water.constant.PayType;
 import com.water.dao.CustomerAccountDAO;
+import com.water.dao.CustomerDAO;
 import com.water.dao.PayRecordDAO;
 import com.water.domain.ChargeRecord;
 import com.water.domain.CustomerAccount;
@@ -34,7 +35,8 @@ import java.util.Map;
 public class PayRecordService {
 
     Logger logger = LoggerFactory.getLogger(PayRecordService.class);
-
+    @Autowired
+    private CustomerDAO customerDAO;
     @Autowired
     private PayRecordDAO payRecordDAO;
     @Autowired
@@ -72,12 +74,7 @@ public class PayRecordService {
      * @Author : 林吉达
      * @Description :保存
      * @Date : 20:28 2018/6/26
-     *//*
-    public void save(PayRecord payRecords) {
-        if (payRecords != null) {
-            meterDAO.insertSelective(payRecords);
-        }
-    }*/
+     */
     public PayRecord queryObject(Integer id) {
 
         Map map = new HashMap();
@@ -109,7 +106,7 @@ public class PayRecordService {
 
             int result = customerAccountService.update(customerAccount,ChargeType.JIAOFEI.getChargeTpe());
             if (result == 0)
-                throw new BizException("缴费失败，余额不足或有多人同时操作顾客账户!");
+                throw new BizException("缴费失败，有多人同时操作顾客账户!");
         }
 
         if (payRecord != null) {
@@ -122,7 +119,7 @@ public class PayRecordService {
         //生成消费记录
         ChargeRecord chargeRecord = new ChargeRecord();
         chargeRecord.setCustId(payRecord.getCustomerId());
-        chargeRecord.setCustCode(payRecord.getCustomerCode());
+        chargeRecord.setCustCode(customerDAO.selectByPrimaryKey(payRecord.getCustomerId()).getCode());
         chargeRecord.setAmount(payRecord.getTotalFee());
         chargeRecord.setFactoryId(payRecord.getFactoryId());
         //后期做成枚举  消费类型（1--充值，2--缴费）
