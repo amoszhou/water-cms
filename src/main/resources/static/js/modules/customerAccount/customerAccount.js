@@ -3,9 +3,10 @@ $(function () {
         url: baseURL + 'customerAccount/list',
         datatype: "json",
         colModel: [
-            { label: 'ID', name: 'id', index: "id", width: 30, key: true },
-            { label: '顾客名', name: 'customerName', width: 40,sortable:false },
-            { label: '余额', name: 'balance', width: 40, sortable:false/*, formatter: formatURL*/},
+            {label: 'ID', name: 'id', index: "id", width: 30, key: true},
+            {label: '顾客名', name: 'customerName', width: 40, sortable: false},
+            {label: '顾客编码', name: 'custCode', width: 40, sortable: false},
+            {label: '余额', name: 'balance', width: 40, sortable: false/*, formatter: formatURL*/},
             /*{ label: '电话', name: 'deleteStatus', width: 30, formatter: function(value, options, row){
                 return value === 0 ?
                     '<span class="label label-success">正常</span>' :
@@ -14,78 +15,80 @@ $(function () {
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
 
-            { label: '更新人', name: 'updateUser', width:40/*,formatter: operateMenu*/,sortable:false},
-            { label: '更新时间', name: 'updateTimeForHTML', width:40/*,formatter: operateMenu*/,sortable:false},
-        /*    { label: '操作', width:40,formatter: operateMenu,sortable:false},*/
+            {label: '更新人', name: 'updateUser', width: 40/*,formatter: operateMenu*/, sortable: false},
+            {label: '更新时间', name: 'updateTimeForHTML', width: 40, formatter: formatDate, sortable: false},
+            /*    { label: '操作', width:40,formatter: operateMenu,sortable:false},*/
         ],
         viewrecords: true,
         height: screen.height * 0.55,
         rowNum: 10,
-        rowList : [10,30,50],
+        rowList: [10, 30, 50],
         rownumbers: true,
         rownumWidth: 25,
-        autowidth:true,
+        autowidth: true,
         multiselect: true,
         pager: "#jqGridPager",
-        jsonReader : {
+        jsonReader: {
             root: "page.list",
             page: "page.currPage",
             total: "page.totalPage",
             records: "page.totalCount"
         },
-        prmNames : {
-            page:"page",
-            rows:"limit",
+        prmNames: {
+            page: "page",
+            rows: "limit",
             order: "order"
         },
-        gridComplete:function(){
+        gridComplete: function () {
             //隐藏grid底部滚动条
-            $("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });
+            $("#jqGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "hidden"});
         }
     });
 });
 
 var vm = new Vue({
-    el:'#rrapp',
-    data:{
+    el: '#rrapp',
+    data: {
         showList: true,
-        title:null,
-        app:{
-            id:'',
-            balance:'',
-            custId:'',
-            updateUser:'',
-            customerName:'',
-            updateTimeForHTML:'',
-            raiseMoney:'',
-            factoryId:'',
+        title: null,
+        app: {
+            id: '',
+            balance: '',
+            custId: '',
+            updateUser: '',
+            customerName: '',
+            updateTimeForHTML: '',
+            raiseMoney: '',
+            factoryId: '',
+            custCode: ''
         },
-        q:{
-            id:'',
-            balance:'',
-            custId:'',
-            updateUser:'',
-            customerName:'',
-            updateTimeForHTML:'',
-            raiseMoney:'',
-            factoryId:'',
+        q: {
+            id: '',
+            balance: '',
+            custId: '',
+            updateUser: '',
+            customerName: '',
+            updateTimeForHTML: '',
+            raiseMoney: '',
+            factoryId: '',
+            custCode: ''
         },
-        CustomerMessageList:[],
-        FactoryMessageList:[],
+        CustomerMessageList: [],
+        FactoryMessageList: [],
     },
     methods: {
         query: function () {
             vm.reload();
         },
-        add: function(){
+        add: function () {
             vm.showList = false;
             vm.title = "新增";
-            vm.app = {deleteStatus:0};
+            vm.app = {deleteStatus: 0};
         },
         update: function () {
             var id = getSelectedRow();
-            if(id == null){
-                return ;
+            if (id == null) {
+                return;
             }
             vm.showList = false;
             vm.title = "修改";
@@ -94,29 +97,29 @@ var vm = new Vue({
         },
         del: function () {
             var id = getSelectedRows();
-            if(id == null){
-                return ;
+            if (id == null) {
+                return;
             }
 
-            confirm('确定要删除选中的记录？', function(){
-                $.get(baseURL + "customerAccount/"+id+"/del", function(r){
+            confirm('确定要删除选中的记录？', function () {
+                $.get(baseURL + "customerAccount/" + id + "/del", function (r) {
                     if (r.permissionCheck) {
                         alert(r.msg);
                         return;
                     }
-                    if(r.code == 0){
-                        alert('操作成功', function(){
+                    if (r.code == 0) {
+                        alert('操作成功', function () {
                             vm.reload();
                         });
-                    }else{
+                    } else {
                         alert(r.msg);
                     }
                 });
             });
         },
         saveOrUpdate: function () {
-            if(vm.validator()){
-                return ;
+            if (vm.validator()) {
+                return;
             }
 
             var url = vm.app.id == null ? "customerAccount/addCustomerAccount" : "customerAccount/updateCustomerAccount";
@@ -125,23 +128,23 @@ var vm = new Vue({
                 url: baseURL + url,
                 contentType: "application/json",
                 data: JSON.stringify(vm.app),
-                success: function(r){
+                success: function (r) {
                     if (r.permissionCheck) {
                         alert(r.msg);
                         return;
                     }
-                    if(r.code === 0){
-                        alert('操作成功', function(){
+                    if (r.code === 0) {
+                        alert('操作成功', function () {
                             vm.reload();
                         });
-                    }else{
+                    } else {
                         alert(r.msg);
                     }
                 }
             });
         },
-        getApp: function(id){
-            $.get(baseURL + "customerAccount/"+id+"/info", function(r){
+        getApp: function (id) {
+            $.get(baseURL + "customerAccount/" + id + "/info", function (r) {
                 if (r.permissionCheck) {
                     alert(r.msg);
                     return;
@@ -151,37 +154,48 @@ var vm = new Vue({
                 delete vm.app.updateTime;
 
 
-
             });
         },
         reload: function () {
             vm.showList = true;
-            var page = $("#jqGrid").jqGrid('getGridParam','page');
-            if(vm.q.custId == -100){
+            var page = $("#jqGrid").jqGrid('getGridParam', 'page');
+            if (vm.q.custId == -100) {
                 vm.q.custId = null;
             }
-            if(vm.q.factoryId == -100){
+            if (vm.q.factoryId == -100) {
                 vm.q.factoryId = null;
             }
-            $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'custId': vm.q.custId,'factoryId':vm.q.factoryId},
-                page:page
+            $("#jqGrid").jqGrid('setGridParam', {
+                postData: {'custCode': vm.q.custCode, 'factoryId': vm.q.factoryId},
+                page: page
             }).trigger("reloadGrid");
         },
         validator: function () {
-            /*  if(isBlank(vm.app.appId)){
-                  alert("应用标识不能为空");
-                  return true;
-              }
-              if(isBlank(vm.app.name)){
-                  alert("应用名称不能为空");
-                  return true;
-              }
+            /*
+            *    id:'',
+            balance:'',
+            custId:'',
+            updateUser:'',
+            customerName:'',
+            updateTimeForHTML:'',
+            raiseMoney:'',
+            factoryId:'',
+            custCode:''
+            * */
+            if (isBlank(vm.app.custId)) {
+                alert("顾客不能为空");
+                return true;
+            }
+            if (isBlank(vm.app.factoryId)) {
+                alert("所属水厂不能为空");
+                return true;
+            }
+            var pattern = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
 
-              if(isBlank(vm.app.url)){
-                  alert("应用地址不能为空");
-                  return true;
-              }*/
+            if (isBlank(vm.app.raiseMoney) || !pattern.test(vm.app.raiseMoney) || vm.app.raiseMoney == 0 ) {
+                alert("充值金额必须为正数!");
+                return true;
+            }
 
         }
     }
@@ -203,14 +217,14 @@ function openDetail(aid) {
 }
 
 function formatDate(cellvalue, options, rowObject) {
-    /*  cellvalue = cellvalue.replace("T"," ");*/
+    cellvalue = cellvalue.replace("T", " ");
     return cellvalue;
 }
 
 function formatURL(value, options, rowObject) {
     var token = localStorage.getItem('token');
     var result = value + '?token=' + token + '&setToken=true';
-    if(!(value.startsWith("http://") || (value.startsWith("https://"))) ) result="http://"+result;
+    if (!(value.startsWith("http://") || (value.startsWith("https://")))) result = "http://" + result;
     return '<a href="' + result + '" target="_blank">' + value + '</a>';
 }
 
@@ -223,12 +237,12 @@ $.ajax({
     contentType: 'application/json',
     success: function (returnJsonData) {
         vm.CustomerMessageList = [];
-        for(var i = 0 ; i < returnJsonData.length ; i ++){
-            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
+        for (var i = 0; i < returnJsonData.length; i++) {
+            var tepm = {id: returnJsonData[i].id, name: returnJsonData[i].name, idAndName: returnJsonData[i].idAndName};
             vm.CustomerMessageList.push(tepm);
         }
         console.log(vm.CustomerMessageList);
-    },error:function (returnJsonData) {
+    }, error: function (returnJsonData) {
 
     }
 });
@@ -241,12 +255,12 @@ $.ajax({
     contentType: 'application/json',
     success: function (returnJsonData) {
         vm.FactoryMessageList = [];
-        for(var i = 0 ; i < returnJsonData.length ; i ++){
-            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
+        for (var i = 0; i < returnJsonData.length; i++) {
+            var tepm = {id: returnJsonData[i].id, name: returnJsonData[i].name, idAndName: returnJsonData[i].idAndName};
             vm.FactoryMessageList.push(tepm);
         }
         console.log(vm.FactoryMessageList);
-    },error:function (returnJsonData) {
+    }, error: function (returnJsonData) {
 
     }
 });

@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author : 林吉达
@@ -53,6 +50,7 @@ public class FactoryService {
         logger.info("total:{}", total_count);
 
         List<Factory> factories = null;
+
         if (total_count > 0) {
             factories = factoryDAO.queryList(query);
             logger.info("serviceList = {}", factories.toString());
@@ -70,19 +68,27 @@ public class FactoryService {
     public void save(Factory factory) {
         if (factory != null) {
             logger.info(factory.toString());
-            int factoryId = factoryDAO.insertSelective(factory);
+            factoryDAO.insertSelective(factory);
+            /*int factoryId = */
             //修改employee表
-            Employee employee = new Employee();
+         /*   Employee employee = new Employee();
             employee.setFactoryId(factoryId);
             employee.setId(factory.getManagerId());
-            employeeDAO.updateByPrimaryKeySelective(employee);
-         }
+            employeeDAO.updateByPrimaryKeySelective(employee);*/
+        }
     }
 
     public Factory queryObject(Integer id) {
         Map map = new HashMap();
-        map.put("id",id);
-        return (Factory)factoryDAO.queryList(map).get(0);
+        map.put("id", id);
+        Factory factory = (Factory) factoryDAO.queryList(map).get(0);
+        List<Employee> employees = employeeDAO.selectEmployeeByFactoryId(id);
+        String managerName = "";
+        for (Employee e : employees) {
+            managerName += e.getId() + ":" + e.getRealName()+",";
+        }
+        factory.setManagerName(managerName);
+        return factory;
     }
 
     @Transactional
@@ -90,16 +96,6 @@ public class FactoryService {
         if (factory != null) {
             logger.info(factory.toString());
             factoryDAO.updateByPrimaryKeySelective(factory);
-
-            Employee employee = new Employee();
-            employee.setId(factory.getManagerId());
-            //检查employee是否已经有了水厂，如果有，则不允许（因为一个管理员只允许管理一个水厂）
-            if(employeeDAO.checkFactoryEmployeeIsExist(employee) > 0)
-                throw  new BizException("该管理员已经有所属水厂了!");
-
-            //修改employee表
-            employee.setFactoryId(factory.getId());
-            employeeDAO.updateByPrimaryKeySelective(employee);
         }
     }
 

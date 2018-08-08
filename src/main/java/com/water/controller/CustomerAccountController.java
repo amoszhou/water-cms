@@ -133,7 +133,7 @@ public class CustomerAccountController {
         try {
             list = customerAccountService.selectCustomerMessage();
             for (IdAndNameDTO idAndNameDTO :list) {
-                idAndNameDTO.setIdAndName(idAndNameDTO.getId()+":"+ idAndNameDTO.getName());
+                idAndNameDTO.setIdAndName(idAndNameDTO.getCode()+":"+ idAndNameDTO.getName());
             }
         } catch (Exception e) {
             logger.info("CustomerAccountController/getCustomerMessageList|查询失败，原因：{}", e.getMessage());

@@ -5,7 +5,7 @@ $(function () {
         colModel: [			
 			{ label: 'ID', name: 'id', index: "id", width: 30, key: true },
 			{ label: '水厂名', name: 'name', width: 40, sortable:false},
-			{ label: '管理员', name: 'managerName', width: 40,sortable:false , formatter: formatManagerName},
+	/*		{ label: '管理员', name: 'managerName', width: 40,sortable:false , formatter: formatManagerName},*/
             { label: '地址', name: 'address', width: 40, sortable:false/*, formatter: formatURL*/},
 			/*{ label: '电话', name: 'deleteStatus', width: 30, formatter: function(value, options, row){
 				return value === 0 ? 
@@ -155,20 +155,24 @@ var vm = new Vue({
             }).trigger("reloadGrid");
 		},
         validator: function () {
-          /*  if(isBlank(vm.app.appId)){
-                alert("应用标识不能为空");
+            if(isBlank(vm.app.tel)){
+                alert("水厂电话不能为空");
                 return true;
             }
             if(isBlank(vm.app.name)){
-                alert("应用名称不能为空");
+                alert("水厂名称不能为空");
                 return true;
             }
 
-            if(isBlank(vm.app.url)){
-                alert("应用地址不能为空");
+            if(isBlank(vm.app.address)){
+                alert("水厂地址不能为空");
                 return true;
-            }*/
-
+            }
+           /* if(isBlank(vm.app.managerId)){
+                alert("水厂管理员不能为空");
+                return true;
+            }
+*/
         }
 	}
 });

@@ -31,7 +31,7 @@
             <div class="form-group col-sm-2">
                 <input type="text" class="form-control" v-model="q.custCode" @keyup.enter="query" placeholder="顾客Code">
             </div>
-            <div class="form-group col-md-1">
+         <!--   <div class="form-group col-md-1">
                 <select  v-model="q.validDate" id="searchPrizeTypeId"
                          style="width: 213px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
                     <option value="0">
@@ -44,7 +44,31 @@
                         已过期
                     </option>
                 </select>
-            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>-->
+            <div class="form-group col-md-1" style="width:300px;">
+                <select  v-model="q.validDate" style="width: 260px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
+                    <option value="0">
+                        所有期限
+                    </option>
+                    <option value="1">
+                        有效期内
+                    </option>
+                    <option value="2">
+                        已过期
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-1" style="width:300px;">
+                <select  v-model="q.factoryId" style="width: 260px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
+                    <option value="-100">
+                        所有水厂
+                    </option>
+                    <option v-for="option in FactoryMessageList" v-bind:value="option.id">
+                        {{ option.id+":"+option.name }}
+                    </option>
+                </select>
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a class="btn btn-default" @click="query">查询</a>
             <a  th:if="${addPer=='true'}"  class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
@@ -76,7 +100,7 @@
                     <select  v-model="app.custId"
                              style="width: 213px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
                         <option v-for="option in CustomerMessageList" v-bind:value="option.id">
-                            {{ option.id+":"+option.name }}
+                            {{ option.idAndName }}
                         </option>
                     </select>
                 </div>
@@ -110,11 +134,17 @@
                 </div>
             </div>
             <div class="form-group">
+                <div class="col-sm-2 control-label">编码</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="app.code" placeholder="编码"/>
+                </div>
+            </div>
+          <!--  <div class="form-group">
                 <div class="col-sm-2 control-label">尺寸</div>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" v-model="app.size" placeholder="尺寸"/>
                 </div>
-            </div>
+            </div>-->
 
             <div class="form-group">
                 <div class="col-sm-2 control-label"></div>

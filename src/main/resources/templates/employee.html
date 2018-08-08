@@ -32,13 +32,16 @@
                 <input type="text" class="form-control" v-model="q.realName" @keyup.enter="query" placeholder="雇员真实姓名">
             </div>
             <div class="form-group col-sm-2">
-                <input type="text" class="form-control" v-model="q.factoryName" @keyup.enter="query" placeholder="所属水厂名">
+                <input type="text" class="form-control" v-model="q.factoryName" @keyup.enter="query"
+                       placeholder="所属水厂名">
             </div>
 
             <a class="btn btn-default" @click="query">查询</a>
-            <a  th:if="${addPer=='true'}"  class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-            <a th:if="${updatePer=='true'}" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-            <a th:if="${deletePer=='true'}" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;禁用</a>
+            <a th:if="${addPer=='true'}" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+            <a th:if="${updatePer=='true'}" class="btn btn-primary" @click="update"><i
+                    class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+            <a th:if="${deletePer=='true'}" class="btn btn-primary" @click="del"><i
+                    class="fa fa-trash-o"></i>&nbsp;禁用</a>
         </div>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
@@ -48,6 +51,11 @@
     <div v-show="!showList" class="panel panel-default">
         <div class="panel-heading">{{title}}</div>
         <form class="form-horizontal">
+            <div class="col-sm-2 control-label" style="color: red">注意事项：</div>
+            <div class="col-sm-10" style="color: red">
+                <h5>当用户类型为超级管理员,不需要设置所属水厂</h5>
+
+            </div>
             <div class="form-group">
                 <div class="col-sm-2 control-label">用户名</div>
                 <div class="col-sm-10">
@@ -60,12 +68,12 @@
                     <input type="text" class="form-control" v-model="app.realName" placeholder="真实姓名"/>
                 </div>
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <div class="col-sm-2 control-label">密码</div>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" v-model="app.password" placeholder="密码"/>
                 </div>
-            </div>
+            </div>-->
 
             <div class="form-group">
                 <div class="col-sm-2 control-label">电话</div>
@@ -76,23 +84,33 @@
             <div class="form-group">
                 <div class="col-sm-2 control-label">用户类别</div>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="app.userType" placeholder="用户类别"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-2 control-label">所属水厂：</div>
-                <div class="col-sm-10">
-                    <!--<input type="text" v-model="activityInfo.id" class="hidden"/>-->
-
-                    <select  v-model="app.factoryId"
-                             style="width: 375px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
-                        <option v-for="option in FactoryMessageList" v-bind:value="option.id">
-                            {{ option.id+":"+option.name }}
+                    <!--  <input type="text" class="form-control" v-model="app.userType" placeholder="用户类别"/>-->
+                    <select v-model="app.userType"
+                            style="width: 375px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
+                        <option value="0">
+                            超级管理员
+                        </option>
+                        <option value="1">
+                            普通管理员
                         </option>
 
                     </select>
                 </div>
             </div>
+             <div class="form-group">
+                 <div class="col-sm-2 control-label">所属水厂：</div>
+                 <div class="col-sm-10">
+                     <!--<input type="text" v-model="activityInfo.id" class="hidden"/>-->
+
+                     <select  v-model="app.factoryId"
+                              style="width: 375px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
+                         <option v-for="option in FactoryMessageList" v-bind:value="option.id">
+                             {{ option.id+":"+option.name }}
+                         </option>
+
+                     </select>
+                 </div>
+             </div>
 
 
             <div class="form-group">
@@ -102,7 +120,6 @@
             </div>
         </form>
     </div>
-
 
 
     <!------------------ 应用详情弹框 ----------------------------->
@@ -135,13 +152,13 @@
                                 <input type="text" v-model="app.telPhone" class="no-border" readonly="readonly"/>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-sm-3 control-label">用户类别：</div>
+                    <!--    <div class="form-group">
+                            <div class="col-sm-3 control-label">密码：</div>
                             <div class="col-sm-3">
-                                <input type="text" v-model="app.userType" class="no-border" readonly="readonly"/>
+                                <input type="text" v-model="app.password" class="no-border" readonly="readonly"/>
                             </div>
                         </div>
-
+-->
                         <!--<div class="form-group">
                             <div class="col-sm-3 control-label">应用状态：</div>
                             <div class="col-sm-3">

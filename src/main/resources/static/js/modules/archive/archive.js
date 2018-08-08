@@ -15,7 +15,7 @@ $(function () {
             },sortable:false},*/
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
-            { label: '记录人', name: 'recordUser', width:40/*,formatter: operateMenu*/,sortable:false},
+           /* { label: '记录人', name: 'recordUser', width:40/!*,formatter: operateMenu*!/,sortable:false},*/
             { label: '操作', width:40,formatter: operateMenu,sortable:false},
         ],
         viewrecords: true,
@@ -57,7 +57,6 @@ var vm = new Vue({
             id:'',
             areaId:'',
             code:'',
-            code:'',
             hallId:'',
             name:'',
             recordUser:'',
@@ -69,7 +68,6 @@ var vm = new Vue({
         q:{
             id:'',
             areaId:'',
-            code:'',
             code:'',
             hallId:'',
             name:'',
@@ -173,19 +171,39 @@ var vm = new Vue({
             }).trigger("reloadGrid");
         },
         validator: function () {
-            /*  if(isBlank(vm.app.appId)){
-                  alert("应用标识不能为空");
+            /*
+            *  id:'',
+            areaId:'',
+            code:'',
+            code:'',
+            hallId:'',
+            name:'',
+            recordUser:'',
+            hallName:'',
+            areaName:'',
+            createTimeForHtml:'',
+            factoryId:'',
+            * */
+              if(isBlank(vm.app.areaId)){
+                  alert("片区不能为空");
                   return true;
               }
-              if(isBlank(vm.app.name)){
-                  alert("应用名称不能为空");
+              if(isBlank(vm.app.code)){
+                  alert("code不能为空");
                   return true;
               }
-
-              if(isBlank(vm.app.url)){
-                  alert("应用地址不能为空");
+              if(isBlank(vm.app.hallId)){
+                  alert("营业厅不能为空");
                   return true;
-              }*/
+              }
+            if(isBlank(vm.app.name)){
+                alert("表册名不能为空");
+                return true;
+            }
+            if(isBlank(vm.app.factoryId)){
+                alert("所属水厂不能为空");
+                return true;
+            }
 
         }
     }

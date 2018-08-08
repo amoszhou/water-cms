@@ -1,13 +1,11 @@
 package com.water.service;
 
 import com.water.annotation.FactoryIds;
-import com.water.config.HttpServletRequestUtil;
 import com.water.dao.CustomerDAO;
 import com.water.dao.CustomerMeterDAO;
 import com.water.dao.PriceTypeDAO;
 import com.water.domain.Customer;
 import com.water.domain.CustomerMeter;
-import com.water.domain.PriceType;
 import com.water.util.PageUtil;
 import com.water.util.Query;
 import com.water.util.R;
@@ -75,7 +73,7 @@ public class CustomerMeterService {
             queryMap.put("id", customerMeter.getCustId());
             Customer customer = (Customer) customerDAO.queryList(queryMap).get(0);
             customerMeter.setCustCode(customer.getCode());
-            customerMeter.setCode(UUID.randomUUID().toString());
+         /*   customerMeter.setCode(UUID.randomUUID().toString());*/
             customerMeterDAO.insertSelective(customerMeter);
         }
     }

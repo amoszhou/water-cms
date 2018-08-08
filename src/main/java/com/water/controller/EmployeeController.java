@@ -1,6 +1,7 @@
 package com.water.controller;
 
 import com.water.domain.Employee;
+import com.water.exception.BizException;
 import com.water.service.EmployeeService;
 import com.water.util.R;
 import org.slf4j.Logger;
@@ -84,7 +85,12 @@ public class EmployeeController {
     public R update(@RequestBody Employee dto){
         try {
             employeeService.update(dto);
-        } catch (Exception e) {
+        }catch (BizException e){
+            logger.info("EmployeeController/update|修改失败，原因：{}", e.getMessage());
+            logger.error("EmployeeController/update|Exception:"+e.getMessage(), e);
+            return R.error(e.getMessage());
+        }
+        catch (Exception e) {
             logger.info("EmployeeController/update|修改失败，原因：{}", e.getMessage());
             logger.error("EmployeeController/update|Exception:"+e.getMessage(), e);
             return R.error();

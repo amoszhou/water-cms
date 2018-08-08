@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +74,7 @@ public class CustomerAccountService {
      * @Description :保存
      * @Date : 20:28 2018/6/26
      */
+    @Transactional
     public void save(CustomerAccount customerAccount) {
         if (customerAccount != null) {
 
@@ -81,9 +83,28 @@ public class CustomerAccountService {
                 throw new BizException("此顾客已经有账号了！");
             }
 
-            //todo 获取user
-            customerAccount.setUpdateUser(HttpServletRequestUtil.getUserId());
-            customerAccountDAO.insertSelective(customerAccount);
+
+
+            if(customerAccount.getRaiseMoney() !=null && customerAccount.getRaiseMoney().compareTo(BigDecimal.ZERO) > 0 ){
+
+                customerAccount.setUpdateUser(HttpServletRequestUtil.getUserId());
+                customerAccount.setBalance(customerAccount.getRaiseMoney());
+                customerAccountDAO.insertSelective(customerAccount);
+
+                //生成消费记录
+                ChargeRecord chargeRecord = new ChargeRecord();
+                chargeRecord.setCreateUser(HttpServletRequestUtil.getUserId());
+                chargeRecord.setCustId(customerAccount.getCustId());
+                chargeRecord.setCustCode(customerDAO.selectByPrimaryKey(customerAccount.getCustId()).getCode());
+                chargeRecord.setAmount(customerAccount.getRaiseMoney());
+                //后期做成枚举  消费类型（1--充值，2--缴费）
+                chargeRecord.setChargeType(ChargeType.YUCUN.getChargeTpe());
+                chargeRecord.setFactoryId(customerAccount.getFactoryId());
+                //充值的支付类型全部为5
+                chargeRecord.setPayType(PayType.CHONGZHI.getPayType());
+                chargeRecordService.save(chargeRecord);
+            }
+
         }
     }
 

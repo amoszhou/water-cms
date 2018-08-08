@@ -68,7 +68,7 @@ public class CustomerService {
             //todo 获取用户名，填充recordUser           获取片区和营业厅列表
             customer.setCreateUser(HttpServletRequestUtil.getUserId());
           customer.setUpdateUser(HttpServletRequestUtil.getUserId());
-          customer.setCode(UUID.randomUUID().toString());
+        /*  customer.setCode(UUID.randomUUID().toString());*/
             customerDAO.insertSelective(customer);
         }
     }

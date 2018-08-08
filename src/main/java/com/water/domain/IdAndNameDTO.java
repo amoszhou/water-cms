@@ -8,8 +8,17 @@ package com.water.domain;
  */
 public class IdAndNameDTO {
     private  Integer id;
+    private String code;
     private  String name;
     private  String idAndName;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getIdAndName() {
         return idAndName;
@@ -21,8 +30,9 @@ public class IdAndNameDTO {
 
     @Override
     public String toString() {
-        return "FactoryIdAndNameDTO{" +
+        return "IdAndNameDTO{" +
                 "id=" + id +
+                ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", idAndName='" + idAndName + '\'' +
                 '}';

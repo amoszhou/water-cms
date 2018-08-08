@@ -5,8 +5,9 @@ $(function () {
         colModel: [
             { label: 'ID', name: 'id', index: "id", width: 30, key: true },
             { label: '用户名', name: 'username', width: 40, sortable:false},
-            { label: '水厂名', name: 'factoryName', width: 40, sortable:false},
+            { label: '所属水厂名', name: 'factoryName', width: 40, sortable:false/*,formatter: funFactory */},
             { label: '真实姓名', name: 'realName', width: 40,sortable:false },
+            { label: '用户类别', name: 'userType', width: 40,sortable:false,formatter: funUserType },
             /*{ label: '电话', name: 'deleteStatus', width: 30, formatter: function(value, options, row){
                 return value === 0 ?
                     '<span class="label label-success">正常</span>' :
@@ -55,7 +56,7 @@ var vm = new Vue({
         app:{
             id:'',
             factoryId:'',
-            password:'',
+          /*  password:'',*/
             realName:'',
             username:'',
             hallId:'',
@@ -68,7 +69,7 @@ var vm = new Vue({
             id:'',
             factoryId:'',
             hallId:'',
-            password:'',
+          /*  password:'',*/
             realName:'',
             username:'',
             telPhone:'',
@@ -163,19 +164,51 @@ var vm = new Vue({
             }).trigger("reloadGrid");
         },
         validator: function () {
-            /*  if(isBlank(vm.app.appId)){
-                  alert("应用标识不能为空");
+            /*
+            *     id:'',
+            factoryId:'',
+            password:'',
+            realName:'',
+            username:'',
+            hallId:'',
+            telPhone:'',
+            factoryName:'',
+            hallName:'',
+            userType:''
+            * */
+              if(isBlank(vm.app.factoryId) && vm.app.userType == 1){
+                  alert("所属水厂不能为空");
                   return true;
               }
-              if(isBlank(vm.app.name)){
-                  alert("应用名称不能为空");
-                  return true;
-              }
-
-              if(isBlank(vm.app.url)){
-                  alert("应用地址不能为空");
+             /* if(isBlank(vm.app.password)){
+                  alert("密码不能为空");
                   return true;
               }*/
+            if(isBlank(vm.app.realName)){
+                alert("真实姓名不能为空");
+                return true;
+            }
+            if(isBlank(vm.app.username)){
+                alert("用户名不能为空");
+                return true;
+            }
+         /*   if(isBlank(vm.app.hallId)){
+                alert("营业厅不能为空");
+                return true;
+            }*/
+            if(isBlank(vm.app.telPhone)){
+                alert("电话不能为空");
+                return true;
+            }
+          /*  if(isBlank(vm.app.password)){
+                alert("密码不能为空");
+                return true;
+            }*/
+          console.log(vm.app.userType);
+            if(isBlank(vm.app.userType) && vm.app.userType !=0 ){
+                alert("用户类别不能为空");
+                return true;
+            }
 
         }
     }
@@ -207,6 +240,24 @@ function formatURL(value, options, rowObject) {
     if(!(value.startsWith("http://") || (value.startsWith("https://"))) ) result="http://"+result;
     return '<a href="' + result + '" target="_blank">' + value + '</a>';
 }
+
+function funUserType(cellvalue, options, rowObject) {
+   if(cellvalue == 0)
+       return "超级管理员"
+    else if(cellvalue == 1)
+        return "普通管理员"
+    return cellvalue;
+}
+
+/*function funFactory(cellvalue, options, rowObject) {
+    if(cellvalue == 0)
+        return "超级管理员"
+    else if(cellvalue == 1)
+        return "普通管理员"
+    return cellvalue;
+}*/
+
+
 
 //页面加载时拿到所有的水厂编码
 $.ajax({

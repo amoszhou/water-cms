@@ -3,10 +3,10 @@ $(function () {
         url: baseURL + 'meter/list',
         datatype: "json",
         colModel: [
-            { label: 'ID', name: 'id', index: "id", width: 30, key: true },
-            { label: '水表名', name: 'name', width: 40, sortable:false},
-            { label: '品牌', name: 'brand', width: 40,sortable:false },
-            { label: '模型', name: 'model', width: 40, sortable:false/*, formatter: formatURL*/},
+            {label: 'ID', name: 'id', index: "id", width: 30, key: true},
+            {label: '水表名', name: 'name', width: 40, sortable: false},
+            {label: '品牌', name: 'brand', width: 40, sortable: false},
+            {label: '模型', name: 'model', width: 40, sortable: false/*, formatter: formatURL*/},
             /*{ label: '电话', name: 'deleteStatus', width: 30, formatter: function(value, options, row){
                 return value === 0 ?
                     '<span class="label label-success">正常</span>' :
@@ -14,75 +14,75 @@ $(function () {
             },sortable:false},*/
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
-            { label: '尺寸', name: 'size', width:40/*,formatter: operateMenu*/,sortable:false},
-            { label: '说明', name: 'specification', width:40/*,formatter: operateMenu*/,sortable:false},
-            { label: '创建时间', name: 'createTimeForHtml', width:40/*,formatter: operateMenu*/,sortable:false},
-            { label: '操作', width:40,formatter: operateMenu,sortable:false},
+            {label: '尺寸', name: 'size', width: 40/*,formatter: operateMenu*/, sortable: false},
+            {label: '说明', name: 'specification', width: 40/*,formatter: operateMenu*/, sortable: false},
+            {label: '创建时间', name: 'createTimeForHtml', width: 40/*,formatter: operateMenu*/, sortable: false},
+            {label: '操作', width: 40, formatter: operateMenu, sortable: false},
         ],
         viewrecords: true,
         height: screen.height * 0.55,
         rowNum: 10,
-        rowList : [10,30,50],
+        rowList: [10, 30, 50],
         rownumbers: true,
         rownumWidth: 25,
-        autowidth:true,
+        autowidth: true,
         multiselect: true,
         pager: "#jqGridPager",
-        jsonReader : {
+        jsonReader: {
             root: "page.list",
             page: "page.currPage",
             total: "page.totalPage",
             records: "page.totalCount"
         },
-        prmNames : {
-            page:"page",
-            rows:"limit",
+        prmNames: {
+            page: "page",
+            rows: "limit",
             order: "order"
         },
-        gridComplete:function(){
+        gridComplete: function () {
             //隐藏grid底部滚动条
-            $("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });
+            $("#jqGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "hidden"});
         }
     });
 });
 
 var vm = new Vue({
-    el:'#rrapp',
-    data:{
+    el: '#rrapp',
+    data: {
         showList: true,
-        title:null,
-        app:{
-            id:'',
-            brand:'',
-            createTimeForHtml:'',
-            model:'',
-            name:'',
-            size:'',
-            specification:'',
+        title: null,
+        app: {
+            id: '',
+            brand: '',
+            createTimeForHtml: '',
+            model: '',
+            name: '',
+            size: '',
+            specification: '',
         },
-        q:{
-            id:'',
-            brand:'',
-            createTimeForHtml:'',
-            model:'',
-            name:'',
-            size:'',
-            specification:'',
+        q: {
+            id: '',
+            brand: '',
+            createTimeForHtml: '',
+            model: '',
+            name: '',
+            size: '',
+            specification: '',
         },
     },
     methods: {
         query: function () {
             vm.reload();
         },
-        add: function(){
+        add: function () {
             vm.showList = false;
             vm.title = "新增";
-            vm.app = {deleteStatus:0};
+            vm.app = {deleteStatus: 0};
         },
         update: function () {
             var id = getSelectedRow();
-            if(id == null){
-                return ;
+            if (id == null) {
+                return;
             }
             vm.showList = false;
             vm.title = "修改";
@@ -91,29 +91,29 @@ var vm = new Vue({
         },
         del: function () {
             var id = getSelectedRows();
-            if(id == null){
-                return ;
+            if (id == null) {
+                return;
             }
 
-            confirm('确定要删除选中的记录？', function(){
-                $.get(baseURL + "meter/"+id+"/del", function(r){
+            confirm('确定要删除选中的记录？', function () {
+                $.get(baseURL + "meter/" + id + "/del", function (r) {
                     if (r.permissionCheck) {
                         alert(r.msg);
                         return;
                     }
-                    if(r.code == 0){
-                        alert('操作成功', function(){
+                    if (r.code == 0) {
+                        alert('操作成功', function () {
                             vm.reload();
                         });
-                    }else{
+                    } else {
                         alert(r.msg);
                     }
                 });
             });
         },
         saveOrUpdate: function () {
-            if(vm.validator()){
-                return ;
+            if (vm.validator()) {
+                return;
             }
 
             var url = vm.app.id == null ? "meter/addMeter" : "meter/updateMeter";
@@ -122,23 +122,23 @@ var vm = new Vue({
                 url: baseURL + url,
                 contentType: "application/json",
                 data: JSON.stringify(vm.app),
-                success: function(r){
+                success: function (r) {
                     if (r.permissionCheck) {
                         alert(r.msg);
                         return;
                     }
-                    if(r.code === 0){
-                        alert('操作成功', function(){
+                    if (r.code === 0) {
+                        alert('操作成功', function () {
                             vm.reload();
                         });
-                    }else{
+                    } else {
                         alert(r.msg);
                     }
                 }
             });
         },
-        getApp: function(id){
-            $.get(baseURL + "meter/"+id+"/info", function(r){
+        getApp: function (id) {
+            $.get(baseURL + "meter/" + id + "/info", function (r) {
                 if (r.permissionCheck) {
                     alert(r.msg);
                     return;
@@ -150,26 +150,42 @@ var vm = new Vue({
         },
         reload: function () {
             vm.showList = true;
-            var page = $("#jqGrid").jqGrid('getGridParam','page');
-            $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'name': vm.q.name,'brand':vm.q.brand},
-                page:page
+            var page = $("#jqGrid").jqGrid('getGridParam', 'page');
+            $("#jqGrid").jqGrid('setGridParam', {
+                postData: {'name': vm.q.name, 'brand': vm.q.brand},
+                page: page
             }).trigger("reloadGrid");
         },
         validator: function () {
-            /*  if(isBlank(vm.app.appId)){
-                  alert("应用标识不能为空");
-                  return true;
-              }
-              if(isBlank(vm.app.name)){
-                  alert("应用名称不能为空");
-                  return true;
-              }
+            /*
+            *    id:'',
+            brand:'',
+            createTimeForHtml:'',
+            model:'',
+            name:'',
+            size:'',
+            specification:'',
+            * */
+            if (isBlank(vm.app.brand)) {
+                alert("商标不能为空");
+                return true;
+            }
 
-              if(isBlank(vm.app.url)){
-                  alert("应用地址不能为空");
-                  return true;
-              }*/
+            if (isBlank(vm.app.model)) {
+                alert("模型不能为空");
+                return true;
+            }
+
+            if (isBlank(vm.app.name)) {
+                alert("水表名不能为空");
+                return true;
+            }
+
+            if (isBlank(vm.app.size)) {
+                alert("水表尺寸不能为空");
+                return true;
+            }
+
 
         }
     }
@@ -198,7 +214,7 @@ function formatDate(cellvalue, options, rowObject) {
 function formatURL(value, options, rowObject) {
     var token = localStorage.getItem('token');
     var result = value + '?token=' + token + '&setToken=true';
-    if(!(value.startsWith("http://") || (value.startsWith("https://"))) ) result="http://"+result;
+    if (!(value.startsWith("http://") || (value.startsWith("https://")))) result = "http://" + result;
     return '<a href="' + result + '" target="_blank">' + value + '</a>';
 }
 

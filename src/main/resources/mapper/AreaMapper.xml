@@ -48,8 +48,8 @@
   <sql id="whereClause">
     <where>
       and is_delete = 0
-      <if test="code != null and code.trim() != ''">
-        and code like concat('%', trim(#{code}),'%')
+      <if test="name != null and name.trim() != ''">
+        and name like concat('%', trim(#{name}),'%')
       </if>
       <if test="factoryId != null and factoryId.trim() != ''">
         and factory_id = #{factoryId}

@@ -4,12 +4,13 @@ $(function () {
         datatype: "json",
         colModel: [
             { label: 'ID', name: 'id', index: "id", width: 30, key: true },
-            { label: 'code', name: 'code', width: 40, sortable:false},
+            { label: '编码', name: 'code', width: 40, sortable:false},
             { label: '顾客code', name: 'custCode', width: 40,sortable:false },
             { label: '顾客名称', name: 'customerName', width: 40,sortable:false },
             { label: '水费价格', name: 'waterFee', width: 40, sortable:false/*, formatter: formatURL*/},
             { label: '污水费价格', name: 'sewageFee', width: 40, sortable:false/*, formatter: formatURL*/},
             { label: '水表名', name: 'meterName', width: 40, sortable:false/*, formatter: formatURL*/},
+            { label: '所属水厂名', name: 'factoryName', width: 40, sortable:false/*, formatter: formatURL*/},
              /*{ label: '电话', name: 'deleteStatus', width: 30, formatter: function(value, options, row){
                 return value === 0 ?
                     '<span class="label label-success">正常</span>' :
@@ -18,7 +19,7 @@ $(function () {
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
             { label: '有效时间', name: 'enableDateForHtml', width:40/*,formatter: operateMenu*/,sortable:false},
-            { label: '操作', width:40,formatter: operateMenu,sortable:false},
+            /*{ label: '操作', width:40,formatter: operateMenu,sortable:false},*/
         ],
         viewrecords: true,
         height: screen.height * 0.55,
@@ -68,6 +69,7 @@ var vm = new Vue({
             sewageFee:'',
             enableDateForHtml:'',
             validDate:'',
+            factoryName:'',
         },
         q:{
             id:'',
@@ -85,6 +87,7 @@ var vm = new Vue({
             sewageFee:'',
             enableDateForHtml:'',
             validDate:'',
+            factoryName:'',
         },
         FactoryMessageList:[],
         CustomerMessageList:[],
@@ -178,7 +181,7 @@ var vm = new Vue({
             if(vm.q.validDate == 0)
                 vm.q.validDate = null
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'custCode': vm.q.custCode,'validDate':vm.q.validDate},
+                postData:{'custCode': vm.q.custCode,'validDate':vm.q.validDate,'factoryId':vm.q.factoryId},
                 page:page
             }).trigger("reloadGrid");
         },

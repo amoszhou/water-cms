@@ -54,7 +54,7 @@
                     <select  v-model="app.custId"
                              style="width: 213px;border: 1px solid #ccc;border-radius: 3px;height: 30px;line-height: 30px;">
                         <option v-for="option in CustomerMessageList" v-bind:value="option.id">
-                            {{ option.id+":"+option.name }}
+                            {{ option.idAndName }}
                         </option>
                     </select>
                 </div>

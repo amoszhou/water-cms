@@ -28,6 +28,16 @@ public class CustomerAccount implements Serializable {
 
     private Integer factoryId;
 
+    private String custCode;
+
+    public String getCustCode() {
+        return custCode;
+    }
+
+    public void setCustCode(String custCode) {
+        this.custCode = custCode;
+    }
+
     public Integer getFactoryId() {
         return factoryId;
     }
@@ -170,6 +180,7 @@ public class CustomerAccount implements Serializable {
                 ", updateTimeForHTML='" + updateTimeForHTML + '\'' +
                 ", raiseMoney=" + raiseMoney +
                 ", factoryId=" + factoryId +
+                ", custCode='" + custCode + '\'' +
                 '}';
     }
 }

@@ -33,6 +33,9 @@
       <if test="factoryId != null and factoryId.trim() != ''">
         and factory_id = #{factoryId}
       </if>
+      <if test="name != null and name.trim() != ''">
+        and name like concat('%', trim(#{name}),'%')
+      </if>
       <if test="id != null ">
         and  id = #{id,jdbcType=INTEGER}
       </if>

@@ -20,7 +20,7 @@
 
   </resultMap>
   <sql id="Base_Column_List" >
-    id, code, cust_code, cust_id, enable_date, is_delete, price_type, size,meter_id,factory_id
+    id, code, cust_code, cust_id, enable_date, is_delete, price_type,meter_id,factory_id
   </sql>
   <!--权限过滤-->
   <sql id="authSql">
@@ -86,8 +86,8 @@
     <include refid="whereClause"/>
   </select>
   <select id="queryList" resultMap="BaseResultMap">
-    select a.id, a.code, a.cust_code, a.cust_id, a.enable_date, a.is_delete, a.price_type, a.size,a.meter_id,a.factory_id,
-        b.name as customerName,c.name as meterName,d.name as factoryName,e.price as waterFee,f.sewage as sewageFee
+    select a.id, a.code, a.cust_code, a.cust_id, a.enable_date, a.is_delete, a.price_type,a.meter_id,a.factory_id,
+        b.name as customerName,c.name as meterName,c.size as size,d.name as factoryName,e.price as waterFee,f.sewage as sewageFee
     FROM  (select id,name from t_customer    <include refid="authSql"/> ) as b RIGHT join
     (select
     <include refid="Base_Column_List"/>
@@ -103,7 +103,7 @@
     </choose>
     <if test="offset != null and limit != null">
       limit #{offset}, #{limit}
-    </if> )as a on a.cust_id = b.id LEFT  JOIN  (select id,name from t_meter where is_delete = 0 ) as c on c.id = a.meter_id
+    </if> )as a on a.cust_id = b.id LEFT  JOIN  (select id,name,size from t_meter where is_delete = 0 ) as c on c.id = a.meter_id
     JOIN  (select id,name from t_factory    <include refid="authSqlForFactoryTable"/> ) as d on d.id = a.factory_id
     JOIN (select id,price from t_price_type    <include refid="authSql"/> ) as e on e.id = a.price_type
     JOIN (select id,sewage from t_price_type    <include refid="authSql"/> ) as f on f.id = a.price_type

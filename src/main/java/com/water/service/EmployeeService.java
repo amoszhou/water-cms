@@ -1,11 +1,14 @@
 package com.water.service;
 
 import com.water.annotation.FactoryIds;
+import com.water.config.Globals;
 import com.water.config.HttpServletRequestUtil;
 import com.water.constant.EmployeeType;
+import com.water.constant.UserType;
 import com.water.dao.EmployeeDAO;
 import com.water.domain.Employee;
 import com.water.domain.Factory;
+import com.water.exception.BizException;
 import com.water.util.PageUtil;
 import com.water.util.Query;
 import com.water.util.R;
@@ -68,7 +71,14 @@ public class EmployeeService {
      */
     public void save(Employee employee) {
         if (employee != null) {
-            logger.info(employee.toString());
+            if(employee.getUserType() == UserType.SUPER_MANAGER.getUserType()){
+                if(HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERTYPE) == EmployeeType.SUPER_MANAGER)
+                    employee.setFactoryId(null);
+                else
+                    throw new BizException("您不是超级管理员，没有此权限!");
+            }
+            //注册时默认密码和手机号码一致
+            employee.setPassword(employee.getTelPhone());
             employeeDAO.insertSelective(employee);
         }
     }
@@ -120,6 +130,32 @@ public class EmployeeService {
            /* String[] result = employee.getHallName().split(":");
             employee.setHallId(Integer.parseInt(result[0]));
             employee.setHallName(result[1]);*/
+
+        /*    Employee employee = new Employee();
+            employee.setId(factory.getManagerId());
+            //检查employee是否已经有了水厂，如果有，则不允许（因为一个管理员只允许管理一个水厂）
+            if(employeeDAO.checkFactoryEmployeeIsExist(employee) > 0)
+                throw  new BizException("该管理员已经有所属水厂了!");
+
+            //修改employee表
+            employee.setFactoryId(factory.getId());
+            employeeDAO.updateByPrimaryKeySelective(employee);*/
+
+           //如果修改了employee所属水厂，需要检查操作人是不是超级管理员
+            if(  queryObject(employee.getId()).getFactoryId() != employee.getFactoryId()){
+
+                if(HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERTYPE) != EmployeeType.SUPER_MANAGER.getTypeId())
+                    throw new BizException("您不是超级管理员，没有此权限!");
+            }
+
+
+           //如果将用户设置成超级管理员，则需清除t_employee 表中的 factory_id 字段
+            if(employee.getUserType() == UserType.SUPER_MANAGER.getUserType()){
+                if(HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERTYPE) == EmployeeType.SUPER_MANAGER.getTypeId())
+                employee.setFactoryId(null);
+                else
+                    throw new BizException("您不是超级管理员，没有此权限!");
+            }
 
             employeeDAO.updateByPrimaryKeySelective(employee);
         }

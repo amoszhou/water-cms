@@ -11,6 +11,7 @@
     <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
     <result column="customerName" property="customerName" />
     <result column="factory_id" property="factoryId" jdbcType="INTEGER" />
+    <result column="custCode" property="custCode" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, balance, cust_id, update_time, update_user, version, is_delete,factory_id
@@ -19,6 +20,9 @@
   <sql id="authSql">
     <where>
       and is_delete = 0
+      <if test="custCode != null and custCode.trim() != ''">
+        and code like concat('%', trim(#{custCode}),'%')
+      </if>
       <if test="factoryIds != null and factoryIds.size != 0">
         and factory_id in
         <foreach collection="factoryIds" index="index" item="item"
@@ -55,8 +59,8 @@
     <include refid="whereClause"/>
   </select>
   <select id="queryList" resultMap="BaseResultMap">
-    select a.id, a.balance, a.cust_id, a.update_time, a.update_user, a.version, a.is_delete ,b.name as customerName,a.factory_id
-    FROM  (select id,name from t_customer    <include refid="authSql"/> ) as b join
+    select a.id, a.balance, a.cust_id, a.update_time, a.update_user, a.version, a.is_delete ,b.name as customerName,a.factory_id,b.code as custCode
+    FROM  (select id,name,code from t_customer    <include refid="authSql"/> ) as b join
     (select
     <include refid="Base_Column_List"/>
     from t_customer_account
@@ -80,7 +84,7 @@
   </update>
 
   <select id="selectCustomerMessage" resultType="com.water.domain.IdAndNameDTO"  >
-    select id , name from t_customer
+    select id , name ,code from t_customer
     <where>
       and is_delete = 0
       <if test="factoryIds != null and factoryIds.size != 0">

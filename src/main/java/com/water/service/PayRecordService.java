@@ -1,6 +1,7 @@
 package com.water.service;
 
 import com.water.annotation.FactoryIds;
+import com.water.config.HttpServletRequestUtil;
 import com.water.constant.ChargeType;
 import com.water.constant.PayState;
 import com.water.constant.PayType;
@@ -97,6 +98,13 @@ public class PayRecordService {
         if (payRecord.getPayType() == PayType.BALANCE.getPayType()) {
             CustomerAccount customerAccount = customerAccountDAO.getByCustId(payRecord.getCustomerId());
             //如果用户没有账户,创建一个
+            if(customerAccount == null){
+                customerAccount = new CustomerAccount();
+                customerAccount.setCustId(payRecord.getCustomerId());
+                customerAccount.setFactoryId(payRecord.getFactoryId());
+                throw new BizException("缴费失败，顾客账户余额不足!");
+            }
+
 
             //余额不足缴费
             if (customerAccount.getBalance().compareTo(payRecord.getTotalFee()) < 0)

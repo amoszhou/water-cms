@@ -193,25 +193,82 @@ var vm = new Vue({
             if(vm.q.factoryId == -100)
                 vm.q.factoryId = null
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'name': vm.q.name,'factoryId': vm.q.factoryId},
+                postData:{'code': vm.q.code,'factoryId': vm.q.factoryId},
                 page:page
             }).trigger("reloadGrid");
         },
         validator: function () {
-            /*  if(isBlank(vm.app.appId)){
-                  alert("应用标识不能为空");
+            /*
+            *    id:'',
+            address:'',
+            archiveId:'',
+            archiveName:'',
+            areaId:'',
+            areaName:'',
+            code:'',
+            createUser:'',
+            createUserName:'',
+            factoryId:'',
+            factoryName:'',
+            familyCount:'',
+            frequency:'',
+            hallId:'',
+            hallName:'',
+            idCard:'',
+            name:'',
+            phone:'',
+            tel:'',
+            updateUser:'',
+            updateUserName:'',
+            createTimeForHTML:'',
+            updateTimeForHTML:'',
+            * */
+              if(isBlank(vm.app.address)){
+                  alert("顾客地址不能为空");
                   return true;
               }
-              if(isBlank(vm.app.name)){
-                  alert("应用名称不能为空");
+              if(isBlank(vm.app.archiveId)){
+                  alert("所属表册不能为空");
                   return true;
               }
-
-              if(isBlank(vm.app.url)){
-                  alert("应用地址不能为空");
+              if(isBlank(vm.app.areaId)){
+                  alert("所属片区不能为空");
                   return true;
-              }*/
-
+              }
+            if(isBlank(vm.app.code)){
+                alert("顾客编码不能为空");
+                return true;
+            }
+            if(isBlank(vm.app.factoryId)){
+                alert("所属水厂不能为空");
+                return true;
+            }
+            if(isBlank(vm.app.hallId)){
+                alert("所属营业厅不能为空");
+                return true;
+            }
+            if(isBlank(vm.app.idCard)){
+                alert("身份证不能为空");
+                return true;
+            }
+            if(isBlank(vm.app.name)){
+                alert("顾客名字不能为空");
+                return true;
+            }
+            if(isBlank(vm.app.phone)){
+                alert("手机号码不能为空");
+                return true;
+            }
+          /*  if(isBlank(vm.app.url)){
+                alert("应用地址不能为空");
+                return true;
+            } if(isBlank(vm.app.url)){
+                alert("应用地址不能为空");
+                return true;
+            } if(isBlank(vm.app.url)){
+                alert("应用地址不能为空");
+                return true;
+            }*/
         }
     }
 });

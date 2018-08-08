@@ -24,6 +24,8 @@ public interface EmployeeDAO {
 
     int modifyPassword(Employee employee);
 
+    List<Employee> selectEmployeeByFactoryId(Integer factoryId);
+
     int checkFactoryEmployeeIsExist(Employee employee);
 
 }

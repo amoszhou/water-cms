@@ -163,19 +163,32 @@ var vm = new Vue({
             }).trigger("reloadGrid");
         },
         validator: function () {
-            /*  if(isBlank(vm.app.appId)){
-                  alert("应用标识不能为空");
+            /*
+            *   id:'',
+            factoryId:'',
+            factoryName:'',
+            code:'',
+            createUserName:'',
+            hallId:'',
+            name:'',
+            * */
+              if(isBlank(vm.app.factoryId)){
+                  alert("所属水厂不能为空");
                   return true;
               }
-              if(isBlank(vm.app.name)){
-                  alert("应用名称不能为空");
+              if(isBlank(vm.app.code)){
+                  alert("片区code不能为空");
                   return true;
               }
 
-              if(isBlank(vm.app.url)){
-                  alert("应用地址不能为空");
+              if(isBlank(vm.app.hallId)){
+                  alert("营业厅不能为空");
                   return true;
-              }*/
+              }
+            if(isBlank(vm.app.name)){
+                alert("片区名不能为空");
+                return true;
+            }
 
         }
     }

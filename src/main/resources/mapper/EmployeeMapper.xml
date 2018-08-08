@@ -108,7 +108,9 @@
   <select id="checkFactoryEmployeeIsExist" resultType="java.lang.Integer" parameterType="com.water.domain.Employee" >
     SELECT COUNT(1) from t_employee where is_delete = 0 and factory_id   &gt;-100 and id = #{id}
   </select>
-
+  <select id="selectEmployeeByFactoryId"  resultType="com.water.domain.Employee" parameterType="java.lang.Integer">
+     select id,real_name as realName from t_employee where is_delete = 0 and factory_id = #{factoryId}
+  </select>
 
   <insert id="insertSelective" parameterType="com.water.domain.Employee" >
     insert into t_employee
@@ -181,6 +183,10 @@
       <if test="factoryId != null" >
         factory_id = #{factoryId,jdbcType=INTEGER},
       </if>
+      <if test="factoryId == null" >
+        factory_id = NULL ,
+      </if>
+
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
       </if>
