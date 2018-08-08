@@ -59,8 +59,8 @@
     <sql id="whereClause">
         <where>
             and is_delete = 0
-            <if test="custId != null and custId.trim() != ''">
-                and cust_id = #{custId}
+            <if test="custCode != null and custCode.trim() != ''">
+                and cust_code like concat('%', trim(#{custCode}),'%')
             </if>
             <if test="factoryId != null and factoryId.trim() != ''">
                 and factory_id = #{factoryId}
@@ -83,11 +83,11 @@
     </select>
 
     <select id="queryList" resultMap="BaseResultMap">
-        select a.id, a.charge_id, a.create_time, a.create_user, a.curr_number, cust_code, a.cust_id, a.fee,
+        select a.id, a.charge_id, a.create_time, a.create_user, a.curr_number, a.cust_code, a.cust_id, a.fee,
         a.last_number,
         a.meter_id, a.pay, a.update_time, a.update_user,
         a.is_delete,a.code,a.factory_id,a.water_record_end_date,a.water_record_begin_date,
-        b.username as createUserName,c.username as updateUserName,d.name as meterName,e.name as customerName,f.name as
+        b.username as createUserName,c.real_name as updateUserName,d.name as meterName,e.name as customerName,f.name as
         factoryName
         from (select id,username from t_employee<include refid="authSql"/>) as b right JOIN (
         select
@@ -105,7 +105,7 @@
         <if test="offset != null and limit != null">
             limit #{offset}, #{limit}
         </if>
-        )as a on b.id = a.create_user LEFT JOIN (select id,username from t_employee<include refid="authSql"/>) as c on c.id
+        )as a on b.id = a.create_user LEFT JOIN (select id,real_name from t_employee<include refid="authSql"/>) as c on c.id
         = a.update_user
         LEFT join (select id,name from t_meter where is_delete = 0 ) as d on d.id = a.meter_id
         LEFT join (select id,name from t_customer<include refid="authSql"/>) as e on e.id = a.cust_id

@@ -171,9 +171,15 @@ var vm = new Vue({
                 vm.app = r.customerMeter;
               /*  delete vm.app.createTime;*/
                 vm.app.enableDate  =  vm.app.enableDateForHtml;
+                $("#meterCustomerCode").attr("readonly","readonly");
+                $("#meterCustomerCustCode").attr("readonly","readonly");
+
+
             });
         },
         reload: function () {
+            $("#meterCustomerCode").removeAttr("readonly");
+            $("#meterCustomerCustCode").removeAttr("readonly");
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
             if(vm.q.factoryId == -100)
@@ -186,19 +192,42 @@ var vm = new Vue({
             }).trigger("reloadGrid");
         },
         validator: function () {
-            /*  if(isBlank(vm.app.appId)){
-                  alert("应用标识不能为空");
+            /*
+            *  id:'',
+            code:'',
+            custCode:'',
+            custId:'',
+            enableDate:'',
+            isDelete:'',
+            priceType:'',
+            size:'',
+            customerName:'',
+            meterName:'',
+            factoryName:'',
+            waterFee:'',
+            sewageFee:'',
+            enableDateForHtml:'',
+            validDate:'',
+            factoryName:'',
+            * */
+              if(isBlank(vm.app.code)){
+                  alert("用户水表关系编码不能为空");
                   return true;
               }
-              if(isBlank(vm.app.name)){
-                  alert("应用名称不能为空");
+              if(isBlank(vm.app.custCode)){
+                  alert("顾客编码不能为空");
                   return true;
               }
 
-              if(isBlank(vm.app.url)){
-                  alert("应用地址不能为空");
+              if(isBlank(vm.app.enableDate)){
+                  alert("有效期不能为空");
                   return true;
-              }*/
+              }
+            if(isBlank(vm.app.priceType)){
+                alert("价格类型不能为空");
+                return true;
+            }
+
 
         }
     }

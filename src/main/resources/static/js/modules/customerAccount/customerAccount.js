@@ -152,11 +152,11 @@ var vm = new Vue({
 
                 vm.app = r.customerAccount;
                 delete vm.app.updateTime;
-
-
+                $("#saveCustomerInput").attr("readonly","readonly");
             });
         },
         reload: function () {
+            $("#saveCustomerInput").removeAttr("readonly");
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam', 'page');
             if (vm.q.custId == -100) {
@@ -182,7 +182,7 @@ var vm = new Vue({
             factoryId:'',
             custCode:''
             * */
-            if (isBlank(vm.app.custId)) {
+            if (isBlank(vm.app.custCode)) {
                 alert("顾客不能为空");
                 return true;
             }
@@ -193,6 +193,8 @@ var vm = new Vue({
             var pattern = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
 
             if (isBlank(vm.app.raiseMoney) || !pattern.test(vm.app.raiseMoney) || vm.app.raiseMoney == 0 ) {
+                if(isBlank(vm.app.raiseMoney))
+                    return;
                 alert("充值金额必须为正数!");
                 return true;
             }

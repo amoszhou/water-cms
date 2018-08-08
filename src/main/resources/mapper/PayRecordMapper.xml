@@ -39,12 +39,30 @@
   <!--权限过滤-->
   <sql id="authSql">
     <where>
+      and is_delete = 0
       <if test="factoryIds != null and factoryIds.size != 0">
         and factory_id in
         <foreach collection="factoryIds" index="index" item="item"
                  open="(" separator="," close=")">
           #{item}
         </foreach>
+      </if>
+
+    </where>
+  </sql>
+  <!--权限过滤  t_customer-->
+  <sql id="authSqlForCustomer">
+    <where>
+      and is_delete = 0
+      <if test="factoryIds != null and factoryIds.size != 0">
+        and factory_id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="customerCode != null and customerCode.trim() != ''">
+        and code   like concat('%', trim(#{customerCode}),'%')
       </if>
     </where>
   </sql>
@@ -100,7 +118,7 @@
     <if test="offset != null and limit != null">
       limit #{offset}, #{limit}
     </if>
-    )as a on b.id = a.factory_id LEFT JOIN (SELECT id,name,code from t_customer  <include refid="authSql"/>) as c on c.id = a.customer_id
+    )as a on b.id = a.factory_id  JOIN (SELECT id,name,code from t_customer  <include refid="authSqlForCustomer"/>) as c on c.id = a.customer_id
   </select>
 
 

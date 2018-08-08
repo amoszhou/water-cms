@@ -191,7 +191,7 @@ var vm = new Vue({
             if(vm.q.customerId == -100)
                 vm.q.customerId = null
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'customerId': vm.q.customerId,'factoryId':vm.q.factoryId,
+                postData:{'customerCode': vm.q.customerCode,'factoryId':vm.q.factoryId,
                 'waterBeginDate':vm.q.waterBeginDate,'waterEndDate':vm.q.waterEndDate},
                 page:page
             }).trigger("reloadGrid");

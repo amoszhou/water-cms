@@ -4,8 +4,8 @@ import com.water.annotation.FactoryIds;
 import com.water.dao.CustomerDAO;
 import com.water.dao.CustomerMeterDAO;
 import com.water.dao.PriceTypeDAO;
-import com.water.domain.Customer;
 import com.water.domain.CustomerMeter;
+import com.water.exception.BizException;
 import com.water.util.PageUtil;
 import com.water.util.Query;
 import com.water.util.R;
@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * @Author : 林吉达
@@ -30,7 +29,8 @@ import java.util.UUID;
 public class CustomerMeterService {
 
     Logger logger = LoggerFactory.getLogger(CustomerMeterService.class);
-
+    @Autowired
+    private CommonService commonService;
     @Autowired
     private CustomerMeterDAO customerMeterDAO;
     @Autowired
@@ -68,15 +68,23 @@ public class CustomerMeterService {
      */
     public void save(CustomerMeter customerMeter) {
         if (customerMeter != null) {
-            //todo 获取用户名，填充recordUser           获取片区和营业厅列表
-            Map queryMap = new HashMap();
-            queryMap.put("id", customerMeter.getCustId());
-            Customer customer = (Customer) customerDAO.queryList(queryMap).get(0);
-            customerMeter.setCustCode(customer.getCode());
+
+            //根据custCode 获取custId
+            Integer custId = commonService.getCustIdByCode(customerMeter.getCustCode());
+            if (custId == null)
+                throw new BizException("输入的顾客编码有误！无法找到该顾客！");
+            customerMeter.setCustId(custId);
+            if (!enableAdd(custId))
+                throw new BizException("该顾客已绑定了水表！一个用户无法绑定多个水表!");
          /*   customerMeter.setCode(UUID.randomUUID().toString());*/
             customerMeterDAO.insertSelective(customerMeter);
         }
     }
+
+    public Boolean enableAdd(Integer custId) {
+        return customerMeterDAO.getIdByCustId(custId) != null ? false : true;
+    }
+
 
     public CustomerMeter queryObject(Integer id) {
         Map map = new HashMap();
@@ -87,6 +95,12 @@ public class CustomerMeterService {
 
     public void update(CustomerMeter customerMeter) {
         if (customerMeter != null) {
+            //根据custCode 获取custId
+          Integer custId = commonService.getCustIdByCode(customerMeter.getCustCode());
+            customerMeter.setCustId(custId);
+            Integer id = customerMeterDAO.getIdByCustId(custId);
+            if (id != null && id != customerMeter.getId())
+                throw new BizException("该顾客已绑定了水表！一个用户无法绑定多个水表!");
             customerMeterDAO.updateByPrimaryKeySelective(customerMeter);
         }
     }

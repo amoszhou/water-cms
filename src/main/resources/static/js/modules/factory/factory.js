@@ -144,6 +144,8 @@ var vm = new Vue({
                     return;
 				}
 				vm.app = r.factory;
+				if(vm.app.managerName == null || vm.app.managerName == "")
+                    vm.app.managerName = "暂未分配管理员";
 			});
 		},
 		reload: function () {

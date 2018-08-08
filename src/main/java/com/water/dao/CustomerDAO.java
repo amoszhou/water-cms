@@ -19,6 +19,8 @@ public interface CustomerDAO {
 
     Customer selectByPrimaryKey(Integer id);
 
+    Integer getIdByCustCode(String code);
+
     int updateByPrimaryKeySelective(Customer record);
 
     List<IdAndNameDTO> selectArchiveMessage(Map<String, Object> map);

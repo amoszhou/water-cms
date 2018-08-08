@@ -37,6 +37,8 @@ public class CustomerAccountService {
 
     Logger logger = LoggerFactory.getLogger(CustomerAccountService.class);
     @Autowired
+    private CommonService commonService;
+    @Autowired
     private CustomerAccountDAO customerAccountDAO;
     @Autowired
     private ChargeRecordService chargeRecordService;
@@ -78,16 +80,18 @@ public class CustomerAccountService {
     public void save(CustomerAccount customerAccount) {
         if (customerAccount != null) {
 
+
+            //根据custCode 获取custId
+            Integer custId = commonService.getCustIdByCode(customerAccount.getCustCode());
             //检查这个customerId 是否已经存在customerAccount表中
-            if (customerAccountDAO.selectByCustId(customerAccount.getCustId()) > 0) {
+            if (customerAccountDAO.selectByCustId(custId) > 0) {
                 throw new BizException("此顾客已经有账号了！");
             }
-
-
-
+            customerAccount.setCustId(custId);
+            customerAccount.setUpdateUser(HttpServletRequestUtil.getUserId());
             if(customerAccount.getRaiseMoney() !=null && customerAccount.getRaiseMoney().compareTo(BigDecimal.ZERO) > 0 ){
 
-                customerAccount.setUpdateUser(HttpServletRequestUtil.getUserId());
+
                 customerAccount.setBalance(customerAccount.getRaiseMoney());
                 customerAccountDAO.insertSelective(customerAccount);
 
@@ -103,6 +107,8 @@ public class CustomerAccountService {
                 //充值的支付类型全部为5
                 chargeRecord.setPayType(PayType.CHONGZHI.getPayType());
                 chargeRecordService.save(chargeRecord);
+            }else{
+                customerAccountDAO.insertSelective(customerAccount);
             }
 
         }

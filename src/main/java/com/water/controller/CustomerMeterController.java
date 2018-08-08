@@ -1,6 +1,7 @@
 package com.water.controller;
 
 import com.water.domain.CustomerMeter;
+import com.water.exception.BizException;
 import com.water.service.CustomerMeterService;
 import com.water.util.R;
 import org.slf4j.Logger;
@@ -46,7 +47,12 @@ public class CustomerMeterController {
     public R save(@RequestBody CustomerMeter dto){
         try {
             customerMeterService.save(dto);
-        } catch (Exception e) {
+        }catch (BizException e){
+            logger.info("CustomerMeterController/save|添加失败，原因：{}", e.getMessage());
+            logger.error("CustomerMeterController/save|Exception:"+e.getMessage(), e);
+            return R.error(e.getMessage());
+        }
+        catch (Exception e) {
             logger.info("CustomerMeterController/save|添加失败，原因：{}", e.getMessage());
             logger.error("CustomerMeterController/save|Exception:"+e.getMessage(), e);
             return R.error();
@@ -84,6 +90,10 @@ public class CustomerMeterController {
     public R update(@RequestBody CustomerMeter dto){
         try {
             customerMeterService.update(dto);
+        }catch (BizException e){
+            logger.info("CustomerMeterController/update|修改失败，原因：{}", e.getMessage());
+            logger.error("CustomerMeterController/update|Exception:"+e.getMessage(), e);
+            return R.error(e.getMessage());
         } catch (Exception e) {
             logger.info("CustomerMeterController/update|修改失败，原因：{}", e.getMessage());
             logger.error("CustomerMeterController/update|Exception:"+e.getMessage(), e);

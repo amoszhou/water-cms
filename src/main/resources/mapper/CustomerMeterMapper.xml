@@ -85,6 +85,9 @@
     select count(1) from t_customer_meter
     <include refid="whereClause"/>
   </select>
+  <select id="getIdByCustId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    select id from t_customer_meter where cust_id = #{custId} and is_delete = 0 limit 1
+  </select>
   <select id="queryList" resultMap="BaseResultMap">
     select a.id, a.code, a.cust_code, a.cust_id, a.enable_date, a.is_delete, a.price_type,a.meter_id,a.factory_id,
         b.name as customerName,c.name as meterName,c.size as size,d.name as factoryName,e.price as waterFee,f.sewage as sewageFee

@@ -84,6 +84,11 @@
     select count(1) from t_customer
     <include refid="whereClause"/>
   </select>
+
+  <select id="getIdByCustCode" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select id from t_customer where code = #{code}  and is_delete = 0
+  </select>
+
   <select id="queryList" resultMap="BaseResultMap">
     select    a.id, a.address, a.archive_id, a.area_id, a.code, a.create_time, a.create_user, a.factory_id, a.family_count,
     a.frequency, a.hall_id, a.id_card, a.is_delete, a.name, a.phone, a.tel, a.update_time, a.update_user,

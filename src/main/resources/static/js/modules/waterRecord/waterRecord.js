@@ -196,7 +196,7 @@ var vm = new Vue({
                 vm.q.factoryId = null;
             }
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'custId': vm.q.custId,'factoryId':vm.q.factoryId},
+                postData:{'custCode': vm.q.custCode,'factoryId':vm.q.factoryId},
                 page:page
             }).trigger("reloadGrid");
         },

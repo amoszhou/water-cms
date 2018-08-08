@@ -20,5 +20,7 @@ public interface CustomerMeterDAO {
 
     int updateByPrimaryKeySelective(CustomerMeter record);
 
+    Integer getIdByCustId(Integer custId);
+
 
 }
