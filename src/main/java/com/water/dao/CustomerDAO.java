@@ -25,5 +25,11 @@ public interface CustomerDAO {
 
     List<IdAndNameDTO> selectArchiveMessage(Map<String, Object> map);
 
+    /**
+      * @Author : 林吉达
+      * @Description : 批量插入
+      * @Date : 14:55 2018/8/9
+      */
+    int insertBatch(List<Customer> list);
 
 }

@@ -52,12 +52,45 @@ public class Customer implements Serializable {
     //更新人
     private Integer updateUser;
 
+
+    //在批量插入时用的以下两个属性,为了生成顾客账户 t_customer_account
+    private Integer priceTypeId;
+    private Integer meterId;
+
+    //在批量插入时用的以下两个属性,为了生成顾客水表关系 t_customer_meter
+    private String meterCustCode;
+
+
+
     private String updateUserName;
 
     private String createTimeForHTML;
 
     private String updateTimeForHTML;
 
+    public Integer getPriceTypeId() {
+        return priceTypeId;
+    }
+
+    public String getMeterCustCode() {
+        return meterCustCode;
+    }
+
+    public void setMeterCustCode(String meterCustCode) {
+        this.meterCustCode = meterCustCode;
+    }
+
+    public void setPriceTypeId(Integer priceTypeId) {
+        this.priceTypeId = priceTypeId;
+    }
+
+    public Integer getMeterId() {
+        return meterId;
+    }
+
+    public void setMeterId(Integer meterId) {
+        this.meterId = meterId;
+    }
     public String getHallName() {
         return hallName;
     }

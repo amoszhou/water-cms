@@ -240,4 +240,19 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--  批量插入  -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+
+    insert into t_customer_meter
+    (cust_id,cust_code,factory_id,price_type,meter_id,code)
+    VALUES
+    <foreach collection="list" item="customer" index="index" separator=",">
+      (
+      #{customer.id},#{customer.code},
+      #{customer.factoryId},#{customer.priceTypeId},#{customer.meterId},#{customer.meterCustCode}
+      )
+    </foreach >
+  </insert>
+
 </mapper>

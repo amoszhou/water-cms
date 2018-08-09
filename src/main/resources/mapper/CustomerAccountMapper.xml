@@ -206,5 +206,20 @@
     </set>
     where id = #{id,jdbcType=INTEGER} AND  update_time = #{updateTime,jdbcType=TIMESTAMP} AND  balance = #{balance} AND  #{balance} + #{raiseMoney}  &gt;= 0
   </update>
+
+  <!--  批量插入  -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+
+    insert into t_customer_account
+    (cust_id,update_user,factory_id)
+    VALUES
+    <foreach collection="list" item="customer" index="index" separator=",">
+      (
+      #{customer.id}, #{customer.createUser},
+      #{customer.factoryId}
+      )
+    </foreach >
+  </insert>
+
 </mapper>
 

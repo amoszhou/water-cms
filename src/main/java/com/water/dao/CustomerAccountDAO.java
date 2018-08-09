@@ -1,5 +1,6 @@
 package com.water.dao;
 
+import com.water.domain.Customer;
 import com.water.domain.CustomerAccount;
 import com.water.domain.IdAndNameDTO;
 import org.apache.ibatis.annotations.Param;
@@ -27,5 +28,6 @@ public interface CustomerAccountDAO {
 
     CustomerAccount  getByCustId(Integer id);
 
+    int insertBatch(List<Customer> list);
 
 }

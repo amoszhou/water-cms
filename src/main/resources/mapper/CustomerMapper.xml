@@ -138,20 +138,8 @@
     </where>
   </select>
 
-
-
-
-
-
-
-
-
-
-
-
-
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_customer
     where id = #{id,jdbcType=INTEGER}
@@ -328,4 +316,28 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+    <!--  批量插入  -->
+  <insert id="insertBatch" parameterType="java.util.List"  useGeneratedKeys="true" keyProperty="id" >
+<!--  <selectKey resultType ="java.lang.Integer" keyProperty= "id" order= "AFTER">
+                  SELECT LAST_INSERT_ID()
+  </selectKey >-->
+    insert into t_customer
+    (address, archive_id, area_id, code,  create_user, factory_id,
+     hall_id, id_card,  name, phone, tel, update_user)
+    VALUES
+      <foreach collection="list" item="customer" index="index" separator=",">
+          (
+          #{customer.address}, #{customer.archiveId},
+          #{customer.areaId},
+          #{customer.code},
+          #{customer.createUser}, #{customer.factoryId},
+          #{customer.hallId}, #{customer.idCard},
+          #{customer.name},
+          #{customer.phone},
+          #{customer.tel}, #{customer.updateUser}
+          )
+      </foreach >
+</insert>
 </mapper>

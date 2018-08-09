@@ -150,7 +150,7 @@
 
         >
         </table>-->
-        <table tableName="t_pay_record" domainObjectName="PayRecord"
+        <table tableName="t_customer" domainObjectName="CustomerERER"
                enableSelectByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
