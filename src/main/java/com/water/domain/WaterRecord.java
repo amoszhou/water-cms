@@ -37,6 +37,10 @@ public class WaterRecord implements Serializable {
     private Integer pay;
 
     private String code;
+    //单次用水记录的用水量 水表显示数字-上一次水表显示数字  currNumber - lastNumber
+    private BigDecimal usedWaterRecord;
+
+
     //用水记录开始时间
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate waterRecordBeginDate;
@@ -129,6 +133,14 @@ public class WaterRecord implements Serializable {
     }
 
     private static final long serialVersionUID = 1L;
+
+    public BigDecimal getUsedWaterRecord() {
+        return usedWaterRecord;
+    }
+
+    public void setUsedWaterRecord(BigDecimal usedWaterRecord) {
+        this.usedWaterRecord = usedWaterRecord;
+    }
 
     public Integer getId() {
         return id;

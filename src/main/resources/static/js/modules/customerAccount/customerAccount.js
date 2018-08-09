@@ -15,7 +15,7 @@ $(function () {
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
 
-            {label: '更新人', name: 'updateUser', width: 40/*,formatter: operateMenu*/, sortable: false},
+            {label: '更新人', name: 'updateUserName', width: 40/*,formatter: operateMenu*/, sortable: false},
             {label: '更新时间', name: 'updateTimeForHTML', width: 40, formatter: formatDate, sortable: false},
             /*    { label: '操作', width:40,formatter: operateMenu,sortable:false},*/
         ],
@@ -60,7 +60,8 @@ var vm = new Vue({
             updateTimeForHTML: '',
             raiseMoney: '',
             factoryId: '',
-            custCode: ''
+            custCode: '',
+            updateUserName: ''
         },
         q: {
             id: '',
@@ -71,7 +72,8 @@ var vm = new Vue({
             updateTimeForHTML: '',
             raiseMoney: '',
             factoryId: '',
-            custCode: ''
+            custCode: '',
+            updateUserName: ''
         },
         CustomerMessageList: [],
         FactoryMessageList: [],
@@ -186,10 +188,10 @@ var vm = new Vue({
                 alert("顾客不能为空");
                 return true;
             }
-            if (isBlank(vm.app.factoryId)) {
+        /*    if (isBlank(vm.app.factoryId)) {
                 alert("所属水厂不能为空");
                 return true;
-            }
+            }*/
             var pattern = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
 
             if (isBlank(vm.app.raiseMoney) || !pattern.test(vm.app.raiseMoney) || vm.app.raiseMoney == 0 ) {

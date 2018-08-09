@@ -100,7 +100,7 @@
   </select>
   <select id="queryList" resultMap="BaseResultMap">
     select  a.id, a.water_record_id, a.pay_state, a.customer_id, a.water_begin_date, a.water_end_date, a.pay_type,
-    a.water_fee, a.sewage_fee, a.late_fee, a.total_fee, a.water_record_code, a.factory_id,b.name as
+    a.water_fee, a.sewage_fee, a.late_fee, a.total_fee,  a.factory_id,b.name as
     factoryName,c.code as customerCode
     from (select id,name from t_factory<include refid="authSqlForFactoryTable"/>) as b right JOIN (
     select

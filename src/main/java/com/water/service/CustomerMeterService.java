@@ -4,6 +4,7 @@ import com.water.annotation.FactoryIds;
 import com.water.dao.CustomerDAO;
 import com.water.dao.CustomerMeterDAO;
 import com.water.dao.PriceTypeDAO;
+import com.water.domain.Customer;
 import com.water.domain.CustomerMeter;
 import com.water.exception.BizException;
 import com.water.util.PageUtil;
@@ -70,12 +71,14 @@ public class CustomerMeterService {
         if (customerMeter != null) {
 
             //根据custCode 获取custId
-            Integer custId = commonService.getCustIdByCode(customerMeter.getCustCode());
+            Customer customer =  commonService.getCustomerByCode(customerMeter.getCustCode());
+            Integer custId = customer.getId();
             if (custId == null)
                 throw new BizException("输入的顾客编码有误！无法找到该顾客！");
             customerMeter.setCustId(custId);
+            customerMeter.setFactoryId(customer.getFactoryId());
             if (!enableAdd(custId))
-                throw new BizException("该顾客已绑定了水表！一个用户无法绑定多个水表!");
+                throw new BizException("该顾客已绑定了水表！一个顾客无法绑定多个水表!");
          /*   customerMeter.setCode(UUID.randomUUID().toString());*/
             customerMeterDAO.insertSelective(customerMeter);
         }

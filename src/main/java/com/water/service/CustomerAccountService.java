@@ -8,6 +8,7 @@ import com.water.constant.PayType;
 import com.water.dao.CustomerAccountDAO;
 import com.water.dao.CustomerDAO;
 import com.water.domain.ChargeRecord;
+import com.water.domain.Customer;
 import com.water.domain.CustomerAccount;
 import com.water.domain.IdAndNameDTO;
 import com.water.exception.BizException;
@@ -82,13 +83,15 @@ public class CustomerAccountService {
 
 
             //根据custCode 获取custId
-            Integer custId = commonService.getCustIdByCode(customerAccount.getCustCode());
+            Customer customer =  commonService.getCustomerByCode(customerAccount.getCustCode());
+            Integer custId = customer.getId();
             //检查这个customerId 是否已经存在customerAccount表中
             if (customerAccountDAO.selectByCustId(custId) > 0) {
                 throw new BizException("此顾客已经有账号了！");
             }
             customerAccount.setCustId(custId);
             customerAccount.setUpdateUser(HttpServletRequestUtil.getUserId());
+            customerAccount.setFactoryId(customer.getFactoryId());
             if(customerAccount.getRaiseMoney() !=null && customerAccount.getRaiseMoney().compareTo(BigDecimal.ZERO) > 0 ){
 
 

@@ -59,6 +59,9 @@ public class WaterRecordService {
         List<WaterRecord> waterRecords = null;
         if (total_count > 0) {
             waterRecords = waterRecordDAO.queryList(query);
+            for(int i = 0 ; i<waterRecords.size() ; i++){
+                waterRecords.get(i).setUsedWaterRecord(waterRecords.get(i).getCurrNumber().subtract(waterRecords.get(i).getLastNumber()));
+            }
             logger.info("serviceList = {}", waterRecords.toString());
         }
         PageUtil pageUtil = new PageUtil(waterRecords, total_count, query.getLimit(), query.getPage());
@@ -82,9 +85,9 @@ public class WaterRecordService {
         waterRecord.setWaterRecordEndDate(LocalDate.of(2018, 7, 10));
         if (waterRecord != null) {
             //组装创建人
-            String waterRecordCode = UUID.randomUUID().toString();
+           /* String waterRecordCode = UUID.randomUUID().toString();*/
             waterRecord.setCreateUser(HttpServletRequestUtil.getUserId());
-            waterRecord.setCode(waterRecordCode);
+         /*   waterRecord.setCode(waterRecordCode);*/
 
             //计算 正常水费，污水费，汇总水费
             Map queryMap = new HashMap();
@@ -103,7 +106,7 @@ public class WaterRecordService {
             int waterRecordId = waterRecordDAO.insertSelective(waterRecord);
             //生成支付记录
             PayRecord payRecord = new PayRecord();
-            payRecord.setWaterRecordCode(waterRecordCode);
+         /*   payRecord.setWaterRecordCode(waterRecordCode);*/
             payRecord.setWaterRecordId(waterRecordId);
             payRecord.setCustomerId(waterRecord.getCustId());
             payRecord.setFactoryId(waterRecord.getFactoryId());

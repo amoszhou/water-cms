@@ -13,7 +13,6 @@
         <result column="last_number" property="lastNumber"/>
         <result column="meter_id" property="meterId"/>
         <result column="pay" property="pay" jdbcType="INTEGER"/>
-        <result column="code" property="code" jdbcType="VARCHAR"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="update_user" property="updateUser" jdbcType="INTEGER"/>
         <result column="createUserName" property="createUserName" jdbcType="VARCHAR"/>
@@ -28,7 +27,7 @@
     </resultMap>
     <sql id="Base_Column_List">
     id, charge_id, create_time, create_user, curr_number, cust_code, cust_id, fee, last_number, 
-    meter_id, pay, update_time, update_user, is_delete,code,factory_id,water_record_begin_date,water_record_end_date
+    meter_id, pay, update_time, update_user, is_delete,factory_id,water_record_begin_date,water_record_end_date
   </sql>
     <!--权限过滤 for factory -->
     <sql id="authSqlForFactory">
@@ -55,13 +54,26 @@
             </if>
         </where>
     </sql>
+    <!--权限过滤   for t_customer -->
+    <sql id="authSqlForCustomer">
+        <where>
+            and is_delete = 0
+            <if test="custCode != null and custCode.trim() != ''">
+                and code like concat('%', trim(#{custCode}),'%')
+            </if>
+            <if test="factoryIds != null and factoryIds.size != 0">
+                and factory_id in
+                <foreach collection="factoryIds" index="index" item="item"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
     <!-- 查询条件 -->
     <sql id="whereClause">
         <where>
             and is_delete = 0
-            <if test="custCode != null and custCode.trim() != ''">
-                and cust_code like concat('%', trim(#{custCode}),'%')
-            </if>
             <if test="factoryId != null and factoryId.trim() != ''">
                 and factory_id = #{factoryId}
             </if>
@@ -83,10 +95,10 @@
     </select>
 
     <select id="queryList" resultMap="BaseResultMap">
-        select a.id, a.charge_id, a.create_time, a.create_user, a.curr_number, a.cust_code, a.cust_id, a.fee,
+        select a.id, a.charge_id, a.create_time, a.create_user, a.curr_number, e.code as cust_code, a.cust_id, a.fee,
         a.last_number,
         a.meter_id, a.pay, a.update_time, a.update_user,
-        a.is_delete,a.code,a.factory_id,a.water_record_end_date,a.water_record_begin_date,
+        a.is_delete,a.factory_id,a.water_record_end_date,a.water_record_begin_date,
         b.username as createUserName,c.real_name as updateUserName,d.name as meterName,e.name as customerName,f.name as
         factoryName
         from (select id,username from t_employee<include refid="authSql"/>) as b right JOIN (
@@ -108,7 +120,7 @@
         )as a on b.id = a.create_user LEFT JOIN (select id,real_name from t_employee<include refid="authSql"/>) as c on c.id
         = a.update_user
         LEFT join (select id,name from t_meter where is_delete = 0 ) as d on d.id = a.meter_id
-        LEFT join (select id,name from t_customer<include refid="authSql"/>) as e on e.id = a.cust_id
+        LEFT join (select id,name,code from t_customer<include refid="authSqlForCustomer"/>) as e on e.id = a.cust_id
         LEFT join (select id,name from t_factory<include refid="authSqlForFactory"/>) as f on f.id = a.factory_id
     </select>
 
@@ -176,9 +188,7 @@
             <if test="factoryId != null">
                 factory_id,
             </if>
-            <if test="code != null">
-                code,
-            </if>
+
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -229,9 +239,7 @@
             <if test="factoryId != null">
                 #{factoryId},
             </if>
-            <if test="code != null">
-                #{code},
-            </if>
+
         </trim>
 
 
@@ -282,9 +290,7 @@
             <if test="factoryId != null">
                 factory_id = #{factoryId},
             </if>
-            <if test="code != null">
-                code = #{code},
-            </if>
+
 
         </set>
         where id = #{id,jdbcType=INTEGER}

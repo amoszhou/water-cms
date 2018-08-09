@@ -19,7 +19,7 @@ public interface CustomerDAO {
 
     Customer selectByPrimaryKey(Integer id);
 
-    Integer getIdByCustCode(String code);
+    Customer getIdByCustCode(String code);
 
     int updateByPrimaryKeySelective(Customer record);
 

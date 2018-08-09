@@ -5,9 +5,10 @@ $(function () {
         colModel: [
             { label: 'ID', name: 'id', index: "id", width: 30, key: true },
             { label: '消费者名称', name: 'customerName', width: 40, sortable:false},
-            { label: '用水记录code', name: 'code', width: 40, sortable:false},
-            { label: '水表数字', name: 'currNumber', width: 40,sortable:false },
-            { label: '上一次水表记录', name: 'lastNumber', width: 40, sortable:false/*, formatter: formatURL*/},
+           /* { label: '用水记录code', name: 'code', width: 40, sortable:false},*/
+            { label: '水表数字', name: 'currNumber', width: 20,sortable:false },
+            { label: '上一次水表记录', name: 'lastNumber', width: 20, sortable:false/*, formatter: formatURL*/},
+            { label: '用水量', name: 'usedWaterRecord', width: 20, sortable:false/*, formatter: formatURL*/},
             /*{ label: '电话', name: 'deleteStatus', width: 30, formatter: function(value, options, row){
                 return value === 0 ?
                     '<span class="label label-success">正常</span>' :

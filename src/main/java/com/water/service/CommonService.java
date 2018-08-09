@@ -1,6 +1,7 @@
 package com.water.service;
 
 import com.water.dao.CustomerDAO;
+import com.water.domain.Customer;
 import com.water.exception.BizException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +21,17 @@ public class CommonService {
     private CustomerDAO customerDAO;
 
     public Integer getCustIdByCode(String custCode){
-        Integer custId = customerDAO.getIdByCustCode(custCode);
-        if (custId == null)
+        Customer customer = customerDAO.getIdByCustCode(custCode);
+        if(customer ==  null)
             throw new BizException("输入的顾客编码有误！无法找到该顾客！");
-        return custId;
+        return customer.getId();
+    }
+
+    public Customer getCustomerByCode(String custCode){
+        Customer customer = customerDAO.getIdByCustCode(custCode);
+        if(customer ==  null)
+            throw new BizException("输入的顾客编码有误！无法找到该顾客！");
+        return customer;
     }
 
 }

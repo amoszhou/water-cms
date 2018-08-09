@@ -5,7 +5,7 @@ $(function () {
         colModel: [
             { label: 'ID', name: 'id', index: "id", width: 30, key: true },
             { label: '水厂名', name: 'factoryName', width: 40,sortable:false },
-            { label: '用水记录编码', name: 'waterRecordCode', width: 40, sortable:false/*, formatter: formatURL*/},
+            { label: '用水记录编码', name: 'waterRecordId', width: 40, sortable:false/*, formatter: formatURL*/},
             { label: '顾客Code', name: 'customerCode', width: 40, sortable:false/*, formatter: formatURL*/},
             { label: '正常水费', name: 'waterFee', width:40/*,formatter: operateMenu*/,sortable:false},
             { label: '污水水费', name: 'sewageFee', width:40/*,formatter: operateMenu*/,sortable:false},
@@ -18,8 +18,8 @@ $(function () {
             },sortable:false},*/
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
-            { label: '是否缴费', name: 'payState', width:40/*,formatter: operateMenu*/,sortable:false},
-            { label: '支付方式', name: 'payType', width:40/*,formatter: operateMenu*/,sortable:false},
+            { label: '是否缴费', name: 'payState', width:40,formatter: operateIsPay,sortable:false},
+            { label: '支付方式', name: 'payType', width:40,formatter: operatePayWay,sortable:false},
             { label: '操作', width:40,formatter: operateMenu,sortable:false},
         ],
         viewrecords: true,
@@ -230,6 +230,33 @@ function payFeeDetail(aid) {
 }
 function openDetail(aid) {
     vm.getApp(aid);
+}
+
+
+
+
+function operateIsPay(cellvalue, options, rowObject) {
+    /*  cellvalue = cellvalue.replace("T"," ");*/
+    if(cellvalue == -1)
+        return "未缴费"
+    else if(cellvalue == 1)
+        return "已缴费"
+    return cellvalue;
+}
+
+function operatePayWay(cellvalue, options, rowObject) {
+    /*  1支付宝，2微信，3现金,4账号余额,-1暂未缴费)*/
+    if(cellvalue == 1)
+        return "支付宝"
+    else if(cellvalue == 2)
+        return "微信"
+    else if(cellvalue == 3)
+        return "现金"
+    else if(cellvalue == 4)
+        return "账户余额"
+    else if(cellvalue == -1)
+        return "暂未缴费"
+    return cellvalue;
 }
 
 function formatDate(cellvalue, options, rowObject) {

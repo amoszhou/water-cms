@@ -30,6 +30,16 @@ public class CustomerAccount implements Serializable {
 
     private String custCode;
 
+    private String updateUserName;
+
+    public String getUpdateUserName() {
+        return updateUserName;
+    }
+
+    public void setUpdateUserName(String updateUserName) {
+        this.updateUserName = updateUserName;
+    }
+
     public String getCustCode() {
         return custCode;
     }
@@ -181,6 +191,7 @@ public class CustomerAccount implements Serializable {
                 ", raiseMoney=" + raiseMoney +
                 ", factoryId=" + factoryId +
                 ", custCode='" + custCode + '\'' +
+                ", updateUserName='" + updateUserName + '\'' +
                 '}';
     }
 }

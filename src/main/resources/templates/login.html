@@ -35,6 +35,12 @@
     </div>
 </div>
 <script type="text/javascript">
+
+    $(document).keyup(function(event){
+        if(event.keyCode ==13){
+            $("#login").click();
+        }
+    });
     //登录模块
     $("#login").click(function () {
         //参数校验

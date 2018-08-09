@@ -85,8 +85,8 @@
     <include refid="whereClause"/>
   </select>
 
-  <select id="getIdByCustCode" resultType="java.lang.Integer" parameterType="java.lang.String">
-    select id from t_customer where code = #{code}  and is_delete = 0
+  <select id="getIdByCustCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select   <include refid="Base_Column_List"/> from t_customer where code = #{code}  and is_delete = 0
   </select>
 
   <select id="queryList" resultMap="BaseResultMap">

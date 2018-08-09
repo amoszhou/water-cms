@@ -24,9 +24,6 @@
     <sql id="whereClause">
         <where>
             and is_delete = 0
-            <if test="custCode != null and custCode.trim() != ''">
-                and cust_code like concat('%', trim(#{custCode}),'%')
-            </if>
             <if test="invoiceCode != null and invoiceCode.trim() != ''">
                 and invoice_code like concat('%', trim(#{invoiceCode}),'%')
             </if>
@@ -55,14 +52,30 @@
             </if>
         </where>
     </sql>
+    <!--权限过滤   for t_customer -->
+    <sql id="authSqlForCustomer">
+        <where>
+            and is_delete = 0
+            <if test="custCode != null and custCode.trim() != ''">
+                and code like concat('%', trim(#{custCode}),'%')
+            </if>
+            <if test="factoryIds != null and factoryIds.size != 0">
+                and factory_id in
+                <foreach collection="factoryIds" index="index" item="item"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
     <select id="queryTotal" resultType="int">
         select count(1) from t_charge_record
         <include refid="whereClause"/>
     </select>
     <select id="queryList" resultMap="BaseResultMap">
-        select  a.id, a.amount, a.charge_type, a.create_time, a.create_user, a.cust_code, a.cust_id, a.invoice_code,
-        a.pay_type, a.is_delete ,b.name as customerName,c.username as createUserName
-        FROM  (select id,name from t_customer    <include refid="authSql"/> ) as b RIGHT join
+        select  a.id, a.amount, a.charge_type, a.create_time, a.create_user,b.code as cust_code, a.cust_id, a.invoice_code,
+        a.pay_type, a.is_delete ,b.name as customerName,c.real_name as createUserName
+        FROM  (select id,name,code from t_customer    <include refid="authSqlForCustomer"/> ) as b  join
         (select
         <include refid="Base_Column_List"/>
         from t_charge_record
@@ -77,7 +90,7 @@
         </choose>
         <if test="offset != null and limit != null">
             limit #{offset}, #{limit}
-        </if> )as a on a.cust_id = b.id LEFT join (select id,username from t_employee   <include refid="authSql"/> ) as c on a.create_user = c.id
+        </if> )as a on a.cust_id = b.id LEFT join (select id,real_name from t_employee   <include refid="authSql"/> ) as c on a.create_user = c.id
     </select>
     <update id="updateDeleteState" parameterType="java.lang.Long">
         update t_charge_record

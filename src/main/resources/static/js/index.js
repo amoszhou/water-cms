@@ -99,6 +99,47 @@ var vm = new Vue({
                 "parentId": 442
             }]
         },{
+            "id": 481,
+            "appId": 33,
+            "name": "其他管理",
+            "createTime": "2017-11-10T17:16:25",
+            "modifyTime": "2017-11-10T17:16:25",
+            "link": false,
+            "menu": true,
+            "parentId": 440,
+            "children": [,{
+                "id": 449,
+                "appId": 33,
+                "name": "水表管理",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/meter.html",
+                "parentId": 442
+            },  {
+                "id": 454,
+                "appId": 33,
+                "name": "水表用户关系",
+                "createTime": "2017-11-10T17:16:25",
+                "modifyTime": "2018-04-10T15:30:49",
+                "link": false,
+                "menu": true,
+                "urls": "/customerMeter.html",
+                "parentId": 442
+            }/*,
+                {
+                    "id": 453,
+                    "appId": 33,
+                    "name": "价格管理",
+                    "createTime": "2017-11-10T17:16:25",
+                    "modifyTime": "2018-04-10T15:30:49",
+                    "link": false,
+                    "menu": true,
+                    "urls": "/priceType.html",
+                    "parentId": 442
+                }*/]
+        },{
             "id": 484,
             "appId": 33,
             "name": "金额流水",

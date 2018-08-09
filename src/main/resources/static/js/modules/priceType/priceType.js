@@ -15,7 +15,7 @@ $(function () {
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
             { label: '污水', name: 'sewage', width:40/*,formatter: operateMenu*/,sortable:false},
-            { label: '类型', name: 'type', width: 40, sortable:false/*, formatter: formatURL*/},
+            { label: '类型', name: 'type', width: 40, sortable:false, formatter: formatType},
             { label: '操作', width:40,formatter: operateMenu,sortable:false},
         ],
         viewrecords: true,
@@ -159,19 +159,38 @@ var vm = new Vue({
             }).trigger("reloadGrid");
         },
         validator: function () {
-            /*  if(isBlank(vm.app.appId)){
-                  alert("应用标识不能为空");
+            /*
+            *   factoryName:'',
+            factoryId:'',
+            name:'',
+            price:'',
+            sewage:'',
+            type:'',
+            * */
+            var pattern = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
+              if(isBlank(vm.app.factoryId)){
+                  alert("所属水厂不能为空");
                   return true;
               }
               if(isBlank(vm.app.name)){
-                  alert("应用名称不能为空");
+                  alert("价格名不能为空");
                   return true;
               }
 
-              if(isBlank(vm.app.url)){
-                  alert("应用地址不能为空");
-                  return true;
-              }*/
+            if (isBlank(vm.app.price) || !pattern.test(vm.app.price) || vm.app.price == 0 ) {
+                alert("正常水价必须为正数!");
+                return true;
+            }
+
+            if (isBlank(vm.app.sewage) || !pattern.test(vm.app.sewage) || vm.app.sewage == 0 ) {
+                alert("污水水价必须为正数!");
+                return true;
+            }
+
+            if(isBlank(vm.app.type)){
+                alert("水价类型不能为空");
+                return true;
+            }
 
         }
     }
@@ -196,6 +215,15 @@ function formatDate(cellvalue, options, rowObject) {
     /*  cellvalue = cellvalue.replace("T"," ");*/
     return cellvalue;
 }
+function formatType(cellvalue, options, rowObject) {
+    /*  cellvalue = cellvalue.replace("T"," ");*/
+    if(cellvalue == 0)
+        return "生活用水"
+    else if(cellvalue == 1)
+        return "工业用水"
+    return cellvalue;
+}
+
 
 function formatURL(value, options, rowObject) {
     var token = localStorage.getItem('token');

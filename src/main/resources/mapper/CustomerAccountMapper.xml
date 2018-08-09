@@ -16,13 +16,26 @@
   <sql id="Base_Column_List" >
     id, balance, cust_id, update_time, update_user, version, is_delete,factory_id
   </sql>
-  <!--权限过滤-->
-  <sql id="authSql">
+  <!--权限过滤   for t_customer -->
+  <sql id="authSqlForCustomer">
     <where>
       and is_delete = 0
       <if test="custCode != null and custCode.trim() != ''">
         and code like concat('%', trim(#{custCode}),'%')
       </if>
+      <if test="factoryIds != null and factoryIds.size != 0">
+        and factory_id in
+        <foreach collection="factoryIds" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+  <!--权限过滤-->
+  <sql id="authSql">
+    <where>
+      and is_delete = 0
       <if test="factoryIds != null and factoryIds.size != 0">
         and factory_id in
         <foreach collection="factoryIds" index="index" item="item"
@@ -59,8 +72,9 @@
     <include refid="whereClause"/>
   </select>
   <select id="queryList" resultMap="BaseResultMap">
-    select a.id, a.balance, a.cust_id, a.update_time, a.update_user, a.version, a.is_delete ,b.name as customerName,a.factory_id,b.code as custCode
-    FROM  (select id,name,code from t_customer    <include refid="authSql"/> ) as b join
+    select a.id, a.balance, a.cust_id, a.update_time, a.update_user, a.version, a.is_delete ,b.name as customerName,a.factory_id,b.code as custCode,
+    c.real_name as updateUserName
+    FROM  (select id,name,code from t_customer    <include refid="authSqlForCustomer"/> ) as b join
     (select
     <include refid="Base_Column_List"/>
     from t_customer_account
@@ -75,7 +89,7 @@
     </choose>
     <if test="offset != null and limit != null">
       limit #{offset}, #{limit}
-    </if> )as a on a.cust_id = b.id
+    </if> )as a on a.cust_id = b.id LEFT JOIN  (select id,real_name from t_employee  <include refid="authSql"/> ) as c on c.id = a.update_user
   </select>
   <update id="updateDeleteState" parameterType="java.lang.Long">
     update t_customer_account

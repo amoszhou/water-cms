@@ -18,7 +18,7 @@ $(function () {
             },sortable:false},*/
             /*	{ label: '创建时间', name: 'createTime', index: "create_time", width: 70,formatter:formatDate},
                 { label: '更新时间', name: 'modifyTime', index: "modify_time", width: 70,formatter:formatDate},*/
-            { label: '有效时间', name: 'enableDateForHtml', width:40/*,formatter: operateMenu*/,sortable:false},
+/*            { label: '有效时间', name: 'enableDateForHtml', width:40/!*,formatter: operateMenu*!/,sortable:false},*/
             /*{ label: '操作', width:40,formatter: operateMenu,sortable:false},*/
         ],
         viewrecords: true,
@@ -218,11 +218,11 @@ var vm = new Vue({
                   alert("顾客编码不能为空");
                   return true;
               }
-
+/*
               if(isBlank(vm.app.enableDate)){
                   alert("有效期不能为空");
                   return true;
-              }
+              }*/
             if(isBlank(vm.app.priceType)){
                 alert("价格类型不能为空");
                 return true;
