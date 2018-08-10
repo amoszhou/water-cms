@@ -118,7 +118,7 @@ var vm = new Vue({
                 "urls": "/chargeRecord.html",
                 "parentId": 442
             }]
-        },{
+        }/*,{
             "id": 481,
             "appId": 33,
             "name": "其他管理",
@@ -159,7 +159,7 @@ var vm = new Vue({
                     "urls": "/priceType.html",
                     "parentId": 442
                 }]
-        }],
+        }*/],
         resultList:[],
 		menuList:[ {
             "id": 442,
