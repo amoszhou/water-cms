@@ -75,7 +75,7 @@
                 <table class="form">
                     <tr>
                         <th class="formTitle">下载模版</th>
-                        <td class="formValue"><a href="../../js/customerExcel.xlsx" download="顾客输入模板.xlsx">顾客导入模板.xlsx</a></td>
+                        <td class="formValue"><a href="../../js/waterRecordExcel.xlsx" download="用水记录输入模板.xlsx">用水记录输入模板.xlsx</a></td>
                     </tr>
                     <tr>
                         <th class="formTitle"></th>
@@ -218,7 +218,7 @@
         var formData = new FormData($("#itemForm")[0]);
 
         $.ajax({
-            url: '/poi/importCustomerExcelData',
+            url: '/poi/importWaterRecordExcelData',
             async: false,
             cache: false,
             type: 'POST',

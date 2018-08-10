@@ -2,6 +2,7 @@ package com.water.controller;
 
 import com.water.config.Globals;
 import com.water.config.HttpServletRequestUtil;
+import com.water.constant.UserType;
 import com.water.domain.Employee;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -85,10 +86,12 @@ public class IndexController {
 
     @RequestMapping("/priceType")
     public String priceType(Model model) {
+        if(HttpServletRequestUtil.getRequst().getSession().getAttribute(Globals.USERTYPE) == UserType.SUPER_MANAGER.getUserType()){
+            model.addAttribute("addPer", "true");
+            model.addAttribute("updatePer", "true");
+            model.addAttribute("deletePer", "true");
+        }
 
-        model.addAttribute("addPer", "true");
-        model.addAttribute("updatePer", "true");
-        model.addAttribute("deletePer", "true");
 
         return "priceType";
     }

@@ -22,4 +22,6 @@ public interface PriceTypeDAO {
 
     int checkTypeIsExist(PriceType record);
 
+    List<PriceType> getPriceByCustId(List list);
+
 }

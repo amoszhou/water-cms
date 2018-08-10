@@ -21,5 +21,5 @@ public interface PayRecordDAO {
 
     int updateByPrimaryKeySelective(PayRecord record);
 
-
+   int insertBatch(List list);
 }

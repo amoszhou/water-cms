@@ -95,12 +95,12 @@
     </select>
 
     <select id="queryList" resultMap="BaseResultMap">
-        select a.id, a.charge_id, a.create_time, a.create_user, a.curr_number, e.code as cust_code, a.cust_id, a.fee,
+        select a.id, a.charge_id, a.create_time, a.create_user, a.curr_number, e.code as cust_code, a.cust_id,
         a.last_number,
         a.meter_id, a.pay, a.update_time, a.update_user,
         a.is_delete,a.factory_id,a.water_record_end_date,a.water_record_begin_date,
         b.username as createUserName,c.real_name as updateUserName,d.name as meterName,e.name as customerName,f.name as
-        factoryName
+        factoryName,g.total_fee as fee
         from (select id,username from t_employee<include refid="authSql"/>) as b right JOIN (
         select
         <include refid="Base_Column_List"/>
@@ -122,6 +122,7 @@
         LEFT join (select id,name from t_meter where is_delete = 0 ) as d on d.id = a.meter_id
         LEFT join (select id,name,code from t_customer<include refid="authSqlForCustomer"/>) as e on e.id = a.cust_id
         LEFT join (select id,name from t_factory<include refid="authSqlForFactory"/>) as f on f.id = a.factory_id
+        left join (select water_record_id,total_fee from t_pay_record <include refid="authSql"/> ) as g on g.water_record_id = a.id
     </select>
 
     <update id="updateDeleteState" parameterType="java.lang.Long">
@@ -295,4 +296,25 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+    <!--  批量插入  -->
+    <insert id="insertBatch" parameterType="java.util.List"  useGeneratedKeys="true" keyProperty="id" >
+        <!--  <selectKey resultType ="java.lang.Integer" keyProperty= "id" order= "AFTER">
+                          SELECT LAST_INSERT_ID()
+          </selectKey >-->
+        insert into t_water_record
+        (   curr_number, cust_code, cust_id,  last_number,
+       factory_id,water_record_begin_date,water_record_end_date,create_user,update_user)
+        VALUES
+        <foreach collection="list" item="customer" index="index" separator=",">
+            (
+            #{customer.currNumber}, #{customer.custCode},
+            #{customer.custId},
+            #{customer.lastNumber},
+            #{customer.factoryId}, #{customer.waterRecordBeginDate},
+            #{customer.waterRecordEndDate},
+            #{customer.createUser}, #{customer.updateUser}
+            )
+        </foreach >
+    </insert>
 </mapper>

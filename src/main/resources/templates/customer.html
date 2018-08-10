@@ -56,7 +56,7 @@
     <!--   新增  修改 -->
     <div v-show="!showList" class="panel panel-default">
         <div class="panel-heading">{{title}}</div>
-        <form class="form-horizontal">
+        <form class="form-horizontal" style="float:left">
             <div class="form-group">
                 <div class="col-sm-2 control-label">所属水厂：</div>
                 <div class="col-sm-10">
@@ -149,24 +149,56 @@
                     <input type="text" class="form-control" v-model="app.tel" placeholder="座机"/>
                 </div>
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <div class="col-sm-2 control-label">frequency</div>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" v-model="app.frequency" placeholder="frequency"/>
                 </div>
-            </div>
+            </div>-->
           <!--  <div class="form-group">
                 <div class="col-sm-2 control-label">familyCount</div>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" v-model="app.familyCount" placeholder="familyCount"/>
                 </div>
             </div>-->
-            <div class="form-group">
+            <div class="form-group" style="float:left; width:500px;">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
                 &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
             </div>
         </form>
+
+        <!--  批量插入顾客信息 -->
+        <form id="itemForm" role="form" class="form-horizontal" enctype="multipart/form-data" style="margin-left: 250px; width:820px; float:left">
+            <h3>批量插入顾客信息</h3>
+            <div id="vmapp" style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+                <table class="form">
+                    <tr>
+                        <th class="formTitle">下载模版</th>
+                        <td class="formValue"><a href="../../js/customerExcel.xlsx" download="顾客输入模板.xlsx">顾客导入模板.xlsx</a></td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle"></th>
+                        <td class="formValue">
+                            <ul>
+                                <li>仅支持上传.xls,.xlsx文件格式。</li>
+                                <li>仅支持单个文件导入。</li>
+                                <li>文件大小可能会影响上传结果。</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">上传文件</th>
+                        <td class="formValue">
+                            <input class="form-input" type="file" name="fileName" id="fileName"/>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </form>
+        <button id="submit" style="margin: 17px 100px 0 260px;">确定</button>
+        <div style="clear:both"></div>
     </div>
 
 
@@ -174,7 +206,7 @@
     <!------------------ 应用详情弹框 ----------------------------->
     <div class="modal fade" id="modal_app_info">
         <div class="modal-dialog">
-            <form class="form-horizontal">
+            <form class="form-horizontal" style="float:left;">
                 <div class="modal-content" style="width: 1000px;">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -206,7 +238,7 @@
                                 <input type="text" v-model="app.hallName" class="no-border" readonly="readonly"/>
                             </div>
                         </div>
-                        <div class="form-group">
+                       <!-- <div class="form-group">
                             <div class="col-sm-3 control-label">familyCount：</div>
                             <div class="col-sm-3">
                                 <input type="text" v-model="app.familyCount" class="no-border" readonly="readonly"/>
@@ -217,7 +249,7 @@
                             <div class="col-sm-3">
                                 <input type="text" v-model="app.frequency" class="no-border" readonly="readonly"/>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group">
                             <div class="col-sm-3 control-label">创建人：</div>
                             <div class="col-sm-3">
@@ -257,5 +289,56 @@
 </div>
 
 <script src="../../js/modules/customer/customer.js"></script>
+<script th:inline="javascript">
+
+    $("#submit").click(function () {
+        submitForm();
+    });
+    //数据上传
+    function submitForm() {
+        //FormData不兼容IE及低版本浏览器
+        var formData = new FormData($("#itemForm")[0]);
+
+        $.ajax({
+            url: '/poi/importCustomerExcelData',
+            async: false,
+            cache: false,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                //成功返回
+                if (data.code == 0) {
+                    alert('导入分配数据保存成功', function(){
+                        vm.reload();
+                    });
+                    /*  layer.alert("导入分配数据保存成功", function () {
+                          parent.layer.close(layerIndex);
+                      });*/
+                }
+                else {
+                    alert("导入分配数据保存失败，消息：" + data.msg, function(){
+                         vm.reload();
+                    });
+                    /*layer.alert("导入分配数据保存失败，消息：" + data.msg, function () {
+                        parent.layer.close(layerIndex);
+                    });*/
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("导入分配异常：" + errorThrown, function(){
+                     vm.reload();
+                });
+                /* layer.alert("导入分配异常：" + errorThrown, function () {
+                     parent.layer.close(layerIndex);
+                 });*/
+            }
+        });
+    }
+
+</script>
 </body>
 </html>

@@ -260,4 +260,28 @@
     </set>
     where id = #{id,jdbcType=INTEGER} and   pay_type = -1 and pay_state = -1
   </update>
+
+
+  <!--  批量插入  -->
+  <insert id="insertBatch" parameterType="java.util.List"  useGeneratedKeys="true" keyProperty="id" >
+    <!--  <selectKey resultType ="java.lang.Integer" keyProperty= "id" order= "AFTER">
+                      SELECT LAST_INSERT_ID()
+      </selectKey >-->
+    insert into t_pay_record
+    (    water_record_id, customer_id, water_begin_date, water_end_date,
+    water_fee, sewage_fee, late_fee, total_fee,  factory_id)
+    VALUES
+    <foreach collection="list" item="customer" index="index" separator=",">
+      (
+      #{customer.waterRecordId}, #{customer.customerId},
+      #{customer.waterBeginDate},
+      #{customer.waterEndDate},
+      #{customer.waterFee}, #{customer.sewageFee},
+      #{customer.lateFee},
+      #{customer.totalFee}, #{customer.factoryId}
+      )
+    </foreach >
+  </insert>
+
+
 </mapper>

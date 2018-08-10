@@ -4,8 +4,8 @@ $(function () {
         datatype: "json",
         colModel: [
             { label: 'ID', name: 'id', index: "id", width: 30, key: true },
-            { label: '消费者名称', name: 'customerName', width: 40, sortable:false},
-           /* { label: '用水记录code', name: 'code', width: 40, sortable:false},*/
+            { label: '顾客名称', name: 'customerName', width: 40, sortable:false},
+            { label: '顾客编码', name: 'custCode', width: 40, sortable:false},
             { label: '水表数字', name: 'currNumber', width: 20,sortable:false },
             { label: '上一次水表记录', name: 'lastNumber', width: 20, sortable:false/*, formatter: formatURL*/},
             { label: '用水量', name: 'usedWaterRecord', width: 20, sortable:false/*, formatter: formatURL*/},

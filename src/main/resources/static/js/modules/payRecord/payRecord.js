@@ -72,6 +72,7 @@ var vm = new Vue({
             factoryName:'',
             waterRecordBeginDateForHtml:'',
             waterRecordEndDateForHtml:'',
+            payStateString:'',
         },
         q:{
             id:'',
@@ -91,6 +92,7 @@ var vm = new Vue({
             factoryName:'',
             waterRecordBeginDateForHtml:'',
             waterRecordEndDateForHtml:'',
+            payStateString:'',
         },
         FactoryMessageList:[],
         CustomerMessageList:[],
@@ -180,6 +182,10 @@ var vm = new Vue({
                 }
 
                 vm.app = r.payRecord;
+                if(vm.app.payState == -1)
+                vm.app.payStateString = "未缴费"
+                else
+                    vm.app.payStateString = "已缴费"
                 delete vm.app.createTime;
             });
         },

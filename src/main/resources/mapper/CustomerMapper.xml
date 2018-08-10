@@ -340,4 +340,17 @@
           )
       </foreach >
 </insert>
+
+  <select id="getIdAndCode" resultMap="BaseResultMap" parameterType="java.util.List" >
+    SELECT id,code from t_customer
+    <where>
+      and is_delete = 0
+        and code in
+        <foreach collection="list" index="index" item="item"
+                 open="(" separator="," close=")">
+          #{item.custCode}
+        </foreach>
+    </where>
+
+  </select>
 </mapper>

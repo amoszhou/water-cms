@@ -21,6 +21,17 @@ public class PriceType implements Serializable {
     //价格类型(0生活用水，1工业用水)
     private Integer type;
 
+    //连表时使用的字段
+    private Integer custId;
+
+    public Integer getCustId() {
+        return custId;
+    }
+
+    public void setCustId(Integer custId) {
+        this.custId = custId;
+    }
+
     public Integer getType() {
         return type;
     }
@@ -131,6 +142,7 @@ public class PriceType implements Serializable {
                 ", isDelete=" + isDelete +
                 ", factoryName='" + factoryName + '\'' +
                 ", type=" + type +
+                ", custId=" + custId +
                 '}';
     }
 }

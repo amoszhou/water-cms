@@ -71,6 +71,26 @@ public class WaterRecord implements Serializable {
 
     private String createTimeForHTML;
 
+    //以下两个属性为了在批量生成缴费记录时，计算水费
+    private BigDecimal swage;  //污水费
+    private BigDecimal normal;  //正常水费
+
+    public BigDecimal getSwage() {
+        return swage;
+    }
+
+    public void setSwage(BigDecimal swage) {
+        this.swage = swage;
+    }
+
+    public BigDecimal getNormal() {
+        return normal;
+    }
+
+    public void setNormal(BigDecimal normal) {
+        this.normal = normal;
+    }
+
     public void setCreateTime(LocalDateTime createTime) {
         this.createTimeForHTML = createTime.toString();
         this.createTime = createTime;
@@ -364,8 +384,11 @@ public class WaterRecord implements Serializable {
                 ", factoryName='" + factoryName + '\'' +
                 ", pay=" + pay +
                 ", code='" + code + '\'' +
+                ", usedWaterRecord=" + usedWaterRecord +
                 ", waterRecordBeginDate=" + waterRecordBeginDate +
                 ", waterRecordEndDate=" + waterRecordEndDate +
+                ", waterRecordBeginDateForHtml='" + waterRecordBeginDateForHtml + '\'' +
+                ", waterRecordEndDateForHtml='" + waterRecordEndDateForHtml + '\'' +
                 ", createUser=" + createUser +
                 ", createUserName='" + createUserName + '\'' +
                 ", updateTime=" + updateTime +
@@ -375,6 +398,8 @@ public class WaterRecord implements Serializable {
                 ", isDelete=" + isDelete +
                 ", createTime=" + createTime +
                 ", createTimeForHTML='" + createTimeForHTML + '\'' +
+                ", swage=" + swage +
+                ", normal=" + normal +
                 '}';
     }
 }

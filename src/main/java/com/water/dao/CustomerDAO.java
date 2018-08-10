@@ -32,4 +32,10 @@ public interface CustomerDAO {
       */
     int insertBatch(List<Customer> list);
 
+    /**
+      * @Author : 林吉达
+      * @Description : 根据List<Code> 插入批量的customerId
+      * @Date : 11:46 2018/8/10
+      */
+     List<Customer> getIdAndCode(List list);
 }

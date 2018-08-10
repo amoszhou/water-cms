@@ -10,6 +10,7 @@
     <result column="sewage" property="sewage"  />
     <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
     <result column="type" property="type"  />
+    <result column="custId" property="custId"  />
   </resultMap>
   <sql id="Base_Column_List" >
     id, factory_id, name, price, type,sewage, is_delete
@@ -178,4 +179,19 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <!--  根据customerId 查t_customer_meter 和t_price_type 得出用户用水记录所对应的费用 -->
+  <select id="getPriceByCustId" resultMap="BaseResultMap" parameterType="java.util.List">
+    SELECT a.price,a.sewage,b.cust_id as custId FROM (select cust_id,price_type from t_customer_meter
+    <where>
+      and is_delete = 0
+      and cust_id in
+      <foreach collection="list" index="index" item="item"
+               open="(" separator="," close=")">
+        #{item.custId}
+      </foreach>
+    </where>
+    )
+    as b JOIN
+    (select id,price,sewage from t_price_type where is_delete = 0 ) as a on a.id = b.price_type
+  </select>
 </mapper>

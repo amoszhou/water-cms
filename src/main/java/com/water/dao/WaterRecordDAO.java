@@ -20,5 +20,5 @@ public interface WaterRecordDAO {
 
     int updateByPrimaryKeySelective(WaterRecord record);
 
-
+    int insertBatch(List list);
 }
