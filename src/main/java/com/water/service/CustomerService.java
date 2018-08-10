@@ -16,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Author : 林吉达
@@ -34,6 +31,8 @@ public class CustomerService {
 
     @Autowired
     private CustomerDAO customerDAO;
+    @Autowired
+    private POIDATAService poidataService;
 
 
     /**
@@ -63,19 +62,22 @@ public class CustomerService {
      * @Description :保存
      * @Date : 20:28 2018/6/26
      */
-    public void save(Customer customer){
+    public void save(Customer customer) {
         if (customer != null) {
             //todo 获取用户名，填充recordUser           获取片区和营业厅列表
             customer.setCreateUser(HttpServletRequestUtil.getUserId());
-          customer.setUpdateUser(HttpServletRequestUtil.getUserId());
+            customer.setUpdateUser(HttpServletRequestUtil.getUserId());
         /*  customer.setCode(UUID.randomUUID().toString());*/
-            customerDAO.insertSelective(customer);
+            List<Customer> list = new ArrayList<>();
+            list.add(customer);
+            poidataService.saveCustomerData(list);
+            //  customerDAO.insertSelective(customer);
         }
     }
 
     public Customer queryObject(Integer id) {
         Map map = new HashMap();
-        map.put("id",id);
+        map.put("id", id);
         return (Customer) customerDAO.queryList(map).get(0);
 
     }
@@ -97,12 +99,10 @@ public class CustomerService {
 
     }
 
-    public  List<IdAndNameDTO> selectArchiveMessage(){
+    public List<IdAndNameDTO> selectArchiveMessage() {
         Map map = new HashMap();
-        return  customerDAO.selectArchiveMessage(map);
+        return customerDAO.selectArchiveMessage(map);
     }
-
-
 
 
 }

@@ -92,7 +92,7 @@
   <select id="queryList" resultMap="BaseResultMap">
     select    a.id, a.address, a.archive_id, a.area_id, a.code, a.create_time, a.create_user, a.factory_id, a.family_count,
     a.frequency, a.hall_id, a.id_card, a.is_delete, a.name, a.phone, a.tel, a.update_time, a.update_user,
-    b.name as factoryName,c.name as archiveName,  d.name as areaName,e.username as createUserName,f.username as updateUserName,
+    b.name as factoryName,c.name as archiveName,  d.name as areaName,e.real_name as createUserName,f.real_name as updateUserName,
     g.name as hallName
     from (select id,name from t_factory <include refid="authSqlForFactoryTable"/>)  as b  right JOIN (
     select
@@ -113,8 +113,8 @@
     </if>
     )as a on b.id = a.factory_id left JOIN (select id,name from t_archive where is_delete = 0) as c ON c.id = a.archive_id
     left join (SELECT id,name from t_area <include refid="authSql"/> ) as d on d.id = a.area_id
-    left  join (SELECT id,username from t_employee <include refid="authSql"/> ) as e on e.id = a.create_user
-    left  join (SELECT id,username from t_employee <include refid="authSql"/> ) as f on f.id = a.update_user
+    left  join (SELECT id,real_name from t_employee <include refid="authSql"/> ) as e on e.id = a.create_user
+    left  join (SELECT id,real_name from t_employee <include refid="authSql"/> ) as f on f.id = a.update_user
     left  join (SELECT id,name from t_bizhall <include refid="authSql"/> ) as g on g.id = a.hall_id
   </select>
 

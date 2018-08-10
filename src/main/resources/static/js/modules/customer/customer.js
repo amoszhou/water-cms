@@ -77,7 +77,8 @@ var vm = new Vue({
             updateUserName:'',
             createTimeForHTML:'',
             updateTimeForHTML:'',
-
+            priceTypeId:'',
+            meterId:'',
         },
         q:{
             id:'',
@@ -103,11 +104,14 @@ var vm = new Vue({
             updateUserName:'',
             createTimeForHTML:'',
             updateTimeForHTML:'',
+            priceTypeId:'',
+            meterId:'',
         },
         FactoryMessageList:[],
         AreaMessageList:[],
         HallMessageList:[],
         ArchiveMessageList:[],
+        PriceTypeMessageList:[],
     },
     methods: {
         query: function () {
@@ -227,14 +231,14 @@ var vm = new Vue({
                   alert("顾客地址不能为空");
                   return true;
               }
-              if(isBlank(vm.app.archiveId)){
+            /*  if(isBlank(vm.app.archiveId)){
                   alert("所属表册不能为空");
                   return true;
               }
               if(isBlank(vm.app.areaId)){
                   alert("所属片区不能为空");
                   return true;
-              }
+              }*/
             if(isBlank(vm.app.code)){
                 alert("顾客编码不能为空");
                 return true;
@@ -243,10 +247,10 @@ var vm = new Vue({
                 alert("所属水厂不能为空");
                 return true;
             }
-            if(isBlank(vm.app.hallId)){
+          /*  if(isBlank(vm.app.hallId)){
                 alert("所属营业厅不能为空");
                 return true;
-            }
+            }*/
             if(isBlank(vm.app.idCard)){
                 alert("身份证不能为空");
                 return true;
@@ -259,16 +263,27 @@ var vm = new Vue({
                 alert("手机号码不能为空");
                 return true;
             }
-          /*  if(isBlank(vm.app.url)){
-                alert("应用地址不能为空");
+
+            if(isBlank(vm.app.priceTypeId)){
+                alert("顾客所属价格不能为空");
                 return true;
-            } if(isBlank(vm.app.url)){
-                alert("应用地址不能为空");
+            }
+
+            if(isBlank(vm.app.meterId)){
+                alert("顾客所属水表不能为空");
                 return true;
-            } if(isBlank(vm.app.url)){
-                alert("应用地址不能为空");
-                return true;
-            }*/
+            }
+
+            /*  if(isBlank(vm.app.url)){
+                  alert("应用地址不能为空");
+                  return true;
+              } if(isBlank(vm.app.url)){
+                  alert("应用地址不能为空");
+                  return true;
+              } if(isBlank(vm.app.url)){
+                  alert("应用地址不能为空");
+                  return true;
+              }*/
         }
     }
 });
@@ -370,5 +385,22 @@ $.ajax({
         console.log(vm.ArchiveMessageList);
     },error:function (returnJsonData) {
 
+    }
+});
+//页面加载时拿到所有的priceType编码
+$.ajax({
+    async: false, // 同步
+    type: 'GET',
+    url: "/getIdAndName/getPriceTypeMessage",
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (returnJsonData) {
+        vm.PriceTypeMessageList = [];
+        for(var i = 0 ; i < returnJsonData.length ; i ++){
+            var tepm = {id:returnJsonData[i].id,name:returnJsonData[i].name,idAndName:returnJsonData[i].idAndName};
+            vm.PriceTypeMessageList.push(tepm);
+        }
+        console.log(vm.PriceTypeMessageList);
+    },error:function (returnJsonData) {
     }
 });
